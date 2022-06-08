@@ -1,16 +1,9 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
+.register-bg {
+  background-image: url('/home/background.svg') !important;
+  background-size: 80% !important ;
+  background-position-y: center !important;
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+  /* background-repeat: repeat !important; */
+  /* background-size: contain; */
+  /* background-position: 100% 100%; */
 }
