@@ -7,28 +7,39 @@ type Prop = {
     prev: boolean;
   };
 };
-const maxPages = 8;
+const maxPages = 9;
 export function Walkthrough({ page, navigatePage, buttonState }: Prop) {
   return (
-    <Flex>
-      <Button
-        onClick={() => navigatePage('prev')}
-        colorScheme='orange'
-        variant={'ghost'}
-        disabled={buttonState.prev}
-      >
-        {' '}
-        رجوع
-      </Button>
-      <RadioGroup defaultValue={page}>
-        {/* <Flex gap='1'>{Array.from(Array(maxPages)).map}</Flex> */}
-      </RadioGroup>
+    <Flex w='100%' align={'center'} justify='space-between'>
       <Button
         onClick={() => navigatePage('next')}
         colorScheme='orange'
         disabled={buttonState.next}
       >
         التالي
+      </Button>
+      {/* <RadioGroup> */}
+      <Flex gap='1'>
+        {Array.from(Array(maxPages)).map((_, i) => (
+          <Radio
+            size='sm'
+            isReadOnly
+            isChecked={page === i + 1}
+            colorScheme={'orange'}
+            key={i}
+            value={i + 1}
+          ></Radio>
+        ))}
+      </Flex>
+      {/* </RadioGroup> */}
+
+      <Button
+        onClick={() => navigatePage('prev')}
+        colorScheme='orange'
+        variant={'ghost'}
+        disabled={buttonState.prev}
+      >
+        رجوع
       </Button>
     </Flex>
   );

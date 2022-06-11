@@ -9,8 +9,8 @@ const breakpoints = {
 const theme = extendTheme({
   breakpoints,
   fonts: {
-    body: `'Vazirmatn', sans-serif !important`,
-    heading: `'Vazirmatn', sans-serif !important`
+    body: `'Vazir', sans-serif !important`,
+    heading: `'Vazir', sans-serif !important`
   },
   styles: {
     global: {

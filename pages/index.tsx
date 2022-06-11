@@ -7,7 +7,7 @@ const allSections: Section[] = [
     bg: 'orange.100',
     image: {
       src: '/home/bodies.svg',
-      width: '300px',
+      width: '400',
       alt: 'boodies',
       order: '1'
     },
@@ -26,7 +26,7 @@ const allSections: Section[] = [
     bg: '',
     image: {
       src: '/home/dish.svg',
-      width: '200px',
+      width: '400',
       alt: 'dish',
       order: '2'
     },
@@ -44,7 +44,7 @@ const allSections: Section[] = [
     bg: 'orange.100',
     image: {
       src: '/home/sec4.svg',
-      width: '400px',
+      width: '400',
       alt: 'dish',
       order: '1'
     },
@@ -67,7 +67,7 @@ const allSections: Section[] = [
     bg: '',
     image: {
       src: '/home/sec5.svg',
-      width: '400px',
+      width: '400',
       alt: 'keto',
       order: '2'
     },
@@ -90,7 +90,7 @@ const allSections: Section[] = [
     bg: 'orange.100',
     image: {
       src: '/home/sec6.svg',
-      width: '400px',
+      width: '400',
       alt: 'keto',
       order: '1'
     },
@@ -113,7 +113,7 @@ const allSections: Section[] = [
     bg: '',
     image: {
       src: '/home/sec7.svg',
-      width: '400px',
+      width: '400',
       alt: 'keto',
       order: '2'
     },

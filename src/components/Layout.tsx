@@ -4,7 +4,7 @@ import { createStandaloneToast } from '@chakra-ui/toast';
 import { fetcher } from 'src/utils/fetcher';
 import theme from 'src/utils/theme';
 import Meta from 'src/utils/Meta';
-import '@fontsource/vazirmatn';
+import '@fontsource/vazir';
 import Header from './Header';
 import Fotter from './Footer';
 const { ToastContainer, toast } = createStandaloneToast(theme);

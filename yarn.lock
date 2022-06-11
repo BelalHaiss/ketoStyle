@@ -894,10 +894,10 @@
     "minimatch" "^3.1.2"
     "strip-json-comments" "^3.1.1"
 
-"@fontsource/vazirmatn@^4.5.1":
-  "integrity" "sha512-+gkgh39rOlr/1np/otiM9UrjAkg/d9+poxztDihsyHRPMLQ8YEt6FZFjPh/nKbeOZzKGNa16vaELmQAaNfwrsg=="
-  "resolved" "https://registry.npmjs.org/@fontsource/vazirmatn/-/vazirmatn-4.5.1.tgz"
-  "version" "4.5.1"
+"@fontsource/vazir@^4.5.4":
+  "integrity" "sha512-PnQwwPf9JDnCHHLx55c9QHBfPSQY4VOqhGTTQ0jUkAAJOW66gE6aCOKZGGANd5e3u95LGXEzzt6E0GZXVUv0cg=="
+  "resolved" "https://registry.npmjs.org/@fontsource/vazir/-/vazir-4.5.4.tgz"
+  "version" "4.5.4"
 
 "@humanwhocodes/config-array@^0.9.2":
   "integrity" "sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw=="

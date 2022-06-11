@@ -2,8 +2,10 @@
   background-image: url('/home/background.svg') !important;
   background-size: 80% !important ;
   background-position-y: center !important;
-
-  /* background-repeat: repeat !important; */
-  /* background-size: contain; */
-  /* background-position: 100% 100%; */
 }
+
+/* @media only screen and (max-width: 700px) {
+  .section-image {
+    order: 1;
+  }
+} */

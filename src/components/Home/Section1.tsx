@@ -1,4 +1,6 @@
-import { Flex, Image, Text, Heading } from '@chakra-ui/react';
+import { Flex, Text, Heading } from '@chakra-ui/react';
+import Image from 'next/image';
+
 const section1Fotter = [
   {
     text: 'فقدان وزن سريع',
@@ -29,12 +31,16 @@ export default function Section1() {
         flexDir={{ base: 'column', md: 'row' }}
         justify='space-around'
       >
-        <Image
-          order={{ base: '1', md: '2' }}
-          w={{ base: '300px', md: '350px' }}
-          alt='Keto sandwich'
-          src='/home/sandwich1.svg'
-        />
+        <Flex order={{ base: '1', md: '2' }}>
+          <Image
+            width={400}
+            height={400}
+            priority
+            className='section-image'
+            alt='Keto sandwich'
+            src='/home/sandwich1.svg'
+          />
+        </Flex>
         <Heading
           order={{ base: '2', md: '1' }}
           w={{ base: 'auto', md: '300px' }}
@@ -51,8 +57,8 @@ export default function Section1() {
       </Flex>
       <Flex my='2' wrap='wrap' align='center' gap='1' justify={'space-around'}>
         {section1Fotter.map(({ text, src }) => (
-          <Flex align='center' key='src'>
-            <Image w={{ base: '40px', md: '76px' }} src={src} alt={text} />
+          <Flex align='center' key={src}>
+            <Image width={100} height={100} src={src} alt={text} />
             <Text
               fontSize={{ base: 'md', md: 'xl' }}
               w='100px'

@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { Walkthrough } from './Walkthrough';
+import { Controller } from './Controller';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
@@ -25,10 +26,11 @@ export function RegisterModal({ isOpen, onClose }: Props) {
       setIsNextDisabled(true);
       return;
     } else {
-      setPage(page - 1);
-      if (page - 1 === 0) {
+      if (page - 1 === 1) {
         setIsPrevDisabled(true);
       }
+      setPage(page - 1);
+
       setIsNextDisabled(false);
     }
   }
@@ -42,33 +44,46 @@ export function RegisterModal({ isOpen, onClose }: Props) {
       action === 'active' ? setIsPrevDisabled(false) : setIsPrevDisabled(true);
     }
   }
+
+  function closeModal() {
+    setPage(1);
+    onClose();
+  }
   useEffect(() => {
-    return () => onClose();
+    return () => closeModal();
   }, []);
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        size={{ base: 'full', md: page === 9 ? 'full' : 'xl' }}
+        isCentered
+        isOpen={isOpen}
+        onClose={closeModal}
+      >
         <ModalOverlay
           backdropFilter='auto'
-          // backdropInvert='80%'
           backgroundColor={'transparent'}
-          backdropBlur='10px'
+          backdropBlur='15px'
           className='register-bg'
         />
         <ModalContent
-          color='orange.50'
-          bg='orange.900'
-          minW={{ base: '90%', md: '600px' }}
-          minH='500px'
+          color={page === 9 ? 'orange.800' : 'orange.50'}
+          bg={page === 9 ? 'orange.50' : 'orange.800'}
+          minW={{ base: '100%', md: '500px' }}
+          overflowY='auto'
+          // minH='250px'
         >
-          <ModalHeader textAlign={'center'}>{header}</ModalHeader>
+          <ModalHeader fontSize='2xl' textAlign={'center'}>
+            {header}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* <Controller
+            <Controller
               page={page}
               setButtonStatus={setButtonStatus}
               onClose={onClose}
-            /> */}
+              setHeader={setHeader}
+            />
           </ModalBody>
           <ModalFooter>
             <Walkthrough
