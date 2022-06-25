@@ -98,6 +98,7 @@ export function CountrySelect({
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === 'other') {
       setOther(true);
+      setCountry('');
     } else {
       setCountry(e.target.value);
       setOther(false);

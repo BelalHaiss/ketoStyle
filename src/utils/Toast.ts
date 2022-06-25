@@ -1,4 +1,4 @@
-import { Toast } from '../components/Layout';
+import { Toast } from '../components/layout/Layout';
 
 type Status = 'error' | 'info' | 'warning' | 'success' | 'loading' | undefined;
 export default function ToastUtil(
@@ -7,7 +7,7 @@ export default function ToastUtil(
   duration = 2000
 ) {
   return Toast({
-    title: status === 'error' ? 'حدث خطأ' : 'تمت العملية بنجاح',
+    title: status === 'error' ? 'حدث خطأ' : 'تم  بنجاح',
     description,
     status,
     duration

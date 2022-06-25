@@ -10,12 +10,21 @@ import {
 import { useState, useEffect } from 'react';
 import { Walkthrough } from './Walkthrough';
 import { Controller } from './Controller';
+import LoginForm from './LoginForm';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  isLogin: boolean;
+  setIsLogin: (isLogin: boolean) => void;
 };
-export function RegisterModal({ isOpen, onClose }: Props) {
+export function RegisterModal({
+  isOpen,
+  onClose,
+  isLogin = false,
+  setIsLogin
+}: Props) {
   const [header, setHeader] = useState('مرحبًا بك في عائلتنا');
+  const [registerDetails, setRegisterDetails] = useState({});
   const [page, setPage] = useState(1);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
@@ -48,6 +57,9 @@ export function RegisterModal({ isOpen, onClose }: Props) {
   function closeModal() {
     setPage(1);
     onClose();
+    if (isLogin) {
+      setIsLogin(false);
+    }
   }
   useEffect(() => {
     return () => closeModal();
@@ -57,7 +69,7 @@ export function RegisterModal({ isOpen, onClose }: Props) {
       <Modal
         size={{ base: 'full', md: page === 9 ? 'full' : 'xl' }}
         isCentered
-        isOpen={isOpen}
+        isOpen={isOpen || isLogin}
         onClose={closeModal}
       >
         <ModalOverlay
@@ -78,19 +90,29 @@ export function RegisterModal({ isOpen, onClose }: Props) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Controller
-              page={page}
-              setButtonStatus={setButtonStatus}
-              onClose={onClose}
-              setHeader={setHeader}
-            />
+            {isLogin && (
+              <LoginForm setHeader={setHeader} onClose={closeModal} />
+            )}
+            {!isLogin && (
+              <Controller
+                page={page}
+                setButtonStatus={setButtonStatus}
+                onClose={onClose}
+                setHeader={setHeader}
+                setRegisterDetails={setRegisterDetails}
+              />
+            )}{' '}
           </ModalBody>
           <ModalFooter>
-            <Walkthrough
-              page={page}
-              buttonState={{ next: isNextDisabled, prev: isPrevDisabled }}
-              navigatePage={navigatePage}
-            />
+            {!isLogin && (
+              <Walkthrough
+                page={page}
+                buttonState={{ next: isNextDisabled, prev: isPrevDisabled }}
+                navigatePage={navigatePage}
+                registerDetails={registerDetails}
+                closeModal={closeModal}
+              />
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

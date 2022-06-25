@@ -1,11 +1,16 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Layout } from 'src/components/Layout';
+
+import { useCreateStore, Provider } from 'src/store';
+import { Layout } from 'src/components/layout/Layout';
 function MyApp({ Component, pageProps }: AppProps) {
+  const store = useCreateStore(pageProps.initialZustandState);
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider createStore={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   );
 }
 

@@ -1,14 +1,24 @@
 import axios from 'axios';
 import Toast from './Toast';
 
+interface ERROR_RESPONSE_TYPE {
+  response: {
+    status: number;
+    data: {
+      message: string;
+      error: string;
+    };
+    message: string;
+  };
+}
+
 type Args = {
   url: string;
-  method?: 'get' | 'post' | 'put' | 'delete';
+  method?: 'get' | 'post' | 'patch' | 'delete';
   data?: any;
   successToast?: string;
   errorToast?: string; //mesage when error
   abortRequest?: boolean;
-  selfHandling?: boolean;
 };
 
 let controller = new AbortController();
@@ -20,12 +30,10 @@ export const fetcher = async ({
   data = null,
   successToast = '', // text to display on success
   errorToast,
-  abortRequest = false,
-  selfHandling
+  abortRequest = false
 }: Args) => {
   // const productionURL = 'https://auto-service-api.herokuapp.com';
-  const devUrl = 'https://autoservice-staging.herokuapp.com';
-  const STATGIN_COUNTRY_CODE = '61e888a4f7274d001692753e';
+  const devUrl = 'http://localhost:5000/api';
   axios.defaults.baseURL = devUrl;
   if (abortRequest) {
     const now = Date.now();
@@ -40,28 +48,29 @@ export const fetcher = async ({
     const res = await axios({
       url: url,
       method,
-      headers: {
-        Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGUiOiIwMDIyMjA5OSIsImlhdCI6MTYzNTg5NTg0MSwiZXhwIjoxOTUxMjU1ODQxfQ.eu8D7aUZ_u-U6zoH41Y4XbRq0wfkBu7kYtVNt1m08c8`,
-        country: STATGIN_COUNTRY_CODE,
-        //  localStorage.getItem('country') || '6184aea034e78407518074e8',
-        languageCode:
-          localStorage.getItem('i18nextLng') === 'en-US' ? 'en' : 'ar'
-      },
+
       data,
-      signal: controller.signal
+      signal: controller.signal,
+      withCredentials: true
     });
     if (successToast) {
       Toast(successToast, 'success');
     }
 
     return res.data;
-  } catch (error: any) {
-    if (selfHandling) throw new Error(error.message);
-
-    if (error.message === 'canceled') return;
+  } catch (e: any) {
+    if (e.message === 'Network Error') {
+      return Toast('حدث خطا برجاء المحاولة لاحقا', 'error');
+    }
+    if (e.message === 'canceled') return null;
+    console.log(e);
+    if (e.response?.data?.name === 'custom') {
+      Toast(e.response.data.message, 'error');
+    } else {
+      Toast(errorToast ?? 'حدث خطا برجاء المحاولة لاحقا', 'error');
+    }
     // if (abortRequest) return;
-    Toast(errorToast ?? 'حدث خطا في الاتصال بالخادم', 'error');
 
-    return 'error';
+    return null;
   }
 };

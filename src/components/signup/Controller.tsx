@@ -26,17 +26,51 @@ import {
 } from 'react';
 import { GiChickenOven, GiCow, GiSheep, GiCamel, GiMeal } from 'react-icons/gi';
 import { TbFish } from 'react-icons/tb';
-import { BiBody, BiHealth } from 'react-icons/bi';
-import { AiFillFire, AiFillSafetyCertificate } from 'react-icons/ai';
-import { FaWeight } from 'react-icons/fa';
-import { MdOutlineFitnessCenter } from 'react-icons/md';
 
 import { CountrySelect } from './CountrySelect';
-type Value = 'chicken' | 'cow' | 'sheep' | 'camel' | 'caridea' | 'fish';
+import { useStore } from 'src/store';
+type Props = {
+  page: number;
+  setButtonStatus: (
+    type: 'next' | 'prev',
+    action: 'active' | 'disabled'
+  ) => void;
+  onClose?: () => void;
+  setHeader: Dispatch<SetStateAction<string>>;
+  [key: string]: any; //setRegisterDetails
+};
+
+export type Value = 'chicken' | 'cow' | 'sheep' | 'camel' | 'caridea' | 'fish';
 type Category = {
   label: string;
   value: Value;
   icon: React.ReactElement;
+};
+type Physical = {
+  question: string;
+  answer: string;
+};
+export type Profile = {
+  name: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  phone: number | '';
+  country: string;
+};
+export type Measure = {
+  sex: 'male' | 'female';
+  weight: number;
+  height: number;
+  desiredWeight: number;
+  age: number;
+};
+export type User = {
+  categories: [] | Category[];
+  physicalActivity: Physical;
+  willing?: number;
+  measurements: Measure;
+  profile: Profile;
 };
 const allCategories: Category[] = [
   {
@@ -70,46 +104,19 @@ const allCategories: Category[] = [
     icon: <GiCamel />
   }
 ];
-type Props = {
-  page: number;
-  setButtonStatus: (
-    type: 'next' | 'prev',
-    action: 'active' | 'disabled'
-  ) => void;
-  onClose?: () => void;
-  setHeader: Dispatch<SetStateAction<string>>;
-  [key: string]: any;
-};
-type Profile = {
-  name: string;
-  email: string;
-  password: string;
-  phone: number | '';
-  country: string;
-};
-type Measure = {
-  sex: 'male' | 'female';
-  weight: number;
-  height: number;
-  desiredWeight: number;
-  age: number;
-};
-type User = {
-  categories: [] | Category[];
-  physicalActivity: number;
-  willing: number;
-  measurements: Measure;
-  profile: Profile;
-};
 export function Controller({
   page,
   setButtonStatus,
+  setRegisterDetails,
   onClose,
   setHeader
 }: Props) {
   const [user, setUser] = useState<User>({
     categories: [],
-    physicalActivity: -1,
+    physicalActivity: {
+      question: 'physicalActivity',
+      answer: ''
+    },
     willing: -1,
     measurements: {
       sex: 'male',
@@ -120,6 +127,7 @@ export function Controller({
     },
     profile: {
       name: '',
+      lastName: '',
       email: '',
       password: '',
       phone: '',
@@ -202,18 +210,8 @@ export function Controller({
           onClose={onClose}
           user={user}
           setHeader={setHeader}
+          setRegisterDetails={setRegisterDetails}
           page={page}
-        />
-      )}
-
-      {page === 9 && (
-        <Page9
-          page={page}
-          setUser={setUser}
-          setButtonStatus={setButtonStatus}
-          onClose={onClose}
-          user={user}
-          setHeader={setHeader}
         />
       )}
     </Flex>
@@ -297,7 +295,7 @@ function Page3({
         gap='3'
         justify='space-between'
       >
-        <Flex align='center' flexDir={{ base: 'row', md: 'column' }} gap='2'>
+        <Flex align='center' flexDir={'column'} gap='2'>
           {allCategories.map((category: Category, i) => {
             if (i >= 3) return;
             return (
@@ -323,7 +321,7 @@ function Page3({
             );
           })}
         </Flex>
-        <Flex align='center' flexDir={{ base: 'row', md: 'column' }} gap='2'>
+        <Flex align='center' flexDir={'column'} gap='2'>
           {allCategories.map((category: Category, i) => {
             if (i <= 2) return;
             return (
@@ -357,19 +355,19 @@ function Page3({
 const physicalActivities = [
   {
     label: 'لا يوجد نشاط',
-    value: 0
+    value: 'no'
+  },
+  {
+    label: ' نشاط خفيف',
+    value: 'normal'
   },
   {
     label: '1-2 ساعة يوميا',
-    value: 1
+    value: 'fit'
   },
   {
-    label: '3-5 ساعات يوميا',
-    value: 2
-  },
-  {
-    label: 'اكثر من  5 ساعات يوميا',
-    value: 3
+    label: 'اكثر من 2 ساعات يوميا',
+    value: 'athlete'
   }
 ];
 function Page4({
@@ -380,23 +378,23 @@ function Page4({
   setUser,
   user
 }: Props) {
-  const [physicalActivity, setPhysicalActivity] = useState<number>(
+  const [physicalActivity, setPhysicalActivity] = useState<Physical>(
     user.physicalActivity
   );
   useLayoutEffect(() => {
     setHeader('النشاط البدني');
-    if (physicalActivity > -1) {
+    if (physicalActivity) {
       setButtonStatus('next', 'active');
     }
   }, []);
 
-  function handleCategory(value: number) {
+  function handleCategory(value: string) {
     setUser((user: any) => ({
       ...user,
-      physicalActivity: value
+      physicalActivity: { ...physicalActivity, answer: value }
     }));
-    setPhysicalActivity(value);
-    value < -1
+    setPhysicalActivity((old) => ({ ...old, answer: value }));
+    value === ''
       ? setButtonStatus('next', 'disabled')
       : setButtonStatus('next', 'active');
   }
@@ -418,9 +416,13 @@ function Page4({
             w='150px'
             onClick={() => handleCategory(activity.value)}
             colorScheme='orange'
-            variant={physicalActivity !== activity.value ? 'ghost' : 'solid'}
+            variant={
+              physicalActivity.answer !== activity.value ? 'ghost' : 'solid'
+            }
             background={
-              physicalActivity !== activity.value ? 'orange.50' : 'orange.500'
+              physicalActivity.answer !== activity.value
+                ? 'orange.50'
+                : 'orange.500'
             }
             key={activity.value}
           >
@@ -531,9 +533,7 @@ function Page6({
   const [value, setValue] = useState('');
   useLayoutEffect(() => {
     setHeader('هل تعاني أحد هذه الأمراض');
-    if (value === 'ok') {
-      setButtonStatus('next', 'active');
-    }
+    setButtonStatus('next', 'disabled');
   }, []);
   function handleChange(value: string) {
     value === 'ok'
@@ -547,7 +547,7 @@ function Page6({
         <Text fontWeight={'bold'} fontSize='xl'>
           هل تعاني من احدي هذه الامراض ؟
         </Text>
-        <RadioGroup onChange={handleChange} defaultValue={value} value={value}>
+        <RadioGroup onChange={handleChange} value={value}>
           <Flex gap='2'>
             <Radio w='70px' colorScheme='orange' value='ok'>
               لا
@@ -591,6 +591,42 @@ function Page6({
     </Flex>
   );
 }
+export const allMeasurements = [
+  {
+    label: ' ',
+    value: '  الوزن (كجم)  ',
+    name: 'weight',
+    min: 40,
+    max: 150,
+    errorMessage: 'الوزن يجب ان يكون بين 40 الي 150 كحد اقصي'
+  },
+  {
+    label: '  ',
+    value: ' الوزن المرغوب (كجم)',
+    name: 'desiredWeight',
+
+    errorMessage: ' الوزن يجب ان لا يكون اعلي من الوزن الحالي وبين 40 الي 150',
+    min: 40,
+    max: 150
+  },
+  {
+    label: '',
+    value: 'الطول (سم) ',
+    name: 'height',
+    min: 120,
+    max: 220,
+    errorMessage: 'الطول يجب ان يكون بين 120 الي 220 كحد اقصي'
+  },
+  {
+    label: '',
+    value: ' العمر (سنة)',
+    name: 'age',
+    min: 18,
+    max: 90,
+    errorMessage: 'العمر يجب ان لا يقل عن 18 عام'
+  }
+];
+
 function Page7({
   page,
   setButtonStatus,
@@ -607,42 +643,7 @@ function Page7({
   );
   //  dont set user measurements before checking that error state is clear use ( useEffect)
   const [errors, setErrors] = useState(user.measurements);
-  const allMeasurements = [
-    {
-      label: ' ',
-      value: '  الوزن (كجم)  ',
-      name: 'weight',
-      min: 50,
-      max: 150,
-      errorMessage: 'الوزن يجب ان يكون بين 50 الي 150 كحد اقصي'
-    },
-    {
-      label: '  ',
-      value: ' الوزن المرغوب (كجم)',
-      name: 'desiredWeight',
-
-      errorMessage:
-        ' الوزن يجب ان لا يكون اعلي من الوزن الحالي وبين 50 الي 150',
-      min: 50,
-      max: 150
-    },
-    {
-      label: '',
-      value: 'الطول (سم) ',
-      name: 'height',
-      min: 100,
-      max: 220,
-      errorMessage: 'الطول يجب ان يكون بين 100 الي 220 كحد اقصي'
-    },
-    {
-      label: '',
-      value: ' العمر (سنة)',
-      name: 'age',
-      min: 13,
-      max: 70,
-      errorMessage: 'العمر يجب ان يكون بين 13 الي 70 كحد اقصي'
-    }
-  ];
+  const [weightError, setWeightError] = useState('');
 
   function handleError(name: string, error: '' | 'fine') {
     if (error === '') {
@@ -660,8 +661,10 @@ function Page7({
     if (find) {
       if (+value >= find.min && +value <= find.max) {
         handleError(name, 'fine');
+        if (name === 'weight') setWeightError('fine');
       } else {
         handleError(name, '');
+        if (name === 'weight') setWeightError('');
       }
     }
     if (name === 'desiredWeight' || name === 'weight') {
@@ -671,11 +674,12 @@ function Page7({
   function validateDesiredWeight(
     name: 'weight' | 'desiredWeight',
     value: number
+    // this for update weight error only
   ) {
     if (name === 'weight') {
       if (
         value >= measurements.desiredWeight &&
-        measurements.desiredWeight >= 50
+        measurements.desiredWeight >= 40
       ) {
         handleError('desiredWeight', 'fine');
       } else {
@@ -684,7 +688,7 @@ function Page7({
       return;
     }
     if (name === 'desiredWeight') {
-      if (value <= measurements.weight && value >= 50) {
+      if (value <= measurements.weight && value >= 40) {
         handleError(name, 'fine');
       } else {
         handleError(name, '');
@@ -692,7 +696,6 @@ function Page7({
     }
   }
   useEffect(() => {
-    console.log(errors);
     for (const key in errors) {
       if (errors[key] === '' || errors[key] === 0) {
         setButtonStatus('next', 'disabled');
@@ -703,6 +706,11 @@ function Page7({
       }
     }
   }, [errors]);
+  useEffect(() => {
+    weightError === 'fine' || errors.weight
+      ? handleError('weight', 'fine')
+      : handleError('weight', '');
+  }, [weightError]);
   return (
     <Flex flexDir={'column'} gap='2' w='100%' align='center'>
       <InputGroup>
@@ -716,7 +724,6 @@ function Page7({
             // color={measurements.sex === 'male' ? 'gray.50' : 'gray.800'}
             variant={measurements.sex === 'male' ? 'solid' : 'ghost'}
           >
-            {' '}
             ذكر
           </Button>
           <Button
@@ -727,8 +734,7 @@ function Page7({
             bg={measurements.sex === 'female' ? 'orange.500' : 'orange.50'}
             variant={measurements.sex === 'female' ? 'solid' : 'ghost'}
           >
-            {' '}
-            انثي{' '}
+            انثي
           </Button>
         </Flex>
       </InputGroup>
@@ -765,12 +771,23 @@ function Page7({
     </Flex>
   );
 }
-const allProfileInfo = [
+
+export const nameInfo = [
   {
-    label: 'الاسم ',
+    label: 'الاسم الاول ',
     name: 'name',
-    type: 'text'
+    type: 'text',
+    // max length: 20
+    re: /(?=^.{3,15}$)/
   },
+  {
+    label: 'اسم العائلة ',
+    name: 'lastName',
+    type: 'text',
+    re: /(?=^.{3,15}$)/
+  }
+];
+export const allProfileInfo = [
   {
     label: 'البريد الالكتروني ',
     name: 'email',
@@ -797,7 +814,8 @@ function Page8({
   onClose,
   setHeader,
   setUser,
-  user
+  user,
+  setRegisterDetails
 }: Props) {
   useLayoutEffect(() => {
     setHeader('بيانات الحساب');
@@ -806,12 +824,17 @@ function Page8({
   //  dont set user measurements before checking that error state is clear use ( useEffect)
   const [errors, setErrors] = useState(user.profile);
 
+  const theSetUser = useStore((state) => state.setUser);
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setProfile((old: any) => ({ ...old, [name]: value }));
-
-    const find = allProfileInfo.find((m) => m.name === name);
+    let find;
+    if (name === 'name' || name === 'lastName') {
+      find = nameInfo.find((item) => item.name === name);
+    } else {
+      find = allProfileInfo.find((m) => m.name === name);
+    }
     if (find) {
       if (find.re) {
         find.re.test(value)
@@ -827,7 +850,6 @@ function Page8({
     }
   }
   function setCountry(country: string) {
-    console.log(country === '', country);
     setProfile((old: any) => ({ ...old, country }));
     if (country === '' || country === 'other') {
       setErrors((old: any) => ({ ...old, country: '' }));
@@ -846,8 +868,47 @@ function Page8({
       }
     }
   }, [errors]);
+  useEffect(() => {
+    if (user) {
+      setRegisterDetails(user);
+    }
+  }, [user]);
+
   return (
     <Flex flexDir={'column'} gap='2' w='100%' align='center'>
+      <Flex
+        gap='1'
+        align='center'
+        justify='space-between'
+        w='100%'
+        flexDir={{ base: 'column', md: 'row' }}
+      >
+        {nameInfo.map((prof, i) => (
+          <FormControl
+            flex='1'
+            isInvalid={errors[prof.name] === '' ? true : false}
+            key={i}
+          >
+            <InputGroup>
+              <InputLeftAddon
+                w={{ base: '150px', md: '90px' }}
+                bg='orange.500'
+                children={prof.label}
+              />
+
+              <Input
+                onChange={handleChange}
+                type={prof.type}
+                _placeholder={{ color: 'gray.700' }}
+                errorBorderColor='crimson'
+                name={prof.name}
+                focusBorderColor='orange.500'
+                value={profile[prof.name]}
+              />
+            </InputGroup>
+          </FormControl>
+        ))}
+      </Flex>
       {allProfileInfo.map((prof, i) => (
         <FormControl
           isInvalid={errors[prof.name] === '' ? true : false}
@@ -870,125 +931,6 @@ function Page8({
         </FormControl>
       ))}
       <CountrySelect country={profile.country} setCountry={setCountry} />
-    </Flex>
-  );
-}
-
-const textIconsArr = [
-  {
-    text: 'وجبات متنوعة',
-    icon: GiMeal
-  },
-  {
-    text: 'قياس الكتلة ',
-    icon: BiBody
-  },
-  {
-    text: 'حساب السعرات',
-    icon: AiFillFire
-  },
-  {
-    text: ' توقعات نزول الوزن',
-    icon: FaWeight
-  },
-  {
-    text: 'وسائل دفع امنه',
-    icon: AiFillSafetyCertificate
-  },
-  {
-    text: 'شهر مجاني لخدمة التمرين',
-    icon: MdOutlineFitnessCenter
-  },
-  {
-    text: 'اسبوع مجانا لخدمة اخصائي الاغذية',
-    icon: BiHealth
-  }
-];
-function TEXT_WITH_ICONS(num: 1 | 2 | 3) {
-  return (
-    <Flex flexDir={'column'} gap='2' align='center'>
-      {textIconsArr.map((item, i) => {
-        if (num === 1 && i > 4) return;
-        if (num === 2 && i > 5) return;
-        return (
-          <Flex w='200px' align='center' gap='2' key={i}>
-            <Icon w='8' h='8' as={item.icon} />
-            <Text fontWeight='medium' fontSize='lg'>
-              {item.text}
-            </Text>
-          </Flex>
-        );
-      })}
-    </Flex>
-  );
-}
-
-const cards = [
-  {
-    title: 'باقة الشهر الواحد',
-    feature: TEXT_WITH_ICONS(1)
-  },
-  {
-    title: 'باقة 3 شهور',
-    feature: TEXT_WITH_ICONS(2)
-  },
-  {
-    title: 'باقة 6 شهور ',
-    feature: TEXT_WITH_ICONS(3)
-  }
-];
-
-function Page9({
-  setButtonStatus,
-  onClose,
-  setHeader,
-  setUser,
-  user,
-  page
-}: Props) {
-  useLayoutEffect(() => {
-    setHeader('اختر الباقة المناسبة');
-  }, []);
-  return (
-    <Flex color='orange.800' w='100%' flexDir='column' align='center'>
-      <Flex w='100%' gap='3' align='center' justify='center'>
-        <Image
-          src='/home/pay.png'
-          alt='logo'
-          w={{ base: '150px', md: '300px' }}
-        />
-        <Text fontWeight={'bold'} fontSize={{ base: 'lg', md: 'xl' }}>
-          {`${user.profile.name} ،لم يتبقى سوى القليل، لدخولك عالم الكيتو معنا`}
-        </Text>
-      </Flex>
-      <Flex
-        flexDir={{ base: 'column', md: 'row' }}
-        align='center'
-        justify='space-around'
-        w='100%'
-      >
-        {cards.map((card, i) => (
-          <Flex
-            align='center'
-            border='2px'
-            bg='orange.200'
-            borderColor='orange.100'
-            flexDir='column'
-            h='400px'
-            w='300px'
-            borderRadius={'2xl'}
-            boxShadow='2xl'
-            gap='3'
-            key={i}
-          >
-            <Text my='2' fontWeight='bold' fontSize='2xl'>
-              {' '}
-              {card.title}
-            </Text>
-            {card.feature}
-          </Flex>
-        ))}
-      </Flex>
     </Flex>
   );
 }
