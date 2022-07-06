@@ -43,7 +43,8 @@ export default function LoginForm({
       setUser(user);
       onClose();
       Toast(`مرحبا ${user.profile.name}`, 'success');
-      router.replace('/');
+
+      !user.role ? router.replace('/') : router.replace('/admin');
     }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

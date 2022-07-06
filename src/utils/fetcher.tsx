@@ -19,6 +19,7 @@ type Args = {
   successToast?: string;
   errorToast?: string; //mesage when error
   abortRequest?: boolean;
+  noErrorToast?: boolean;
 };
 
 let controller = new AbortController();
@@ -30,6 +31,7 @@ export const fetcher = async ({
   data = null,
   successToast = '', // text to display on success
   errorToast,
+  noErrorToast,
   abortRequest = false
 }: Args) => {
   // const productionURL = 'https://auto-service-api.herokuapp.com';
@@ -62,8 +64,9 @@ export const fetcher = async ({
     if (e.message === 'Network Error') {
       return Toast('حدث خطا برجاء المحاولة لاحقا', 'error');
     }
+    if (noErrorToast) return null;
     if (e.message === 'canceled') return null;
-    console.log(e);
+    console.log(e, 'fetcher error');
     if (e.response?.data?.name === 'custom') {
       Toast(e.response.data.message, 'error');
     } else {

@@ -29,6 +29,14 @@ import { TbFish } from 'react-icons/tb';
 
 import { CountrySelect } from './CountrySelect';
 import { useStore } from 'src/store';
+import {
+  User,
+  Physical,
+  Category,
+  Value,
+  Profile,
+  Measure
+} from 'src/ts/register.types';
 type Props = {
   page: number;
   setButtonStatus: (
@@ -40,38 +48,6 @@ type Props = {
   [key: string]: any; //setRegisterDetails
 };
 
-export type Value = 'chicken' | 'cow' | 'sheep' | 'camel' | 'caridea' | 'fish';
-type Category = {
-  label: string;
-  value: Value;
-  icon: React.ReactElement;
-};
-type Physical = {
-  question: string;
-  answer: string;
-};
-export type Profile = {
-  name: string;
-  lastName: string;
-  email: string;
-  password?: string;
-  phone: number | '';
-  country: string;
-};
-export type Measure = {
-  sex: 'male' | 'female';
-  weight: number;
-  height: number;
-  desiredWeight: number;
-  age: number;
-};
-export type User = {
-  categories: [] | Category[];
-  physicalActivity: Physical;
-  willing?: number;
-  measurements: Measure;
-  profile: Profile;
-};
 const allCategories: Category[] = [
   {
     label: 'الدجاج',

@@ -10,7 +10,7 @@ import {
 
 import { useRouter } from 'next/router';
 import { CgProfile } from 'react-icons/cg';
-import { USER } from 'src/store';
+import { USER } from 'src/ts/store.types';
 import { fetcher } from 'src/utils/fetcher';
 
 type Props = {
@@ -50,11 +50,12 @@ export default function ProfileMenu({ user, setUser, setProfile }: Props) {
         {user.profile.name.slice(0, 13)}
       </MenuButton>
       <MenuList>
-        {list.map((item: ListItem, index) => (
-          <MenuItem onClick={() => handleRoute(item.value)} key={index}>
-            {item.label}
-          </MenuItem>
-        ))}
+        {!user.role &&
+          list.map((item: ListItem, index) => (
+            <MenuItem onClick={() => handleRoute(item.value)} key={index}>
+              {item.label}
+            </MenuItem>
+          ))}
         <MenuDivider />
         <MenuItem onClick={logout}>تسجيل الخروج</MenuItem>
       </MenuList>

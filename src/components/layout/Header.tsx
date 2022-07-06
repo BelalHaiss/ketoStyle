@@ -23,6 +23,12 @@ const links = [
     href: '/nutritionist'
   }
 ];
+const adminLinks = [
+  {
+    label: 'dashboard',
+    href: '/admin'
+  }
+];
 export default function Header() {
   const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
@@ -59,7 +65,12 @@ export default function Header() {
             alt='Keto'
           />
         </Flex>
-        {user && <LinksButton justifyMd='center' links={links} scheme='gray' />}
+        {user && !user.role && (
+          <LinksButton justifyMd='center' links={links} scheme='gray' />
+        )}
+        {user?.role && (
+          <LinksButton justifyMd='center' links={adminLinks} scheme='gray' />
+        )}
         <Flex wrap='wrap' px='3' align='center' gap='2'>
           {!user ? (
             <>

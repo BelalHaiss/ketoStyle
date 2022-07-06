@@ -8,7 +8,6 @@ export default function AuthHOC(Component: JSXElementConstructor<any>) {
   return function HigherFunc(props: ReactPropTypes) {
     if (window !== undefined) {
       const user = useStore((state) => state.user);
-      const setUser = useStore((state) => state.setUser);
       const router = useRouter();
       if (!user) {
         router.push('/');

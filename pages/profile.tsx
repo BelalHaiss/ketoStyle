@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import AuthHOC from 'src/components/UserHOC';
 import { useStore } from 'src/store';
-import { USER } from 'src/store';
+import { USER } from 'src/ts/store.types';
 
 import Measurements from 'src/components/profile/Measurements';
 function Profile({ user }: { user: USER }) {

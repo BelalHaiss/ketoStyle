@@ -1,11 +1,14 @@
 import { Flex, Text, Button, Icon } from '@chakra-ui/react';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { BiBody, BiHealth } from 'react-icons/bi';
 import { AiFillFire, AiFillSafetyCertificate } from 'react-icons/ai';
 import { FaWeight } from 'react-icons/fa';
 import { MdOutlineFitnessCenter } from 'react-icons/md';
 import { GiMeal } from 'react-icons/gi';
 import { useStore } from 'src/store';
+import { fetchPrices } from 'src/utils/fetchData';
+import Loader from 'src/utils/Loader';
 const textIconsArr = [
   {
     text: 'وجبات متنوعة',
@@ -36,24 +39,25 @@ const textIconsArr = [
     icon: BiHealth
   }
 ];
-const cards = [
+
+const initCards = [
   {
+    _id: 'mealOne',
     title: 'باقة الشهر الواحد',
     feature: TEXT_WITH_ICONS(1),
-    price: '18',
-    oldPrice: '50'
+    price: 0
   },
   {
+    _id: 'mealThree',
+    price: 0,
     title: 'باقة 3 شهور',
-    feature: TEXT_WITH_ICONS(2),
-    price: '18',
-    oldPrice: '50'
+    feature: TEXT_WITH_ICONS(2)
   },
   {
+    _id: 'mealSix',
     title: 'باقة 6 شهور ',
-    feature: TEXT_WITH_ICONS(3),
-    price: '18',
-    oldPrice: '50'
+    price: 0,
+    feature: TEXT_WITH_ICONS(3)
   }
 ];
 
@@ -66,6 +70,25 @@ export default function Pricing({
   page
 }: any) {
   const user = useStore((state) => state.user);
+  const prices = useStore((state) => state.prices);
+  const setPrices = useStore((state) => state.setPrices);
+
+  const [cards, setCards] = useState(initCards);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    fetchPrices(setPrices);
+  }, []);
+  useEffect(() => {
+    if (prices.length) {
+      setCards(
+        cards.map((card) => {
+          const price = prices.find((price) => price._id === card._id);
+          return { ...card, price: price ? price.price : 0 };
+        })
+      );
+      setLoading(false);
+    }
+  }, [prices]);
   return (
     <Flex
       color='orange.800'
@@ -89,71 +112,73 @@ export default function Pricing({
         justify='space-around'
         w='100%'
       >
-        {cards.map((card, i) => (
-          <Flex
-            align='center'
-            border='2px'
-            bg='orange.200'
-            borderColor='orange.100'
-            flexDir='column'
-            h='550px'
-            w='300px'
-            borderRadius={'2xl'}
-            transition='all 0.2s ease-out'
-            transform={'scale(0.9)'}
-            _hover={{
-              transform: 'scale(1)',
-              transition: 'all 0.2s ease-out',
-              color: 'orange.50',
-              borderColor: 'orange.500',
-              bg: 'orange.500'
-            }}
-            sx={{
-              '&:hover': {
-                button: {
-                  bg: 'orange.50',
-                  color: 'orange.500'
-                }
-              }
-            }}
-            boxShadow='2xl'
-            gap='3'
-            key={i}
-          >
-            <Text my='2' fontWeight='bold' fontSize='2xl'>
-              {card.title}
-            </Text>
-            {card.feature}
-            {/* pricing and subscribe */}
+        {loading ? (
+          <Loader />
+        ) : (
+          cards.map((card, i) => (
             <Flex
-              w='100%'
-              flexDir={'column'}
-              mt='auto'
-              mb='5'
-              gap='3'
-              px='5'
               align='center'
+              border='2px'
+              bg='orange.200'
+              borderColor='orange.100'
+              flexDir='column'
+              h='550px'
+              w='300px'
+              borderRadius={'2xl'}
+              transition='all 0.2s ease-out'
+              transform={'scale(0.9)'}
+              cursor={'pointer'}
+              _hover={{
+                transform: 'scale(1)',
+                transition: 'all 0.2s ease-out',
+                color: 'orange.50',
+                borderColor: 'orange.500',
+                bg: 'orange.500'
+              }}
+              sx={{
+                '&:hover': {
+                  button: {
+                    bg: 'orange.50',
+                    color: 'orange.500'
+                  }
+                }
+              }}
+              boxShadow='2xl'
+              gap='3'
+              key={i}
             >
-              <hr style={{ width: '100%', border: '2px dashed white' }} />
-              {/* price */}
-              <Flex align='center' gap='5'>
-                <Flex align='center'>
-                  <Text fontSize='xl' fontWeight='bold' as='sup'>
-                    $
-                  </Text>
-                  <Text fontWeight='bold' fontSize='50px'>
-                    {card.price}
-                  </Text>
+              <Text my='2' fontWeight='bold' fontSize='2xl'>
+                {card.title}
+              </Text>
+              {card.feature}
+              {/* pricing and subscribe */}
+              <Flex
+                w='100%'
+                flexDir={'column'}
+                mt='auto'
+                mb='5'
+                gap='3'
+                px='5'
+                align='center'
+              >
+                <hr style={{ width: '100%', border: '2px dashed white' }} />
+                {/* price */}
+                <Flex align='center' gap='5'>
+                  <Flex align='center'>
+                    <Text fontSize='2xl' ml='1' fontWeight='bold' as='sup'>
+                      SAR
+                    </Text>
+                    <Text fontWeight='bold' fontSize='50px'>
+                      {card.price}
+                    </Text>
+                  </Flex>
                 </Flex>
-                <Text fontSize='xl' pt='7' color='GrayText' as='s'>
-                  {card.oldPrice} $
-                </Text>
+                {/* subs */}
+                <Button colorScheme={'orange'}>اشترك الان</Button>
               </Flex>
-              {/* subs */}
-              <Button colorScheme={'orange'}>اشترك الان</Button>
             </Flex>
-          </Flex>
-        ))}
+          ))
+        )}
       </Flex>
     </Flex>
   );

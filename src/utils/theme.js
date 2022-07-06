@@ -8,6 +8,19 @@ const breakpoints = {
 };
 const theme = extendTheme({
   breakpoints,
+  layerStyles: {
+    flexResponsive: {
+      flexDirection: { base: 'column', md: 'row' },
+      alignItems: 'center',
+
+      justifyContent: 'center',
+      p: 1
+    },
+    flexCenter: {
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  },
   fonts: {
     body: `'Vazir', sans-serif !important`,
     heading: `'Vazir', sans-serif !important`
