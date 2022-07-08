@@ -40,4 +40,30 @@ export interface AppState {
   setProfile: (profile: Profile) => void;
   prices: Price[];
   setPrices: (prices: Price[]) => void;
+  mealView: Meal;
+  setMealView: (meal: Meal) => void;
 }
+
+export type MealCategory =
+  | 'chicken'
+  | 'cow'
+  | 'sheep'
+  | 'camel'
+  | 'caridea'
+  | 'fish';
+
+export type MealTimes = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+export type Meal = {
+  name: string;
+  category: MealCategory;
+  time: MealTimes;
+  image: string;
+  duration: number;
+  carbs: number;
+  proteins: number;
+  fats: number;
+  calories: number;
+  components: string[];
+  steps: string;
+  isRemoved?: boolean;
+};

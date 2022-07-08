@@ -1,17 +1,6 @@
 import axios from 'axios';
 import Toast from './Toast';
 
-interface ERROR_RESPONSE_TYPE {
-  response: {
-    status: number;
-    data: {
-      message: string;
-      error: string;
-    };
-    message: string;
-  };
-}
-
 type Args = {
   url: string;
   method?: 'get' | 'post' | 'patch' | 'delete';

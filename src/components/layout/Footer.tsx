@@ -43,6 +43,7 @@ export default function Footer() {
         {user ? (
           <Button
             colorScheme={'green'}
+            size='sm'
             leftIcon={<RiCustomerService2Fill fontSize='25px' />}
           >
             تواصل مع خدمة العملاء
