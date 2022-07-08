@@ -1,12 +1,12 @@
 import { Flex, Text, Button, Image } from '@chakra-ui/react';
 
 import { useStore } from 'src/store';
-import { useRouter } from 'next/router';
 import MealSquare from 'src/components/meals/MealSquare';
+import { BackButton } from 'src/utils/BackButton';
 export default function MealView() {
-  const router = useRouter();
   const mealView = useStore((state) => state.mealView);
   const user = useStore((state) => state.user);
+
   return (
     <Flex
       flexDir='column'
@@ -16,18 +16,9 @@ export default function MealView() {
       p='2'
       gap='2'
     >
-      <Button
-        onClick={() => router.back()}
-        position={'absolute'}
-        width='150px'
-        top='30px'
-        left='30px'
-        colorScheme={'yellow'}
-        color='yellow.800'
-      >
-        رجوع
-      </Button>
+      <BackButton path={user?.role ? '/admin/meals' : 'meals'} />
       <Image
+        mt={{ base: '8', md: '1' }}
         src={mealView.image}
         rounded='3xl'
         alt='meal'

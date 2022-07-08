@@ -32,14 +32,13 @@ export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
       onMouseLeave={() => setFocus(false)}
       rounded={'xl'}
       color='orange.800'
-      transition='all 0.3s ease-in-out'
       w={width}
       h={height(width)}
       layerStyle={'flexCenter'}
     >
-      <Image src={meal.image} mb='2' alt='meal' rounded={'3xl'} w='80%' />
+      <Image src={meal.image} alt='meal' mb='3' rounded={'3xl'} w='80%' />
       {!focus ? (
-        <>
+        <Flex align='center' gap='2' h='50%' flexDir='column'>
           <Text fontSize={size === 'sm' ? 'lg' : 'xl'} fontWeight={'bold'}>
             {meal.name}
           </Text>
@@ -53,9 +52,9 @@ export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
           >
             {meal.calories} سعره
           </Badge>
-        </>
+        </Flex>
       ) : (
-        <>
+        <Flex h='50%' align='center' flexDir='column' gap='3'>
           {isAdmin && (
             <Button
               size={{ base: 'sm', md: 'md' }}
@@ -73,7 +72,7 @@ export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
           >
             تحضير الوجبة
           </Button>
-        </>
+        </Flex>
       )}
     </Flex>
   );
