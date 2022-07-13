@@ -3,23 +3,31 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Meal } from 'src/ts/store.types';
 import { useStore } from 'src/store';
+interface MealType extends Meal {
+  _id: string;
+  addedBy: string;
+}
 type Props = {
-  meal: Meal;
+  meal: MealType;
   width: string;
   size: 'sm' | 'lg';
-  isAdmin: boolean;
-  onEdit: (meal: Meal) => void;
 };
+
 function height(width: string) {
   const h = +width.replace('px', '') * 1.3;
   return `${h}px`;
 }
-export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
+export function MealBox({ meal, width, size }: Props) {
   const router = useRouter();
   const setMealView = useStore((state) => state.setMealView);
+  const user = useStore((state) => state.user);
   function onView() {
     setMealView(meal);
     router.replace('/mealView');
+  }
+  function onEdit() {
+    setMealView(meal);
+    router.replace('/admin/addMeal?edit=' + meal._id);
   }
   const [focus, setFocus] = useState(false);
   return (
@@ -36,7 +44,7 @@ export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
       h={height(width)}
       layerStyle={'flexCenter'}
     >
-      <Image src={meal.image} alt='meal' mb='3' rounded={'3xl'} w='80%' />
+      <Image src={meal.image.url} alt='meal' mb='3' rounded={'3xl'} w='120px' />
       {!focus ? (
         <Flex align='center' gap='2' h='50%' flexDir='column'>
           <Text fontSize={size === 'sm' ? 'lg' : 'xl'} fontWeight={'bold'}>
@@ -55,10 +63,10 @@ export function MealBox({ meal, width, size, isAdmin, onEdit }: Props) {
         </Flex>
       ) : (
         <Flex h='50%' align='center' flexDir='column' gap='3'>
-          {isAdmin && (
+          {(user?.role === 'admin' || user?._id === meal.addedBy) && (
             <Button
               size={{ base: 'sm', md: 'md' }}
-              onClick={() => onEdit(meal)}
+              onClick={onEdit}
               colorScheme='yellow'
             >
               تعديل

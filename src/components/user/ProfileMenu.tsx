@@ -25,12 +25,16 @@ export default function ProfileMenu({ user, setUser, setProfile }: Props) {
     fetcher({ url: '/users/logout', method: 'post' });
     router.replace('/');
   }
-  type Profile = 'measurements' | 'payments';
+  type Profile = 'measurements' | 'payments' | 'account';
   type ListItem = {
     label: string;
     value: Profile;
   };
   const list: ListItem[] = [
+    {
+      label: 'حسابي',
+      value: 'account'
+    },
     {
       label: 'قياساتي',
       value: 'measurements'
@@ -40,7 +44,7 @@ export default function ProfileMenu({ user, setUser, setProfile }: Props) {
       value: 'payments'
     }
   ];
-  function handleRoute(value: 'measurements' | 'payments') {
+  function handleRoute(value: Profile) {
     setProfile(value);
     router.replace(`/profile`);
   }
@@ -56,6 +60,11 @@ export default function ProfileMenu({ user, setUser, setProfile }: Props) {
               {item.label}
             </MenuItem>
           ))}
+        {user.role && (
+          <MenuItem onClick={() => handleRoute(list[0].value)}>
+            {list[0].label}
+          </MenuItem>
+        )}
         <MenuDivider />
         <MenuItem onClick={logout}>تسجيل الخروج</MenuItem>
       </MenuList>

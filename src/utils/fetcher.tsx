@@ -3,7 +3,7 @@ import Toast from './Toast';
 
 type Args = {
   url: string;
-  method?: 'get' | 'post' | 'patch' | 'delete';
+  method?: 'get' | 'post' | 'patch' | 'delete' | string;
   data?: any;
   successToast?: string;
   errorToast?: string; //mesage when error
@@ -51,7 +51,8 @@ export const fetcher = async ({
     return res.data;
   } catch (e: any) {
     if (e.message === 'Network Error') {
-      return Toast('حدث خطا برجاء المحاولة لاحقا', 'error');
+      Toast('حدث خطا برجاء المحاولة لاحقا', 'error');
+      return;
     }
     if (noErrorToast) return null;
     if (e.message === 'canceled') return null;

@@ -18,15 +18,37 @@ import { Measure } from 'src/ts/register.types';
 import ToastUtil from 'src/utils/Toast';
 import { allMeasurements } from 'src/components/signup/Controller';
 import { fetcher } from 'src/utils/fetcher';
+import RenderHoc from 'src/components/RenderHoc';
+
 const submitButtonIntial = {
   submitActive: true,
   submitLoading: false,
   loadingText: 'جاري تحديث البيانات'
 };
-export default function Measurements({ user }: { user: USER }) {
+type Props = {
+  user: USER;
+  shouldRender: boolean;
+  isAdminUpdate: boolean;
+};
+function Measurements({
+  user,
+  isAdminUpdate,
+
+  shouldRender //  if true  normaluser is login otherwise an admin and we cant load this component
+}: Props) {
   const setUser = useStore((state) => state.setUser);
   const [errors, setErrors] = useState<any>(user.measurements);
-
+  const [measurements, setMeasurements] = useState<Measure | any>(
+    user.measurements
+  );
+  const [physicalActivity, setPhysicalActivity] = useState(
+    user.physicalActivity
+  );
+  useEffect(() => {
+    setMeasurements(user.measurements);
+    setErrors(user.measurements);
+    setPhysicalActivity(user.physicalActivity);
+  }, [user]);
   const [weightError, setWeightError] = useState('');
   const [isUpdate, setIsUpdate] = useState(false);
   const [showFormActions, setShowFormActions] = useState('none');
@@ -50,8 +72,7 @@ export default function Measurements({ user }: { user: USER }) {
   async function onSubmit() {
     setSubmitButton((old) => ({ ...old, submitLoading: true }));
 
-    const updatedUser = await fetcher({
-      url: '/users/' + user._id,
+    const payload = {
       method: 'patch',
       data: {
         measurements,
@@ -59,20 +80,31 @@ export default function Measurements({ user }: { user: USER }) {
       },
       successToast: 'تم تحديث البيانات بنجاح',
       errorToast: 'حدث خطا برجاء المحاولة لاحقا'
+    };
+    if (isAdminUpdate) {
+      fetcher({
+        url: '/admin//measure/' + user._id + '?path=admin',
+        ...payload
+      });
+      pauseSubmitButton();
+      return;
+    }
+
+    const updatedUser = await fetcher({
+      url: '/users/measure/' + user._id,
+      ...payload
     });
     if (updatedUser) {
       setUser(updatedUser);
     }
+    pauseSubmitButton();
+  }
+  function pauseSubmitButton() {
     setIsUpdate(false);
     setShowFormActions('none');
     setSubmitButton(submitButtonIntial);
   }
-  const [measurements, setMeasurements] = useState<Measure | any>(
-    user.measurements
-  );
-  const [physicalActivity, setPhysicalActivity] = useState(
-    user.physicalActivity
-  );
+
   function handleActivityChange(e: ChangeEvent<HTMLSelectElement>) {
     if (e.target.value) {
       setIsUpdate(true);
@@ -153,32 +185,35 @@ export default function Measurements({ user }: { user: USER }) {
       gap='3'
       flexDir='column'
     >
-      <FormControl>
-        <FormLabel fontSize='xl' htmlFor='activity'>
-          {user.quest.label}
-        </FormLabel>
+      {!isAdminUpdate && (
+        <FormControl>
+          <FormLabel fontSize='xl' htmlFor='activity'>
+            {user.quest.label}
+          </FormLabel>
 
-        <Select
-          id='activity'
-          bg='orange.200'
-          color='gray.800'
-          value={physicalActivity.answer}
-          onChange={handleActivityChange}
-        >
-          {user.quest.answers.map(({ answer, _id }) => (
-            <option
-              style={{
-                backgroundColor:
-                  physicalActivity.answer === _id ? 'DodgerBlue' : ''
-              }}
-              key={_id}
-              value={_id}
-            >
-              {answer}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
+          <Select
+            id='activity'
+            bg='orange.200'
+            color='gray.800'
+            value={physicalActivity.answer}
+            onChange={handleActivityChange}
+          >
+            {user.quest.answers.map(({ answer, _id }) => (
+              <option
+                style={{
+                  backgroundColor:
+                    physicalActivity.answer === _id ? 'DodgerBlue' : ''
+                }}
+                key={_id}
+                value={_id}
+              >
+                {answer}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+
       {allMeasurements.map((measure, i) => (
         <FormControl
           isInvalid={errors[measure.name] === '' ? true : false}
@@ -218,3 +253,5 @@ export default function Measurements({ user }: { user: USER }) {
     </Flex>
   );
 }
+
+export default RenderHoc(Measurements);

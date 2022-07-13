@@ -25,7 +25,11 @@ export default function CategoryTabs({ data }: Props) {
           {data.categories.map((category, index) => (
             <Tab
               _hover={{
-                bg: 'orange.100'
+                bg: 'orange.300'
+              }}
+              _selected={{
+                bg: 'orange.400',
+                color: 'orange.800'
               }}
               key={index}
               onClick={() =>

@@ -39,7 +39,7 @@ export default function WorkoutAccordin({ workout }: Props) {
   async function onSubmit() {
     setSubmitButton({ ...submitButton, submitLoading: true });
     await fetcher({
-      url: `/workout/${state._id}`,
+      url: `/workout/${state._id}?path=workouts`,
       method: 'patch',
       successToast: 'تم التحديث بنجاح',
       data: state
@@ -91,7 +91,7 @@ export default function WorkoutAccordin({ workout }: Props) {
                 <TabPanel key={i}>
                   <Flex gap='2' layerStyle={'flexResponsive'}>
                     <CustomFormControl
-                      type='string'
+                      type='text'
                       value={video.url}
                       label={'رابط الفيديو'}
                       width='700px'

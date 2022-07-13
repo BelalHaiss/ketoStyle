@@ -4,6 +4,8 @@ import CategoryTabs from 'src/components/meals/CategoryTabs';
 import { Category, Time, Count } from 'src/ts/meal.types';
 import { fetchMealsCount, fetchAllMeals } from 'src/utils/fetchData';
 import { MealBox } from 'src/components/meals/MealBox';
+import AdminHoc from 'src/components/AdminHOC';
+import { useRouter } from 'next/router';
 const allCategories: Category[] = [
   {
     label: 'الدجاج',
@@ -65,7 +67,7 @@ const countsInitialState = () => {
   return counts;
 };
 
-export default function Meals() {
+function Meals() {
   const [query, setQuery] = useState({
     category: allCategories[0].value,
     time: allTimes[0].value
@@ -74,14 +76,11 @@ export default function Meals() {
   const [meals, setMeals] = useState([]);
   useEffect(() => {
     fetchMealsCount(setCounts);
-  }, []);
-  useEffect(() => {
+
     fetchAllMeals(query, setMeals);
   }, [query]);
 
-  function onEdit() {
-    alert('edit');
-  }
+  const router = useRouter();
   return (
     <Flex layerStyle={'flexCenter'} gap='3' flexDir='column' p='1'>
       <Flex justify='center' w='100%' align='center'>
@@ -98,6 +97,7 @@ export default function Meals() {
           colorScheme={'green'}
           position={'absolute'}
           left='20px'
+          onClick={() => router.replace('/admin/addMeal')}
         >
           اضف وجبة جديدة
         </Button>
@@ -114,17 +114,18 @@ export default function Meals() {
       />
 
       <Flex gap='2' my='3' mx='auto' layerStyle={'flexCenter'} wrap='wrap'>
-        {meals.map((meal, i) => (
-          <MealBox
-            key={i}
-            width='190px'
-            size='lg'
-            onEdit={onEdit}
-            isAdmin={true}
-            meal={meal}
-          />
-        ))}
+        {meals.length ? (
+          meals.map((meal, i) => (
+            <MealBox key={i} width='190px' size='lg' meal={meal} />
+          ))
+        ) : (
+          <Text my='3' fontSize='3xl' color='orange.800' fontWeight={'bod'}>
+            لا يوجد وجبات !!!!!!!!!
+          </Text>
+        )}
       </Flex>
     </Flex>
   );
 }
+
+export default AdminHoc(Meals, 'meals');

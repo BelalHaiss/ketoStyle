@@ -4,15 +4,17 @@ import { fetcher } from 'src/utils/fetcher';
 import { JSXElementConstructor } from 'react';
 import Loader from 'src/utils/Loader';
 
-export default function AdminHoc(Component: JSXElementConstructor<any>) {
+export default function AdminHoc(
+  Component: JSXElementConstructor<any>,
+  path: string
+) {
   const AuthenticatedComponent = () => {
     const router = useRouter();
     const [data, setData] = useState(null);
     const checkAdmin = async () => {
       const response = await fetcher({
-        url: '/admin/validate'
+        url: '/admin/validate?path=' + path
       });
-      console.log(response, 'admonhoc');
       if (!response) {
         router.push('/');
       } else {

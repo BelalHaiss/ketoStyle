@@ -41,4 +41,4 @@ function Workouts() {
   );
 }
 
-export default AdminHoc(Workouts);
+export default AdminHoc(Workouts, 'workouts');

@@ -1,4 +1,4 @@
-import { User } from './register.types';
+import { User, Profile as UserProfile } from './register.types';
 export interface USER extends User {
   _id: string;
   quest: {
@@ -7,8 +7,9 @@ export interface USER extends User {
     _id: string;
     answers: Answer[];
   };
-  role: undefined | 'admin' | 'moderator';
+  role: Role;
 }
+export type Role = undefined | 'admin' | 'meals' | 'subscriptions' | 'workouts';
 
 type Video = {
   duration: number;
@@ -32,7 +33,7 @@ export type Price = {
   duration: number;
 };
 
-export type Profile = 'measurements' | 'payments';
+export type Profile = 'measurements' | 'payments' | 'account';
 export interface AppState {
   user: USER | null;
   setUser: (user: USER | null) => void;
@@ -40,8 +41,8 @@ export interface AppState {
   setProfile: (profile: Profile) => void;
   prices: Price[];
   setPrices: (prices: Price[]) => void;
-  mealView: Meal;
-  setMealView: (meal: Meal) => void;
+  mealView: Meal | null;
+  setMealView: (meal: Meal | null) => void;
 }
 
 export type MealCategory =
@@ -55,9 +56,12 @@ export type MealCategory =
 export type MealTimes = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 export type Meal = {
   name: string;
-  category: MealCategory;
-  time: MealTimes;
-  image: string;
+  category: Value_Label;
+  time: Value_Label;
+  image: {
+    url: string;
+    public_id: string;
+  };
   duration: number;
   carbs: number;
   proteins: number;
@@ -65,5 +69,25 @@ export type Meal = {
   calories: number;
   components: string[];
   steps: string;
-  isRemoved?: boolean;
+  addedBy: string;
+  _id: string;
+};
+
+export type Value_Label = {
+  value: string;
+  label: string;
+};
+
+export type MealInfo = {
+  name: keyof Meal;
+  value: string | number | string[];
+  type: 'text' | 'number' | 'radio' | 'select' | 'array' | 'textarea';
+  label: string;
+  options?: Value_Label[];
+};
+
+export type AdminUser = {
+  _id: string;
+  role: Role;
+  profile: UserProfile;
 };

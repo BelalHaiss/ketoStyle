@@ -27,7 +27,7 @@ export const initializeStore = (preloadedState: AppState) =>
         setUser: (user: USER | null) => set({ user }),
         setProfile: (profile: Profile) => set({ profile }),
         setPrices: (prices: Price[]) => set({ prices }),
-        setMealView: (meal: Meal) => set({ mealView: meal })
+        setMealView: (meal: Meal | null) => set({ mealView: meal })
       }))
     )
   );
