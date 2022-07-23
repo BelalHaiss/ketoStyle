@@ -7,6 +7,8 @@ const breakpoints = {
   '2xl': '1536px'
 };
 const theme = extendTheme({
+  direction: 'rtl',
+
   breakpoints,
   layerStyles: {
     flexResponsive: {

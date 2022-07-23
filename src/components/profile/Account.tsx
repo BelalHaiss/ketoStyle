@@ -107,7 +107,7 @@ export function Account({ user, isAdminUpdate = false }: Props) {
     if (updatedUser) {
       setUser(updatedUser);
     }
-    resetSubmitButton;
+    resetSubmitButton();
   }
 
   function resetSubmitButton() {

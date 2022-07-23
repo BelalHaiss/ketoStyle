@@ -9,3 +9,40 @@
     order: 1;
   }
 } */
+
+/* .nextAnimation {
+  animation: 3s ease-in 1s infinite reverse both running slidein;
+} */
+
+.prevAnimation {
+  animation-name: prev;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.2s;
+}
+
+@keyframes next {
+  0% {
+    transform: translateX(+700px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes prev {
+  0% {
+    transform: translateX(-700px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* The element to apply the animation to */
+.nextAnimation {
+  animation-name: next;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.2s;
+}

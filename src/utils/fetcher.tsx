@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Toast from './Toast';
 
-type Args = {
+export type Args = {
   url: string;
   method?: 'get' | 'post' | 'patch' | 'delete' | string;
   data?: any;
@@ -51,7 +51,7 @@ export const fetcher = async ({
     return res.data;
   } catch (e: any) {
     if (e.message === 'Network Error') {
-      Toast('حدث خطا برجاء المحاولة لاحقا', 'error');
+      Toast('حدث خطا بالاتصال في الشبكه', 'error');
       return;
     }
     if (noErrorToast) return null;

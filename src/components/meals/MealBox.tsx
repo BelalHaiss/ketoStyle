@@ -9,15 +9,16 @@ interface MealType extends Meal {
 }
 type Props = {
   meal: MealType;
-  width: string;
-  size: 'sm' | 'lg';
+  width?: string;
+  size?: 'sm' | 'lg';
+  className?: string;
 };
 
-function height(width: string) {
-  const h = +width.replace('px', '') * 1.3;
-  return `${h}px`;
-}
-export function MealBox({ meal, width, size }: Props) {
+// function height(width: string) {
+//   const h = +width.replace('px', '') * 1.3;
+//   return `${h}px`;
+// }
+export function MealBox({ meal, width, size, className }: Props) {
   const router = useRouter();
   const setMealView = useStore((state) => state.setMealView);
   const user = useStore((state) => state.user);
@@ -34,21 +35,21 @@ export function MealBox({ meal, width, size }: Props) {
     <Flex
       flexDir={'column'}
       p='1'
-      gap='1'
       bg={'orange.100'}
+      className={className ?? ''}
       onMouseEnter={() => setFocus(true)}
       onMouseLeave={() => setFocus(false)}
       rounded={'xl'}
       color='orange.800'
-      w={width}
-      h={height(width)}
+      w={'190px'}
+      h={'250px'}
       layerStyle={'flexCenter'}
     >
-      <Image src={meal.image.url} alt='meal' mb='3' rounded={'3xl'} w='120px' />
+      <Image src={meal.image.url} alt='meal' mb='3' rounded={'3xl'} w='140px' />
       {!focus ? (
-        <Flex align='center' gap='2' h='50%' flexDir='column'>
-          <Text fontSize={size === 'sm' ? 'lg' : 'xl'} fontWeight={'bold'}>
-            {meal.name}
+        <Flex align='center' gap='1' h='35%' flexDir='column'>
+          <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight={'bold'}>
+            {meal.name.slice(0, 19)}
           </Text>
           <Text> {meal.duration} دقائق</Text>
           <Badge
@@ -56,13 +57,13 @@ export function MealBox({ meal, width, size }: Props) {
             variant='subtle'
             fontSize='sm'
             rounded={'lg'}
-            p='1'
+            px='3'
           >
             {meal.calories} سعره
           </Badge>
         </Flex>
       ) : (
-        <Flex h='50%' align='center' flexDir='column' gap='3'>
+        <Flex gap='1' h='35%' align='center' flexDir='column'>
           {(user?.role === 'admin' || user?._id === meal.addedBy) && (
             <Button
               size={{ base: 'sm', md: 'md' }}

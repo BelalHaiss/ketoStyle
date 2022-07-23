@@ -32,7 +32,6 @@ export default function PasswordReset() {
         router.replace('/');
         toast = 'true';
       }
-      console.log(id, token, elapsedMins);
       toast === 'true' && ToastUtil('هذا الرابط غير صالح للاستخدام');
     }
   }, [router]);

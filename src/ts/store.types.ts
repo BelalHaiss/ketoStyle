@@ -1,14 +1,14 @@
 import { User, Profile as UserProfile } from './register.types';
 export interface USER extends User {
   _id: string;
-  quest: {
-    label: string;
-    name: string;
-    _id: string;
-    answers: Answer[];
-  };
+
   role: Role;
+  water: Water;
 }
+export type Water = {
+  date: Date;
+  cups: number;
+};
 export type Role = undefined | 'admin' | 'meals' | 'subscriptions' | 'workouts';
 
 type Video = {

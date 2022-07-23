@@ -30,6 +30,24 @@ type Props = {
   shouldRender: boolean;
   isAdminUpdate: boolean;
 };
+const physicalActivities = [
+  {
+    label: 'لا يوجد نشاط',
+    value: 'no'
+  },
+  {
+    label: ' نشاط خفيف',
+    value: 'normal'
+  },
+  {
+    label: '1-2 ساعة يوميا',
+    value: 'fit'
+  },
+  {
+    label: 'اكثر من 2 ساعات يوميا',
+    value: 'athlete'
+  }
+];
 function Measurements({
   user,
   isAdminUpdate,
@@ -188,7 +206,7 @@ function Measurements({
       {!isAdminUpdate && (
         <FormControl>
           <FormLabel fontSize='xl' htmlFor='activity'>
-            {user.quest.label}
+            مدى نشاطك البدني اليومي
           </FormLabel>
 
           <Select
@@ -198,16 +216,16 @@ function Measurements({
             value={physicalActivity.answer}
             onChange={handleActivityChange}
           >
-            {user.quest.answers.map(({ answer, _id }) => (
+            {physicalActivities.map(({ label, value }) => (
               <option
                 style={{
                   backgroundColor:
-                    physicalActivity.answer === _id ? 'DodgerBlue' : ''
+                    physicalActivity.answer === value ? 'DodgerBlue' : ''
                 }}
-                key={_id}
-                value={_id}
+                key={value}
+                value={value}
               >
-                {answer}
+                {label}
               </option>
             ))}
           </Select>

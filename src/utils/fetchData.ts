@@ -1,6 +1,8 @@
 import { fetcher } from './fetcher';
-import { MealInfo, Meal } from 'src/ts/store.types';
 import ToastUtil from './Toast';
+import { MealInfo, Meal } from 'src/ts/store.types';
+
+const getDate = () => new Date().toLocaleDateString('en');
 export async function fetchPrices(setPrices: any) {
   const prices = await fetcher({ url: '/prices', noErrorToast: true });
   setPrices(prices);
@@ -162,4 +164,61 @@ export async function SearchUserByNameOrPhone(value: string) {
     url: '/admin/find/' + value + '?path=admin'
   });
   return res;
+}
+
+export async function AddWater(data: any, user: any, setState: any) {
+  const res = await fetcher({
+    url: '/users/water/' + user._id,
+    method: 'post',
+    data,
+    successToast: 'تم الاضافة بنجاح',
+    errorToast: 'حدث خطأ ما'
+  });
+
+  if (res) {
+    setState(res);
+  }
+}
+
+export async function fetchUser(userId: string, setState: any) {
+  const res = await fetcher({
+    url: '/users/user/' + userId,
+    method: 'get'
+  });
+  if (res) {
+    setState(res);
+  }
+}
+
+export async function getWater(
+  userId: string,
+  setState: any,
+  setSavedData: any,
+  mount: any
+) {
+  const res = await fetcher({
+    url: `/users/water/${userId}?date=${getDate()}`,
+    method: 'get'
+  });
+
+  if (res && mount.isMount) {
+    setState(res);
+    setSavedData(res);
+  }
+}
+export async function getStatus(
+  userId: string,
+  setState: any,
+  mount: any,
+  setSavedStatus: any
+) {
+  const res = await fetcher({
+    url: `/users/status/${userId}?date=${getDate()}`,
+    method: 'get'
+  });
+
+  if (res && mount.current) {
+    setState(res);
+    setSavedStatus(res);
+  }
 }
