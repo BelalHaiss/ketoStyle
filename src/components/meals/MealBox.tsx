@@ -1,7 +1,7 @@
 import { Flex, Text, Badge, Image, Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Meal } from 'src/ts/store.types';
+import { Meal, MealTimes } from 'src/ts/store.types';
 import { useStore } from 'src/store';
 interface MealType extends Meal {
   _id: string;
@@ -12,19 +12,28 @@ type Props = {
   width?: string;
   size?: 'sm' | 'lg';
   className?: string;
+  time?: MealTimes; // dont check if the item is added to user meals
 };
 
 // function height(width: string) {
 //   const h = +width.replace('px', '') * 1.3;
 //   return `${h}px`;
 // }
-export function MealBox({ meal, width, size, className }: Props) {
+export function MealBox({ meal, width, size, className, time }: Props) {
   const router = useRouter();
   const setMealView = useStore((state) => state.setMealView);
   const user = useStore((state) => state.user);
   function onView() {
     setMealView(meal);
-    router.replace('/mealView');
+    router.replace(
+      {
+        pathname: '/mealView',
+        query: {
+          time: time ? time : ''
+        }
+      },
+      '/mealView'
+    );
   }
   function onEdit() {
     setMealView(meal);
@@ -45,7 +54,17 @@ export function MealBox({ meal, width, size, className }: Props) {
       h={'250px'}
       layerStyle={'flexCenter'}
     >
-      <Image src={meal.image.url} alt='meal' mb='3' rounded={'3xl'} w='140px' />
+      <Image
+        src={
+          meal.image.url
+            ? meal.image.url
+            : `https://res.cloudinary.com/ketoar/image/upload/v1/${meal.image}`
+        }
+        alt='meal'
+        mb='3'
+        rounded={'3xl'}
+        w='140px'
+      />
       {!focus ? (
         <Flex align='center' gap='1' h='35%' flexDir='column'>
           <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight={'bold'}>

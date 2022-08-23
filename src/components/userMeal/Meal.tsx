@@ -2,8 +2,12 @@ import { Flex, Text } from '@chakra-ui/react';
 import { MealSwiper } from './MealSwiper';
 export function UserMeal() {
   return (
-    <Flex py='1' bg='orange.200' align='center' flexDir={'column'}>
-      <Text fontSize={{ base: 'lg', md: '3xl' }} fontWeight='bold'>
+    <Flex py='1' bg='orange.100' align='center' flexDir={'column'}>
+      <Text
+        color='orange.800'
+        fontSize={{ base: 'lg', md: '3xl' }}
+        fontWeight='bold'
+      >
         قم باختيار الوجبة اللتي ستاكلها
       </Text>
 

@@ -30,22 +30,38 @@ type Props = {
   shouldRender: boolean;
   isAdminUpdate: boolean;
 };
-const physicalActivities = [
+const physicalActivities: {
+  label: string;
+  value: USER['physicalActivity'];
+}[] = [
   {
-    label: 'لا يوجد نشاط',
-    value: 'no'
+    label: '  لا يوجد نشاط',
+    value: 'sedentary'
   },
   {
-    label: ' نشاط خفيف',
-    value: 'normal'
+    label: '  نشاط خفيف (ا - 3 يوم/ اسبوع)',
+    value: 'light'
   },
   {
-    label: '1-2 ساعة يوميا',
-    value: 'fit'
+    label: '  نشاط متوسط (3 - 5 يوم/ اسبوع)',
+    value: 'moderate'
   },
   {
-    label: 'اكثر من 2 ساعات يوميا',
-    value: 'athlete'
+    label: '  نشيط (6 - 7 يوم/ اسبوع)',
+    value: 'active'
+  }
+];
+const willings: {
+  label: string;
+  value: USER['willing'];
+}[] = [
+  {
+    label: 'اريد انقاص وزني',
+    value: 'min'
+  },
+  {
+    label: 'اريد إنقاص اكبر وزن ممكن',
+    value: 'max'
   }
 ];
 function Measurements({
@@ -62,10 +78,12 @@ function Measurements({
   const [physicalActivity, setPhysicalActivity] = useState(
     user.physicalActivity
   );
+  const [willing, setWilling] = useState(user.willing);
   useEffect(() => {
     setMeasurements(user.measurements);
     setErrors(user.measurements);
     setPhysicalActivity(user.physicalActivity);
+    setWilling(user.willing);
   }, [user]);
   const [weightError, setWeightError] = useState('');
   const [isUpdate, setIsUpdate] = useState(false);
@@ -94,7 +112,8 @@ function Measurements({
       method: 'patch',
       data: {
         measurements,
-        physicalActivity
+        physicalActivity,
+        willing
       },
       successToast: 'تم تحديث البيانات بنجاح',
       errorToast: 'حدث خطا برجاء المحاولة لاحقا'
@@ -127,7 +146,14 @@ function Measurements({
     if (e.target.value) {
       setIsUpdate(true);
 
-      setPhysicalActivity({ ...physicalActivity, answer: e.target.value });
+      setPhysicalActivity(e.target.value as USER['physicalActivity']);
+    }
+  }
+  function handleWillingChange(e: ChangeEvent<HTMLSelectElement>) {
+    if (e.target.value) {
+      setIsUpdate(true);
+
+      setWilling(e.target.value as USER['willing']);
     }
   }
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -204,32 +230,59 @@ function Measurements({
       flexDir='column'
     >
       {!isAdminUpdate && (
-        <FormControl>
-          <FormLabel fontSize='xl' htmlFor='activity'>
-            مدى نشاطك البدني اليومي
-          </FormLabel>
+        <>
+          <FormControl>
+            <FormLabel fontSize='xl' htmlFor='activity'>
+              مدى نشاطك البدني اليومي
+            </FormLabel>
 
-          <Select
-            id='activity'
-            bg='orange.200'
-            color='gray.800'
-            value={physicalActivity.answer}
-            onChange={handleActivityChange}
-          >
-            {physicalActivities.map(({ label, value }) => (
-              <option
-                style={{
-                  backgroundColor:
-                    physicalActivity.answer === value ? 'DodgerBlue' : ''
-                }}
-                key={value}
-                value={value}
-              >
-                {label}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+            <Select
+              id='activity'
+              bg='orange.200'
+              color='gray.800'
+              value={physicalActivity}
+              onChange={handleActivityChange}
+            >
+              {physicalActivities.map(({ label, value }) => (
+                <option
+                  style={{
+                    backgroundColor:
+                      physicalActivity === value ? 'DodgerBlue' : ''
+                  }}
+                  key={value}
+                  value={value}
+                >
+                  {label}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel fontSize='xl' htmlFor='activity'>
+              مدى إستعدادك لأنقاص الوزن
+            </FormLabel>
+
+            <Select
+              id='activity'
+              bg='orange.200'
+              color='gray.800'
+              value={willing}
+              onChange={handleWillingChange}
+            >
+              {willings.map(({ label, value }) => (
+                <option
+                  style={{
+                    backgroundColor: willing === value ? 'DodgerBlue' : ''
+                  }}
+                  key={value}
+                  value={value}
+                >
+                  {label}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </>
       )}
 
       {allMeasurements.map((measure, i) => (
@@ -241,6 +294,7 @@ function Measurements({
             <InputLeftAddon
               w='160px'
               bg='orange.500'
+              color='white'
               children={measure.value}
             />
             <Input

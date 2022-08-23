@@ -23,8 +23,13 @@ export function Layout({ children }: any) {
   }, []);
   useEffect(() => {
     if (user && !fetchUser && !user.role) {
-      fetchUserData(user._id, setUser);
-      setUserFetched(true);
+      console.log(user.loginTime);
+      const justLogin = Date.now() - user.loginTime < 3000;
+      console.log(justLogin);
+      if (!justLogin) {
+        fetchUserData(user._id, setUser);
+        setUserFetched(true);
+      }
     }
   }, [user]);
   if (!isHydradated) {

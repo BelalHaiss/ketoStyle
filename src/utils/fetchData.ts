@@ -183,10 +183,16 @@ export async function AddWater(data: any, user: any, setState: any) {
 export async function fetchUser(userId: string, setState: any) {
   const res = await fetcher({
     url: '/users/user/' + userId,
-    method: 'get'
+    method: 'get',
+    noErrorToast: true
   });
   if (res) {
     setState(res);
+  } else {
+    document.cookie = 'keto=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie =
+      'keto.sig=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; ';
+    setState(null);
   }
 }
 

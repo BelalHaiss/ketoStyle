@@ -1,7 +1,7 @@
 import { User, Profile as UserProfile } from './register.types';
 export interface USER extends User {
   _id: string;
-
+  loginTime: number; // millisecond
   role: Role;
   water: Water;
 }
@@ -57,7 +57,7 @@ export type MealTimes = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 export type Meal = {
   name: string;
   category: Value_Label;
-  time: Value_Label;
+  time: Value_Label | MealTimes;
   image: {
     url: string;
     public_id: string;

@@ -40,6 +40,7 @@ export default function LoginForm({
     });
     setLoading(false);
     if (user) {
+      user.loginTime = Date.now();
       setUser(user);
       onClose();
       Toast(`مرحبا ${user.profile.name}`, 'success');

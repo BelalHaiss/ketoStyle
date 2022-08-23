@@ -124,6 +124,7 @@ export function MealSwiper({ link, label }: Props) {
         borderRadius={'xl'}
         align='center'
         py='10px'
+        h='270px'
         w='100%'
       >
         <Icon

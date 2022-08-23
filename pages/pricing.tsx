@@ -79,7 +79,7 @@ export default function Pricing({
     fetchPrices(setPrices);
   }, []);
   useEffect(() => {
-    if (prices.length) {
+    if (prices?.length) {
       setCards(
         cards.map((card) => {
           const price = prices.find((price) => price._id === card._id);

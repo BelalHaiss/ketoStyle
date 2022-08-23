@@ -13,7 +13,7 @@ export function Swiper({ loading, docsCount, data, action }: Props) {
     return (
       <Flex w='100%' align={'center'} justify='space-around' gap='2'>
         {new Array(docsCount).fill(0).map((_, index) => (
-          <Skeleton key={index} w='190px' h='250px' />
+          <Skeleton borderRadius='xl' key={index} w='190px' h='250px' />
         ))}
       </Flex>
     );

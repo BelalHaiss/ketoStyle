@@ -1,7 +1,8 @@
+export type Willing = 'min' | 'max';
 export type User = {
   categories: [] | Category[];
   physicalActivity: Physical;
-  willing?: number;
+  willing: Willing;
   measurements: Measure;
   profile: Profile;
 };
@@ -27,7 +28,4 @@ export type Category = {
   value: Value;
   icon: React.ReactElement;
 };
-export type Physical = {
-  question: string;
-  answer: string;
-};
+export type Physical = 'sedentary' | 'light' | 'moderate' | 'active';

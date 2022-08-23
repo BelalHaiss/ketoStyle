@@ -102,6 +102,7 @@ export default function ChangePassword({ id = '', isAdminUpdate = false }) {
             <InputGroup>
               <InputLeftAddon
                 w='160px'
+                color='white'
                 bg='orange.500'
                 children={isAdminUpdate ? 'كلمة السر' : pass.label}
               />

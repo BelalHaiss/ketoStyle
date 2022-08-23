@@ -89,11 +89,10 @@ export function Controller({
 }: Props) {
   const [user, setUser] = useState<User>({
     categories: [],
-    physicalActivity: {
-      question: 'physicalActivity',
-      answer: ''
-    },
-    willing: -1,
+    // @ts-ignore
+    physicalActivity: '',
+    // @ts-ignore
+    willing: '',
     measurements: {
       sex: 'male',
       height: 0,
@@ -328,22 +327,25 @@ function Page3({
   );
 }
 
-const physicalActivities = [
+const physicalActivities: {
+  label: string;
+  value: User['physicalActivity'];
+}[] = [
   {
-    label: 'لا يوجد نشاط',
-    value: 'no'
+    label: '  لا يوجد نشاط',
+    value: 'sedentary'
   },
   {
-    label: ' نشاط خفيف',
-    value: 'normal'
+    label: '  نشاط خفيف (ا - 3 يوم/ اسبوع)',
+    value: 'light'
   },
   {
-    label: '1-2 ساعة يوميا',
-    value: 'fit'
+    label: '  نشاط متوسط (3 - 5 يوم/ اسبوع)',
+    value: 'moderate'
   },
   {
-    label: 'اكثر من 2 ساعات يوميا',
-    value: 'athlete'
+    label: '  نشيط (6 - 7 يوم/ اسبوع)',
+    value: 'active'
   }
 ];
 function Page4({
@@ -354,9 +356,9 @@ function Page4({
   setUser,
   user
 }: Props) {
-  const [physicalActivity, setPhysicalActivity] = useState<Physical>(
-    user.physicalActivity
-  );
+  const [physicalActivity, setPhysicalActivity] = useState<
+    User['physicalActivity']
+  >(user.physicalActivity);
   useLayoutEffect(() => {
     setHeader('النشاط البدني');
     if (physicalActivity) {
@@ -364,12 +366,13 @@ function Page4({
     }
   }, []);
 
-  function handleCategory(value: string) {
+  function handleCategory(value: User['physicalActivity']) {
     setUser((user: any) => ({
       ...user,
-      physicalActivity: { ...physicalActivity, answer: value }
+      physicalActivity: value
     }));
-    setPhysicalActivity((old) => ({ ...old, answer: value }));
+    setPhysicalActivity(value);
+    // @ts-ignore
     value === ''
       ? setButtonStatus('next', 'disabled')
       : setButtonStatus('next', 'active');
@@ -389,16 +392,12 @@ function Page4({
       >
         {physicalActivities.map((activity) => (
           <Button
-            w='150px'
+            w='250px'
             onClick={() => handleCategory(activity.value)}
             colorScheme='orange'
-            variant={
-              physicalActivity.answer !== activity.value ? 'ghost' : 'solid'
-            }
+            variant={physicalActivity !== activity.value ? 'ghost' : 'solid'}
             background={
-              physicalActivity.answer !== activity.value
-                ? 'orange.50'
-                : 'orange.500'
+              physicalActivity !== activity.value ? 'orange.50' : 'orange.500'
             }
             key={activity.value}
           >
@@ -410,22 +409,17 @@ function Page4({
   );
 }
 
-const willings = [
-  {
-    label: 'فقط اريد التجربة',
-    value: 0
-  },
-  {
-    label: 'اريد التجربة ونقص الوزن',
-    value: 1
-  },
+const willings: {
+  label: string;
+  value: User['willing'];
+}[] = [
   {
     label: 'اريد انقاص وزني',
-    value: 2
+    value: 'min'
   },
   {
     label: 'اريد إنقاص اكبر وزن ممكن',
-    value: 3
+    value: 'max'
   }
 ];
 function Page5({
@@ -436,23 +430,23 @@ function Page5({
   setUser,
   user
 }: Props) {
-  const [willing, setWillings] = useState<number>(user.willing);
+  const [willing, setWillings] = useState<User['willing']>(user.willing);
   useLayoutEffect(() => {
     setHeader('انقاص الوزن');
-    if (willing > -1) {
+    if (willing) {
       setButtonStatus('next', 'active');
     }
   }, []);
 
-  function handleCategory(value: number) {
+  function handleCategory(value: User['willing']) {
     setUser((user: any) => ({
       ...user,
       willing: value
     }));
     setWillings(value);
-    value < -1
-      ? setButtonStatus('next', 'disabled')
-      : setButtonStatus('next', 'active');
+    value
+      ? setButtonStatus('next', 'active')
+      : setButtonStatus('next', 'disabled');
   }
   return (
     <Flex flexDir={'column'} w='100%' align='center'>

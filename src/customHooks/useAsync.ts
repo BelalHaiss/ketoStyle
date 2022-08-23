@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { fetcher, Args } from '../utils/fetcher';
-import ToastUtil from '../utils/Toast';
 type Options = {
   onRequest?: () => void;
   onSuccess?: (data: any) => void;

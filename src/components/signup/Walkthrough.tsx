@@ -25,7 +25,6 @@ export function Walkthrough({
   const [loading, setLoading] = useState(false);
   const setUser = useStore((state) => state.setUser);
   async function register() {
-    delete registerDetails.willing;
     const user = await fetcher({
       url: '/users/register',
       method: 'post',
@@ -35,6 +34,7 @@ export function Walkthrough({
     });
     setLoading(false);
     if (user) {
+      user.loginTime = Date.now();
       setUser(user);
       router.replace('/pricing');
       closeModal();

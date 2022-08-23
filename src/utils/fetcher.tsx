@@ -23,7 +23,6 @@ export const fetcher = async ({
   noErrorToast,
   abortRequest = false
 }: Args) => {
-  // const productionURL = 'https://auto-service-api.herokuapp.com';
   const devUrl = 'http://localhost:5000/api';
   axios.defaults.baseURL = devUrl;
   if (abortRequest) {
