@@ -88,4 +88,4 @@ function Prices() {
   );
 }
 
-export default AdminHoc(Prices);
+export default AdminHoc(Prices, 'prices');

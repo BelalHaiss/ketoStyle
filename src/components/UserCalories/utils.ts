@@ -8,7 +8,8 @@ export type Energy = 'carbs' | 'proteins' | 'fats' | 'calories';
 export function calculateActualEnergy(data: MealsData) {
   let carbs = 0,
     fats = 0,
-    proteins = 0;
+    proteins = 0,
+    calories = 0;
   // @
   for (let energy in data) {
     // @ts-ignore
@@ -16,13 +17,14 @@ export function calculateActualEnergy(data: MealsData) {
       carbs += meal.carbs;
       fats += meal.fats;
       proteins += meal.proteins;
+      calories += meal.calories;
     });
   }
-  console.log(carbs, fats, proteins);
   return {
     carbs,
     fats,
-    proteins
+    proteins,
+    calories
   };
 }
 

@@ -1,4 +1,4 @@
-import { Flex, Text, Button } from '@chakra-ui/react';
+import { Flex, Text, Button, Icon } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { CaloriesLoader } from './CaloriesLoader';
 import { useStore } from 'src/store';
@@ -7,6 +7,8 @@ import { useAsync } from 'src/customHooks/useAsync';
 import { TimesEnergy, MealsData } from './TimesEnergy';
 import { MyMealsModal } from './MyMealsModal';
 import { calculateEnergy, calculateActualEnergy } from './utils';
+import { AiFillFire } from 'react-icons/ai';
+
 export type Energy = {
   total: number;
   actual: number;
@@ -57,6 +59,10 @@ export function UserCalories() {
           ...prev,
           actual: +actuals.fats.toFixed(0)
         }));
+        setCalories((prev) => ({
+          ...prev,
+          actual: +actuals.calories.toFixed(0)
+        }));
         setLoader(false);
       }
     }
@@ -79,6 +85,27 @@ export function UserCalories() {
     setCarbs((prev) => ({ ...prev, total: +totals.carbs.toFixed(0) }));
   }, []);
 
+  useEffect(() => {
+    const c = document.getElementById('caloriesCanvas') as HTMLCanvasElement;
+    const rd = Math.PI / 180;
+    if (c) {
+      const theCalorie = (calories.actual / calories.total) * 180 + 180;
+      const ctx = c.getContext('2d');
+
+      ctx!.beginPath();
+      ctx!.lineWidth = 9;
+      ctx!.strokeStyle = '#FBD38D';
+      ctx!.arc(180, 120, 110, 180 * rd, 360 * rd, false);
+      ctx!.stroke();
+      ctx!.beginPath();
+      ctx!.lineWidth = 9;
+      ctx!.lineCap = 'round';
+      ctx!.strokeStyle = '#7B341E';
+      ctx!.arc(180, 120, 110, 180 * rd, theCalorie * rd, false);
+      ctx!.stroke();
+    }
+  }, [loading, calories]);
+
   return (
     <Flex w='100%' flexDir='column' p='1' align='center'>
       <Text
@@ -89,6 +116,29 @@ export function UserCalories() {
         سعراتك الحرارية لهذا اليوم
       </Text>
       {loading && <CaloriesLoader />}
+      {!loading && (
+        <Flex position='relative'>
+          <canvas id='caloriesCanvas' width='360' height='180'></canvas>
+
+          <Flex
+            color='orange.800'
+            flexDir='column'
+            position={'absolute'}
+            top='47px'
+            right='120'
+            align='center'
+          >
+            <Icon w='8' h='8' mb='2' as={AiFillFire} />
+            <Text fontWeight={'bold'}> استهلكت {calories.actual} جم</Text>
+
+            <Text>
+              {calories.total - calories.actual < 0
+                ? 'استهلكت اكثر من اللازم'
+                : ` متبقي لك ${calories.total - calories.actual} جم`}
+            </Text>
+          </Flex>
+        </Flex>
+      )}
       {!loading && (
         <Flex
           w='100%'
@@ -144,6 +194,7 @@ export function UserCalories() {
                 عرض الوجبات
               </Button>
             </Flex>
+
             {mealsData && <TimesEnergy data={mealsData} />}
           </Flex>
           <MyMealsModal

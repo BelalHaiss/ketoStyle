@@ -4,20 +4,22 @@ import Meta from 'src/utils/Meta';
 import { useStore } from 'src/store';
 import { GiMeal } from 'react-icons/gi';
 import { BsWhatsapp } from 'react-icons/bs';
+import UnSubNutritionist from 'src/components/UnSupscriptions/UnSub.nutritionist';
 export default function Nutrition() {
   const user = useStore((state) => state.user);
   return (
     <>
       <Meta title='اخصائي التغذية' />
       <Flex gap='10' my='3' align='center' flexDir='column'>
-        <Flex gap='2' flexDir={'column'}>
-          <Heading as='h3' size='xl' color='orange.800'>
+        <Flex gap='2' w='100%' align='center' flexDir={'column'}>
+          <Heading as='h3' size={{ base: 'lg', md: 'xl' }} color='orange.800'>
             {`مرحبا, ${user?.profile.name} في قسم اخصائي الاغذية`}
           </Heading>
           <Text>
             يمكنك الأن التواصل مع مختص التغذية الخاص بك عبر النقر على علامة
             الواتساب أدناه
           </Text>
+          <UnSubNutritionist />
         </Flex>
 
         <Button

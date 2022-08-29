@@ -85,6 +85,7 @@ export default function WaterComponent({ user }: Props) {
             transition: 'all .2s ease-in-out'
           }
         }}
+        cursor='pointer'
         onClick={updateWater}
         maxW='400px'
         wrap='wrap'

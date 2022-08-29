@@ -20,6 +20,7 @@ export function EnergyProgress({ label, energy, colorScheme, value }: Props) {
         isAnimated
         colorScheme={colorScheme}
         size='xs'
+        mx='2'
         value={value}
         bg={colorScheme + '.100'}
       />

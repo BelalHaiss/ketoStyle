@@ -145,8 +145,10 @@ export default function Status({ user }: Props) {
               align='center'
               flexDir='column'
               w='90px'
+              cursor={'pointer'}
             >
               <Image
+                cursor={'pointer'}
                 src={'/home/status/' + mood.value + '.svg'}
                 alt={mood.value}
                 w='50px'
@@ -182,6 +184,7 @@ export default function Status({ user }: Props) {
               w='89px'
             >
               <Image
+                cursor={'pointer'}
                 src={'/home/status/' + symptom.value + '.svg'}
                 alt={symptom.value}
                 w='50px'

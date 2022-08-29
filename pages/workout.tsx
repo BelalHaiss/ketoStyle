@@ -2,13 +2,15 @@ import { Flex, Text, Heading, Icon, Alert, AlertIcon } from '@chakra-ui/react';
 import { useStore } from 'src/store';
 import { FcSportsMode } from 'react-icons/fc';
 import WorkoutVideos from 'src/components/workout/WorkoutVideos';
+import UnSupWorkout from 'src/components/UnSupscriptions/UnSub.workout';
 export default function Workout() {
   const user = useStore((state) => state.user);
   return (
     <Flex px='3' direction='column' mt='5' align='center' justify='center'>
-      <Heading as='h3' size='xl' color='orange.800'>
+      <Heading as='h3' size={{ base: 'lg', md: 'xl' }} color='orange.800'>
         {`مرحبا, ${user?.profile.name} هذه التمارين المخصصة لك لهذا اليوم`}
       </Heading>
+      <UnSupWorkout />
       <Text>يمكنك النقر علي الفيديو لمشاهدته وبدا التمرين</Text>
 
       <WorkoutVideos />

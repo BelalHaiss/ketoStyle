@@ -7,6 +7,10 @@ import { useRouter } from 'next/router';
 import ProfileMenu from '../user/ProfileMenu';
 const links = [
   {
+    label: 'التوقعات',
+    href: '/expectation'
+  },
+  {
     label: 'اشترك الان',
     href: '/pricing'
   },

@@ -1,4 +1,4 @@
-import { Flex, Text, Button, Icon } from '@chakra-ui/react';
+import { Flex, Text, Button, Icon, Image as IMAGE } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { BiBody, BiHealth } from 'react-icons/bi';
@@ -36,7 +36,7 @@ const textIconsArr = [
   },
   {
     text: 'اسبوع مجانا لخدمة اخصائي الاغذية',
-    icon: BiHealth
+    image: '/home/nutritionist.png'
   }
 ];
 
@@ -192,7 +192,11 @@ function TEXT_WITH_ICONS(num: 1 | 2 | 3) {
         if (num === 2 && i > 5) return;
         return (
           <Flex w='200px' align='center' gap='2' key={i}>
-            <Icon w='8' h='8' as={item.icon} />
+            {item.icon ? (
+              <Icon w='8' h='8' as={item.icon} />
+            ) : (
+              <IMAGE src={item.image} w='8' h='8' alt='nutritionist' />
+            )}
             <Text fontWeight='medium' fontSize='lg'>
               {item.text}
             </Text>
