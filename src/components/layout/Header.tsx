@@ -67,6 +67,7 @@ export default function Header() {
             w='90px'
             onClick={() => router.replace('/')}
             alt='Keto'
+            cursor={'pointer'}
           />
         </Flex>
         {user && !user.role && (

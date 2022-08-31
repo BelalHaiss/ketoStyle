@@ -1,5 +1,5 @@
-import { Flex, Text, Button, Icon, Heading } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Text, Button, Icon, Heading, Image } from '@chakra-ui/react';
+// import Image from 'next/image';
 import Meta from 'src/utils/Meta';
 import { useStore } from 'src/store';
 
@@ -23,9 +23,11 @@ export default function Nutrition() {
         >
           <Flex order={{ base: '1', md: '2' }}>
             <Image
-              width={300}
-              height={300}
-              priority
+              // width={300}
+              // height={300}
+              // priority
+              w={{ base: '200px', md: '300px' }}
+              h={{ base: '200px', md: '300px' }}
               className='section-image'
               alt='Keto weight'
               src='/home/expectation/weight.png'
@@ -33,7 +35,7 @@ export default function Nutrition() {
           </Flex>
           <Heading
             order={{ base: '2', md: '1' }}
-            w={{ base: 'auto', md: '300px' }}
+            w={{ base: 'auto', md: '400px' }}
             as='h3'
             color='orange.900'
             fontSize={{ base: 'xl', md: '5xl' }}
@@ -59,16 +61,18 @@ export default function Nutrition() {
         >
           <Flex order={{ base: '1', md: '2' }}>
             <Image
-              width={300}
-              height={300}
-              priority
+              // width={300}
+              // height={300}
+              // priority
+              w={{ base: '200px', md: '300px' }}
+              h={{ base: '200px', md: '300px' }}
               className='section-image'
               alt='Keto weight'
               src='/home/expectation/bmi.png'
             />
           </Flex>
           <Flex
-            w={{ base: 'auto', md: '300px' }}
+            w={{ base: 'auto', md: '400px' }}
             flexDir='column'
             align='center'
             gap='3'
@@ -106,16 +110,18 @@ export default function Nutrition() {
         >
           <Flex order={{ base: '1', md: '2' }}>
             <Image
-              width={300}
-              height={300}
-              priority
+              // width={300}
+              // height={300}
+              // priority
+              w={{ base: '200px', md: '300px' }}
+              h={{ base: '200px', md: '300px' }}
               className='section-image'
               alt='Keto weight'
               src='/home/expectation/goal.png'
             />
           </Flex>
           <Flex
-            w={{ base: 'auto', md: '300px' }}
+            w={{ base: 'auto', md: '400px' }}
             flexDir='column'
             align='center'
             gap='3'
@@ -152,16 +158,18 @@ export default function Nutrition() {
         >
           <Flex order={{ base: '1', md: '2' }}>
             <Image
-              width={300}
-              height={300}
-              priority
+              // width={300}
+              // height={300}
+              // priority
+              w={{ base: '200px', md: '300px' }}
+              h={{ base: '200px', md: '300px' }}
               className='section-image'
               alt='Keto weight'
               src='/home/expectation/kcai.png'
             />
           </Flex>
           <Flex
-            w={{ base: 'auto', md: '300px' }}
+            w={{ base: 'auto', md: '400px' }}
             flexDir='column'
             align='center'
             gap='3'
@@ -197,16 +205,18 @@ export default function Nutrition() {
         >
           <Flex order={{ base: '1', md: '1' }}>
             <Image
-              width={220}
-              height={400}
-              priority
+              // width={220}
+              // height={400}
+              // priority
+              w={{ base: '110px', md: '220px' }}
+              h={{ base: '200px', md: '400px' }}
               className='section-image'
               alt='Keto weight'
               src='/home/expectation/meal.png'
             />
           </Flex>
           <Flex
-            w={{ base: 'auto', md: '300px' }}
+            w={{ base: 'auto', md: '400px' }}
             flexDir='column'
             align='center'
             gap='3'

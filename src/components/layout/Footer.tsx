@@ -1,5 +1,5 @@
-import { Flex, Button } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Button, Image } from '@chakra-ui/react';
+// import Image from 'next/image';
 import LinksButton from 'src/components/layout/LinksButton';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { useStore } from 'src/store';
@@ -52,7 +52,7 @@ export default function Footer() {
           <Image
             src='/home/payment.svg'
             alt='payment'
-            width='300px'
+            width={{ base: 150, md: '300px' }}
             height={'100px'}
           />
         )}

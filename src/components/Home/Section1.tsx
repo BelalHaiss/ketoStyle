@@ -1,5 +1,5 @@
-import { Flex, Text, Heading } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Flex, Text, Heading, Image } from '@chakra-ui/react';
+// import Image from 'next/image';
 
 const section1Fotter = [
   {
@@ -33,12 +33,12 @@ export default function Section1() {
       >
         <Flex order={{ base: '1', md: '2' }}>
           <Image
-            width={400}
-            height={400}
-            priority
+            width={{ base: '200px', md: '400px' }}
+            height={{ base: '200px', md: '400px' }}
+            // priority
             className='section-image'
             alt='Keto sandwich'
-            src='/home/sandwich1.svg'
+            src='/home/sandwich1.png'
           />
         </Flex>
         <Heading
@@ -58,7 +58,12 @@ export default function Section1() {
       <Flex my='2' wrap='wrap' align='center' gap='1' justify={'space-around'}>
         {section1Fotter.map(({ text, src }) => (
           <Flex align='center' key={src}>
-            <Image width={100} height={100} src={src} alt={text} />
+            <Image
+              width={{ base: '60px', md: '100px' }}
+              height={{ base: '60px', md: '100px' }}
+              src={src}
+              alt={text}
+            />
             <Text
               fontSize={{ base: 'md', md: 'xl' }}
               w='100px'

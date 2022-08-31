@@ -75,8 +75,8 @@ export function RegisterModal({
         <ModalOverlay
           backdropFilter='auto'
           backgroundColor={'transparent'}
-          backdropBlur='15px'
-          className='register-bg'
+          backdropBlur='4px'
+          
         />
         <ModalContent
           color={page === 9 ? 'orange.800' : 'orange.50'}

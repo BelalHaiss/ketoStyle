@@ -1,8 +1,8 @@
 import React from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
-import Image from 'next/image';
-import { Flex, Text, Heading, Icon } from '@chakra-ui/react';
+// import Image from 'next/image';
+import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
 export type Section = {
   bg: string | undefined;
   heading: React.ReactElement;
@@ -35,8 +35,8 @@ export function Sections({ sections = [] }: Props) {
             order={{ base: '1', md: section.image.order }}
           >
             <Image
-              width={section.image.width}
-              height={section.image.width}
+              width={{ base: '200px', md: section.image.width }}
+              height={{ base: '200px', md: section.image.width }}
               alt={section.image.alt}
               src={section.image.src}
             />

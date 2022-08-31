@@ -1,5 +1,5 @@
 import { Flex, Text, Button, Icon, Image as IMAGE } from '@chakra-ui/react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { BiBody, BiHealth } from 'react-icons/bi';
 import { AiFillFire, AiFillSafetyCertificate } from 'react-icons/ai';
@@ -100,7 +100,7 @@ export default function Pricing({
     >
       {user && (
         <Flex w='100%' gap='3' align='center' justify='center'>
-          <Image src='/home/pay.png' width='300' height='300' alt='pic' />
+          <IMAGE src='/home/pay.png' width='300' height='300' alt='pic' />
           <Text fontWeight={'bold'} fontSize={{ base: 'lg', md: 'xl' }}>
             {`${user.profile.name} ،لم يتبقى سوى القليل، لدخولك عالم الكيتو معنا`}
           </Text>
