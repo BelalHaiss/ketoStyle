@@ -4,7 +4,13 @@ export interface USER extends User {
   loginTime: number; // millisecond
   role: Role;
   water: Water;
+  plans: UserPlan[];
 }
+type UserPlan = {
+  category: Plans;
+  start: Date;
+  end: Date;
+};
 export type Water = {
   date: Date;
   cups: number;
@@ -25,15 +31,19 @@ export type Answer = {
   _id: string;
   answer: string;
 };
+
+export type Plans = 'meal' | 'nutritionist' | 'workout';
+
 export type Price = {
   _id: string;
-  category: 'meal' | 'nutritionist' | 'workout';
+  category: Plans;
   label: string;
   price: number;
+  usd: number;
   duration: number;
 };
 
-export type Profile = 'measurements' | 'payments' | 'account';
+export type Profile = 'measurements' | 'payments' | 'account' | 'meal';
 export interface AppState {
   user: USER | null;
   setUser: (user: USER | null) => void;
@@ -90,4 +100,11 @@ export type AdminUser = {
   _id: string;
   role: Role;
   profile: UserProfile;
+};
+
+export type Payment = {
+  createdAt: Date;
+  paid: number;
+  status: 'success' | 'fail';
+  category: Plans;
 };

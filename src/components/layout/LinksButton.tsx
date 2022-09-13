@@ -25,6 +25,7 @@ export default function LinksButton({
       flexDir={{ base: 'column', sm: 'row' }}
       justify={{ base: 'center', md: justifyMd }}
       align='center'
+      wrap='wrap'
     >
       {links.map((link: Link, i) => (
         <Button

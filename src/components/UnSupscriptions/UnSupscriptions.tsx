@@ -19,8 +19,10 @@ export default function UnSupscriptions({
   submitButton
 }: Props) {
   return (
-    <Flex flexDir='column' w='100%' align='center'>
-      <Text>{subTitle}</Text>
+    <Flex gap='2' flexDir='column' w='100%' align='center'>
+      <Text fontWeight='bold' fontSize='lg'>
+        {subTitle}
+      </Text>
 
       <Flex
         flexDir='column'

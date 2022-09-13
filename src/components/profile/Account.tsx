@@ -173,7 +173,7 @@ export function Account({ user, isAdminUpdate = false }: Props) {
           >
             <InputGroup>
               <InputLeftAddon
-                w='160px'
+                w={{ base: '120px', md: '160px' }}
                 bg='orange.500'
                 color='white'
                 children={info.label}

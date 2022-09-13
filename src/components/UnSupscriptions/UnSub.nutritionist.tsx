@@ -9,12 +9,16 @@ import { FaWeight, FaRegFlushed } from 'react-icons/fa';
 import { GiMuscleUp } from 'react-icons/gi';
 import { VscChecklist } from 'react-icons/vsc';
 import { useEffect, useState } from 'react';
+import Paypal from '../Paypal/Paypal';
+import { Price } from 'src/ts/store.types';
 export default function UnSubNutritionist() {
   const prices = useStore((state) => state.prices);
   const [price, setPrice] = useState(0);
+  const [plan, setPlan] = useState<Price | null>(null);
+  const [checkout, setCheckout] = useState<Price | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   function onClick() {
-    alert('i will subscripe');
+    setCheckout(plan);
   }
   const submitButton = {
     price,
@@ -22,67 +26,75 @@ export default function UnSubNutritionist() {
     isLoading
   };
   useEffect(() => {
-    const thePrice = prices.find((price) => price.category === 'nutritionist');
-    thePrice && setPrice(thePrice.price);
+    const thePrice = prices?.find((price) => price.category === 'nutritionist');
+    if (thePrice) {
+      setPrice(thePrice.price);
+      setPlan(thePrice);
+    }
   }, [prices]);
 
   return (
-    <UnSupscriptions
-      submitButton={submitButton}
-      title='باقة اخصائي التغذية'
-      subTitle=' اشتراككم لايدعم قسم الاستشارات الغذائية، ولكن يمكنكم الإشتراك  للاستفادة من القسم'
-    >
-      <Flex
-        flexDir='column'
-        w='100%'
-        p='3'
-        justify='center'
-        gap='5'
-        align='center'
-      >
-        <Flex
-          align='center'
-          w='100%'
-          justify={{ base: 'center', md: 'space-around' }}
-          gap='3'
-          wrap='wrap'
+    <>
+      {!checkout && (
+        <UnSupscriptions
+          submitButton={submitButton}
+          title='باقة اخصائي التغذية'
+          subTitle=' اشتراككم لايدعم قسم الاستشارات الغذائية، ولكن يمكنكم الإشتراك  للاستفادة من القسم'
         >
-          <TextIcon
-            text='اخصائي تغذية معك بشكل يومي'
-            image='/home/nutritionist.png'
-          />
-          <TextIcon text='تحديد الأهداف مع الاخصائى' icon={VscChecklist} />
-        </Flex>
-        <Flex
-          align='center'
-          justify={{ base: 'center', md: 'space-around' }}
-          gap='3'
-          wrap='wrap'
-          w='100%'
-        >
-          <TextIcon
-            text='توفير جميع ماتحتاجه لنظام غذائي كيتوني أفضل'
-            image='/home/meal.svg'
-          />
-          <TextIcon
-            text='حل المشاكل الشائعة في الحمية'
-            image='/home/limit.png'
-          />
-        </Flex>
-        <Flex
-          align='center'
-          justify={{ base: 'center', md: 'space-around' }}
-          gap='3'
-          wrap='wrap'
-          w='100%'
-        >
-          <TextIcon
-            text='نصائح مساعدة من اخصائي التغذية المسؤول عنك'
-            icon={RiLightbulbFlashFill}
-          />
-          <TextIcon text='وسائل دفع امنة' icon={AiFillSafetyCertificate} />
-        </Flex>
-      </Flex>
-    </UnSupscriptions>
+          <Flex
+            flexDir='column'
+            w='100%'
+            p='3'
+            justify='center'
+            gap='5'
+            align='center'
+          >
+            <Flex
+              align='center'
+              w='100%'
+              justify={{ base: 'center', md: 'space-around' }}
+              gap='3'
+              wrap='wrap'
+            >
+              <TextIcon
+                text='اخصائي تغذية معك بشكل يومي'
+                image='/home/nutritionist.png'
+              />
+              <TextIcon text='تحديد الأهداف مع الاخصائى' icon={VscChecklist} />
+            </Flex>
+            <Flex
+              align='center'
+              justify={{ base: 'center', md: 'space-around' }}
+              gap='3'
+              wrap='wrap'
+              w='100%'
+            >
+              <TextIcon
+                text='توفير جميع ماتحتاجه لنظام غذائي كيتوني أفضل'
+                image='/home/meal.svg'
+              />
+              <TextIcon
+                text='حل المشاكل الشائعة في الحمية'
+                image='/home/limit.png'
+              />
+            </Flex>
+            <Flex
+              align='center'
+              justify={{ base: 'center', md: 'space-around' }}
+              gap='3'
+              wrap='wrap'
+              w='100%'
+            >
+              <TextIcon
+                text='نصائح مساعدة من اخصائي التغذية المسؤول عنك'
+                icon={RiLightbulbFlashFill}
+              />
+              <TextIcon text='وسائل دفع امنة' icon={AiFillSafetyCertificate} />
+            </Flex>
+          </Flex>
+        </UnSupscriptions>
+      )}
+      {checkout && <Paypal plan={plan} setCheckout={setCheckout} />}
+    </>
   );
 }

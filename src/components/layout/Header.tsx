@@ -5,15 +5,13 @@ import { useState } from 'react';
 import LinksButton from 'src/components/layout/LinksButton';
 import { useRouter } from 'next/router';
 import ProfileMenu from '../user/ProfileMenu';
+import { checkSubscription } from 'src/utils/checker';
 const links = [
   {
     label: 'التوقعات',
     href: '/expectation'
   },
-  {
-    label: 'اشترك الان',
-    href: '/pricing'
-  },
+
   {
     label: 'نظامي الغذائي',
     href: '/meals'
@@ -25,6 +23,10 @@ const links = [
   {
     label: 'اخصائي الاغذية',
     href: '/nutritionist'
+  },
+  {
+    label: 'اشترك الان',
+    href: '/pricing'
   }
 ];
 const adminLinks = [
@@ -70,7 +72,14 @@ export default function Header() {
             cursor={'pointer'}
           />
         </Flex>
-        {user && !user.role && (
+        {user && !user.role && checkSubscription(user, 'meal') && (
+          <LinksButton
+            justifyMd='center'
+            links={links.slice(0, -1)}
+            scheme='gray'
+          />
+        )}
+        {user && !user.role && !checkSubscription(user, 'meal') && (
           <LinksButton justifyMd='center' links={links} scheme='gray' />
         )}
         {user?.role && (

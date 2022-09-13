@@ -24,6 +24,7 @@ export const fetcher = async ({
   abortRequest = false
 }: Args) => {
   const devUrl = 'http://localhost:5000/api';
+  axios.defaults.baseURL = devUrl;
   axios.defaults.baseURL = process.env.api || devUrl;
   if (abortRequest) {
     const now = Date.now();

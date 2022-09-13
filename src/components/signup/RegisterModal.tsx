@@ -25,6 +25,7 @@ export function RegisterModal({
 }: Props) {
   const [header, setHeader] = useState('مرحبًا بك في عائلتنا');
   const [registerDetails, setRegisterDetails] = useState({});
+  console.log(registerDetails);
   const [page, setPage] = useState(1);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
@@ -71,12 +72,12 @@ export function RegisterModal({
         isCentered
         isOpen={isOpen || isLogin}
         onClose={closeModal}
+        closeOnOverlayClick={false}
       >
         <ModalOverlay
           backdropFilter='auto'
           backgroundColor={'transparent'}
           backdropBlur='4px'
-          
         />
         <ModalContent
           color={page === 9 ? 'orange.800' : 'orange.50'}

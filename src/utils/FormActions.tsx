@@ -18,14 +18,18 @@ export default function FormAction({
       w='100%'
       justify='space-around'
     >
-      <Button w='200px' colorScheme={'yellow'} onClick={onReset}>
+      <Button
+        w={{ base: '120px', md: '200px' }}
+        colorScheme={'yellow'}
+        onClick={onReset}
+      >
         الغاء التعديلات
       </Button>
       <Button
         isLoading={submitButton.submitLoading}
         loadingText={submitButton.loadingText}
         disabled={!submitButton.submitActive}
-        w='200px'
+        w={{ base: '120px', md: '200px' }}
         colorScheme={'green'}
         onClick={onSubmit}
       >

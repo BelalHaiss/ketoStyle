@@ -1,6 +1,6 @@
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex, Spinner, Text } from '@chakra-ui/react';
 
-export default function Loader() {
+export default function Loader({ text }: { text?: string }) {
   return (
     <Flex
       p='3'
@@ -15,9 +15,10 @@ export default function Loader() {
         speed='0.65s'
         w='8rem'
         h='8rem'
-        emptyColor='gray.200'
-        color='pink.500'
+        emptyColor='orange.200'
+        color='orange.700'
       />
+      {text && <Text>{text}</Text>}
     </Flex>
   );
 }

@@ -1,6 +1,6 @@
 export type Willing = 'min' | 'max';
 export type User = {
-  categories: [] | Category[];
+  categories: Meats[];
   physicalActivity: Physical;
   willing: Willing;
   measurements: Measure;
@@ -12,6 +12,7 @@ export type Measure = {
   height: number;
   desiredWeight: number;
   age: number;
+  weightUpdateDate: Date;
 };
 
 export type Profile = {
@@ -22,10 +23,10 @@ export type Profile = {
   phone: number | '';
   country: string;
 };
-export type Value = 'chicken' | 'cow' | 'sheep' | 'camel' | 'caridea' | 'fish';
+export type Meats = 'chicken' | 'cow' | 'sheep' | 'camel' | 'caridea' | 'fish';
 export type Category = {
   label: string;
-  value: Value;
+  value: Meats;
   icon: React.ReactElement;
 };
 export type Physical = 'sedentary' | 'light' | 'moderate' | 'active';

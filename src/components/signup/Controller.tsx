@@ -33,7 +33,7 @@ import {
   User,
   Physical,
   Category,
-  Value,
+  Meats,
   Profile,
   Measure
 } from 'src/ts/register.types';
@@ -48,7 +48,7 @@ type Props = {
   [key: string]: any; //setRegisterDetails
 };
 
-const allCategories: Category[] = [
+export const allCategories: Category[] = [
   {
     label: 'الدجاج',
     value: 'chicken',
@@ -98,7 +98,8 @@ export function Controller({
       height: 0,
       weight: 0,
       desiredWeight: 0,
-      age: 0
+      age: 0,
+      weightUpdateDate: new Date()
     },
     profile: {
       name: '',
@@ -231,7 +232,7 @@ function Page3({
   setUser,
   user
 }: Props) {
-  const [selectedCategories, setSelectedCategories] = useState<Value[]>(
+  const [selectedCategories, setSelectedCategories] = useState<Meats[]>(
     user.categories
   );
   useLayoutEffect(() => {
@@ -240,7 +241,7 @@ function Page3({
       setButtonStatus('next', 'active');
     }
   }, []);
-  function handleCategory(value: Value) {
+  function handleCategory(value: Meats) {
     const isChecked = selectedCategories.find((category) => category === value);
     let newCategoryState = [...selectedCategories];
     if (isChecked) {
@@ -794,7 +795,6 @@ function Page8({
   //  dont set user measurements before checking that error state is clear use ( useEffect)
   const [errors, setErrors] = useState(user.profile);
 
-  const theSetUser = useStore((state) => state.setUser);
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 

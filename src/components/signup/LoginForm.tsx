@@ -82,7 +82,7 @@ export default function LoginForm({
       borderRadius='3xl'
       mx='auto'
       gap='20px'
-      w='500px'
+      w={{ base: '95%', md: '500px' }}
       alignItems='center'
     >
       {!forgetPassword && (

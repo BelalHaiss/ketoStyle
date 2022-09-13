@@ -15,7 +15,6 @@ import FormAction from 'src/utils/FormActions';
 import { ChangeEvent } from 'react';
 import { USER } from 'src/ts/store.types';
 import { Measure } from 'src/ts/register.types';
-import ToastUtil from 'src/utils/Toast';
 import { allMeasurements } from 'src/components/signup/Controller';
 import { fetcher } from 'src/utils/fetcher';
 import RenderHoc from 'src/components/RenderHoc';
@@ -105,13 +104,25 @@ function Measurements({
     setIsUpdate(false);
     setSubmitButton(submitButtonIntial);
   }
+
+  function getMeasurement(measurements: Measure) {
+    if (
+      measurements.desiredWeight === user.measurements.desiredWeight &&
+      measurements.weight === user.measurements.weight
+    ) {
+      return measurements;
+    } else {
+      // user change weight so we change date
+      return { ...measurements, weightUpdateDate: new Date() };
+    }
+  }
   async function onSubmit() {
     setSubmitButton((old) => ({ ...old, submitLoading: true }));
 
     const payload = {
       method: 'patch',
       data: {
-        measurements,
+        measurements: getMeasurement(measurements),
         physicalActivity,
         willing
       },

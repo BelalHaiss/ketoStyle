@@ -1,46 +1,53 @@
 import { Flex, Text, Heading, Icon, Alert, AlertIcon } from '@chakra-ui/react';
 import { useStore } from 'src/store';
 import { FcSportsMode } from 'react-icons/fc';
+import SubscripedHOC from 'src/components/SubscriptionHOC';
 import WorkoutVideos from 'src/components/workout/WorkoutVideos';
 import UnSupWorkout from 'src/components/UnSupscriptions/UnSub.workout';
-export default function Workout() {
+function Workout({ isSubscriped }: { isSubscriped: boolean }) {
   const user = useStore((state) => state.user);
   return (
     <Flex px='3' direction='column' mt='5' align='center' justify='center'>
-      <Heading as='h3' size={{ base: 'lg', md: 'xl' }} color='orange.800'>
-        {`مرحبا, ${user?.profile.name} هذه التمارين المخصصة لك لهذا اليوم`}
-      </Heading>
-      <UnSupWorkout />
-      <Text>يمكنك النقر علي الفيديو لمشاهدته وبدا التمرين</Text>
-
-      <WorkoutVideos />
-
-      <Flex
-        justify={{ base: 'center', md: 'space-between' }}
-        w='100%'
-        px='10'
-        align='center'
-      >
-        <Flex gap='5' flexDir={'column'}>
-          <Heading as='h5' size='lg'>
-            {' '}
-            نصائح للتمارين
+      {!isSubscriped && <UnSupWorkout />}
+      {isSubscriped && (
+        <>
+          <Heading as='h3' size={{ base: 'lg', md: 'xl' }} color='orange.800'>
+            {`مرحبا, ${user?.profile.name} هذه التمارين المخصصة لك لهذا اليوم`}
           </Heading>
-          <Text>
-            لاتقم بإجهاد نفسك في التمرين وعند شعورك بالتعب الشديد، عليك التوقف
-            وفورًا واخذ الراحه بشكل كاف، القسوة في التمارين غير مفيدة ابدًا ولها
-            مضار اكثر من منافعها نتمنى لك تمرينًا ممتعًا
-          </Text>
-        </Flex>
+          <Text>يمكنك النقر علي الفيديو لمشاهدته وبدا التمرين</Text>
 
-        <Icon
-          display={{ base: 'none', md: 'inline-block' }}
-          as={FcSportsMode}
-          w='60'
-          mr='10'
-          h='40'
-        />
-      </Flex>
+          <WorkoutVideos />
+
+          <Flex
+            justify={{ base: 'center', md: 'space-between' }}
+            w='100%'
+            px='10'
+            align='center'
+          >
+            <Flex gap='5' flexDir={'column'}>
+              <Heading as='h5' size='lg'>
+                {' '}
+                نصائح للتمارين
+              </Heading>
+              <Text>
+                لاتقم بإجهاد نفسك في التمرين وعند شعورك بالتعب الشديد، عليك
+                التوقف وفورًا واخذ الراحه بشكل كاف، القسوة في التمارين غير مفيدة
+                ابدًا ولها مضار اكثر من منافعها نتمنى لك تمرينًا ممتعًا
+              </Text>
+            </Flex>
+
+            <Icon
+              display={{ base: 'none', md: 'inline-block' }}
+              as={FcSportsMode}
+              w='60'
+              mr='10'
+              h='40'
+            />
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 }
+
+export default SubscripedHOC(Workout, 'workout');

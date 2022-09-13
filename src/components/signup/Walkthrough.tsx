@@ -25,6 +25,7 @@ export function Walkthrough({
   const [loading, setLoading] = useState(false);
   const setUser = useStore((state) => state.setUser);
   async function register() {
+    setLoading(true);
     const user = await fetcher({
       url: '/users/register',
       method: 'post',
