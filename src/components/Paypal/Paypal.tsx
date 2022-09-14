@@ -98,6 +98,7 @@ function PaypalButton({ setCheckout, plan }: Props) {
   async function handleError(e: any) {
     savePayment(true);
   }
+
   return (
     <>
       {(isPending || loading) && <Loader />}

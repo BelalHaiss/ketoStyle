@@ -107,4 +107,21 @@ export type Payment = {
   paid: number;
   status: 'success' | 'fail';
   category: Plans;
+  userId: USER;
+  paypal?: {
+    orderId: String;
+    payer: Object;
+    method: String;
+    status: String;
+  };
+  priceId: string; //id of prcies
+  fraud: boolean;
+  alreadySubscriped: boolean;
+};
+
+export type Subscriptions = {
+  start: string;
+  end: string;
+  userId: USER;
+  priceId: string;
 };

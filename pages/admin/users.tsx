@@ -61,10 +61,11 @@ function Users() {
   }
   async function onSearch(value: string) {
     const res = await SearchUserByNameOrPhone(value);
+    console.log(res);
     if (res) {
       if (res.name === 'custom') {
         ToastUtil('لاتوجد نتائج', 'error');
-      } else {
+      } else if (Array.isArray(res)) {
         setShowTable(true);
         setResultCount({
           ...resultCount,

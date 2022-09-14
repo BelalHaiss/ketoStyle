@@ -4,11 +4,17 @@ import { MdOutlinePersonSearch } from 'react-icons/md';
 type SearchProps = {
   onSearch: (value: string) => void;
   placeholder: string;
+  width?: string;
 };
-export default function Search({ placeholder, onSearch }: SearchProps) {
+export default function Search({ placeholder, onSearch, width }: SearchProps) {
   const [value, setValue] = useState('');
   return (
-    <Flex w='60%' layerStyle={'flexCenter'} dir='ltr' position='relative'>
+    <Flex
+      w={width ?? '60%'}
+      layerStyle={'flexCenter'}
+      dir='ltr'
+      position='relative'
+    >
       <Input
         type='text'
         value={value}

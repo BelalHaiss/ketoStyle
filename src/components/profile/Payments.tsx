@@ -86,7 +86,11 @@ function Payment({ payment }: { payment: PaymentType }) {
           </Badge>
         </Flex>
 
-        <Text>{new Date(payment.createdAt).toLocaleDateString('ar')}</Text>
+        <Text>
+          {new Date(payment.createdAt).toLocaleDateString('ar', {
+            dateStyle: 'full'
+          })}
+        </Text>
       </Flex>
       <Badge
         fontSize={{ base: 'md', md: 'lg' }}
