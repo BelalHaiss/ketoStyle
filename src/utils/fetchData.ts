@@ -15,8 +15,16 @@ export async function fetchWorkouts(setWorkouts: any) {
 
 export async function fetchMealsCount(setMealsCount: any) {
   const url = '/meals/count?category=';
-  const allCategories = ['chicken', 'fish', 'caridea', 'cow', 'sheep', 'camel'];
-  const [chicken, fish, caridea, cow, sheep, camel] = await Promise.all(
+  const allCategories = [
+    'chicken',
+    'fish',
+    'caridea',
+    'cow',
+    'sheep',
+    'camel',
+    'other'
+  ];
+  const [chicken, fish, caridea, cow, sheep, camel, other] = await Promise.all(
     allCategories.map((category) => {
       const meals = fetcher({ url: url + category });
       return meals;
@@ -28,18 +36,21 @@ export async function fetchMealsCount(setMealsCount: any) {
     caridea,
     cow,
     sheep,
-    camel
+    camel,
+    other
   });
 }
 
 export async function fetchAllMeals(
   query: { category: string; time: string },
-  setMeals: (meal: any) => void
+  setMeals: (meal: any) => void,
+  setLoading: (bool: boolean) => void
 ) {
   const data = await fetcher({
     url: `meals/all?category=${query.category}&time=${query.time}`
   });
   setMeals(data);
+  setLoading(false);
 }
 export async function destroyImage(id: string, userId: string | undefined) {
   const data = await fetcher({
@@ -130,6 +141,13 @@ export async function changePermission(data: { role: string; userId: string }) {
     method: 'patch',
     data,
     successToast: 'تم تغيير الصلاحيات بنجاح'
+  });
+}
+export async function deleteRoledPerson(id: string) {
+  const res = await fetcher({
+    url: `/admin/role/${id}?path=admin`,
+    method: 'delete',
+    successToast: 'تم حذف الشخص بنجاح'
   });
 }
 export async function changePassword(data: any, id: string, isAdmin: boolean) {

@@ -26,9 +26,13 @@ export default function SubscripedHOC(
             ? router.replace('/')
             : setLoading(false);
         } else if (plan === 'meal') {
-          router.replace('/pricing');
-          ToastUtil('يجب عليك الاشتراك في باقات الكيتو', 'info');
-          return;
+          if (checkSubscription(user, 'meal')) {
+            setLoading(false);
+          } else {
+            router.replace('/pricing');
+            ToastUtil('يجب عليك الاشتراك في باقات الكيتو', 'info');
+            return;
+          }
         } else {
           checkSubscription(user, plan)
             ? setIsSubscriped(true)
@@ -49,7 +53,7 @@ export default function SubscripedHOC(
     }, [user, prices]);
 
     return !loading ? (
-      <Component isSubscriped={isSubscriped} vistor={vistor} />
+      <Component user={user} isSubscriped={isSubscriped} vistor={vistor} />
     ) : (
       <Loader />
     ); // Render whatever you want while the authentication occurs

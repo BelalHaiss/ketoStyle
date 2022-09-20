@@ -6,6 +6,7 @@ import { fetchMealsCount, fetchAllMeals } from 'src/utils/fetchData';
 import { MealBox } from 'src/components/meals/MealBox';
 import AdminHoc from 'src/components/AdminHOC';
 import { useRouter } from 'next/router';
+import Loader from 'src/utils/Loader';
 const allCategories: Category[] = [
   {
     label: 'الدجاج',
@@ -30,6 +31,10 @@ const allCategories: Category[] = [
   {
     label: 'لحم الجمال',
     value: 'camel'
+  },
+  {
+    label: 'اخري',
+    value: 'other'
   }
 ];
 const allTimes: Time[] = [
@@ -74,10 +79,11 @@ function Meals() {
   });
   const [counts, setCounts] = useState(countsInitialState);
   const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true);
     fetchMealsCount(setCounts);
-
-    fetchAllMeals(query, setMeals);
+    fetchAllMeals(query, setMeals, setLoading);
   }, [query]);
 
   const router = useRouter();
@@ -113,17 +119,20 @@ function Meals() {
         }}
       />
 
-      <Flex gap='2' my='3' mx='auto' layerStyle={'flexCenter'} wrap='wrap'>
-        {meals.length ? (
-          meals.map((meal, i) => (
-            <MealBox key={i} width='190px' size='lg' meal={meal} />
-          ))
-        ) : (
-          <Text my='3' fontSize='3xl' color='orange.800' fontWeight={'bod'}>
-            لا يوجد وجبات !!!!!!!!!
-          </Text>
-        )}
-      </Flex>
+      {loading && <Loader />}
+      {!loading && (
+        <Flex gap='2' my='3' mx='auto' layerStyle={'flexCenter'} wrap='wrap'>
+          {meals.length ? (
+            meals.map((meal, i) => (
+              <MealBox key={i} width='190px' size='lg' meal={meal} />
+            ))
+          ) : (
+            <Text my='3' fontSize='3xl' color='orange.800' fontWeight={'bod'}>
+              لا يوجد وجبات !!!!!!!!!
+            </Text>
+          )}
+        </Flex>
+      )}
     </Flex>
   );
 }

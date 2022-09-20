@@ -55,7 +55,7 @@ export default function Paypal({ plan, setCheckout }: Props) {
       <PayPalScriptProvider
         options={{
           'client-id':
-            'Aa2gYWoyRDL6MVdcZEvD0YACgP49xVdeRlY92ZX_xkRgRJKie0MQF2p1cGE6NdoOc0hybKI3Zab8q4Kj'
+            'AYTCP0tc6Sc1UURcx0uQtvtuUOhQJIXBoTyuBxShH5IllqUuYKYvgz6mTc3qS543O-6MqVNSk-M40s-P'
         }}
       >
         {<PaypalButton plan={plan} setCheckout={setCheckout} />}

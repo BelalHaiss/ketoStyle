@@ -36,7 +36,7 @@ function handleText(field: Field, item: any) {
     return field.custom(item);
   }
   if (field.parentField) {
-    return field.parentField
+    return !item[field.parentField]
       ? ''
       : getText(item[field.parentField][field.name], field.type);
   }

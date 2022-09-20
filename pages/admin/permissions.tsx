@@ -3,9 +3,14 @@ import { useEffect, useState } from 'react';
 import { BackButton } from 'src/utils/BackButton';
 import { AddAgent } from 'src/components/admin/AddAgent';
 import AdminHoc from 'src/components/AdminHOC';
-import { getAgents, changePermission } from 'src/utils/fetchData';
+import {
+  getAgents,
+  changePermission,
+  deleteRoledPerson
+} from 'src/utils/fetchData';
 import { AdminUser } from 'src/ts/store.types';
 import { CustomFormControl } from 'src/utils/FormControl';
+import ToastUtil from 'src/utils/Toast';
 const agentsSelect = {
   label: 'اختر الموظف',
   name: 'agents',
@@ -79,11 +84,22 @@ function Permissions() {
         />
 
         {selectedAgent && (
-          <CustomFormControl
-            {...agentRoles}
-            value={selectedRole}
-            onChange={onRoleChange}
-          />
+          <>
+            <CustomFormControl
+              {...agentRoles}
+              value={selectedRole}
+              onChange={onRoleChange}
+            />
+            <Button
+              colorScheme='red'
+              onClick={() => {
+                ToastUtil('جاري الحذف', 'warning');
+                deleteRoledPerson(selectedAgent._id);
+              }}
+            >
+              حذف الموظف
+            </Button>
+          </>
         )}
 
         {isUpdate && (

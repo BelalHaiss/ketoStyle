@@ -30,7 +30,7 @@ export default function WaterComponent({ user }: Props) {
 
   useEffect(() => {
     let mount = { isMount: true };
-    getWater(user!._id, setWater, setWaterSavedData, mount);
+    getWater(user?._id, setWater, setWaterSavedData, mount);
     return () => {
       mount.isMount = false;
     };

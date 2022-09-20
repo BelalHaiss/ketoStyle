@@ -61,7 +61,8 @@ export type MealCategory =
   | 'sheep'
   | 'camel'
   | 'caridea'
-  | 'fish';
+  | 'fish'
+  | 'other';
 
 export type MealTimes = 'breakfast' | 'lunch' | 'dinner' | 'snack';
 export type Meal = {

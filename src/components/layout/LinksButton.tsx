@@ -20,8 +20,8 @@ export default function LinksButton({
   const router = useRouter();
   return (
     <Flex
+      flex='1' // flex='1'
       gap={{ base: '1', md: '2' }}
-      w='100%'
       flexDir={{ base: 'column', sm: 'row' }}
       justify={{ base: 'center', md: justifyMd }}
       align='center'

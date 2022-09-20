@@ -73,3 +73,26 @@
     font-size: 11px !important;
   }
 }
+@media screen and (max-width: 763px) and (min-width: 700px) {
+  .section4 img {
+    width: 340px;
+    height: 340px;
+  }
+  .section4 div h3 {
+    font-size: 25px;
+  }
+  .section4-text {
+    font-size: 16px !important;
+  }
+  .section5-7 img {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.term-table table,
+.term-table th,
+.term-table td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

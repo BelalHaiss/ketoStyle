@@ -35,6 +35,10 @@ function Nutrition({ isSubscriped }: { isSubscriped: boolean }) {
               colorScheme={'whatsapp'}
               size='lg'
               w='250px'
+              onClick={() => {
+                const link = 'https://wa.me/+18722824005';
+                window.open(link, '_blank');
+              }}
             >
               تواصل مع اخصائي
             </Button>

@@ -10,6 +10,7 @@ export default function MyVideo({ src, mins }: Props) {
       p='5'
       bg='orange.200'
       direction='column'
+      borderRadius={'xl'}
       gap='3'
       align='center'
       justify='center'

@@ -31,31 +31,40 @@ export default function Footer() {
     <Flex
       as='footer'
       justify='space-between'
-      bg='orange.100'
+      // bg='orange.100'
       align='center'
       mt='auto'
+      gap='1'
       px={{ base: '1', md: '3' }}
       pt={{ base: '10', md: '0' }}
-      flexDir={{ base: 'column', md: 'row' }}
+      flexDir={{ base: 'column', lg: 'row' }}
     >
       <LinksButton links={links} />
-      <Flex align={'center'} h='100px'>
-        {user ? (
-          <Button
-            colorScheme={'green'}
-            size='sm'
-            leftIcon={<RiCustomerService2Fill fontSize='25px' />}
-          >
-            تواصل مع خدمة العملاء
-          </Button>
-        ) : (
-          <Image
-            src='/home/payment.svg'
-            alt='payment'
-            width={{ base: 150, md: '300px' }}
-            height={'100px'}
-          />
-        )}
+      <Flex
+        align='center'
+        wrap='wrap'
+        justify={{ base: 'center', md: 'space-between' }}
+        w='100%'
+        flex='1'
+      >
+        <Button
+          colorScheme={'orange'}
+          onClick={() => {
+            const link = 'https://wa.me/+13126101416';
+            window.open(link, '_blank');
+          }}
+          size={{ base: 'sm', md: 'md' }}
+          leftIcon={<RiCustomerService2Fill fontSize='25px' />}
+        >
+          تواصل فورًا مع خدمة العملاء{' '}
+        </Button>
+
+        <Image
+          src='/home/paymentmethod.png'
+          alt='payment'
+          // width={{ base: 150, md: '300px' }}
+          // height={'95px'}
+        />
       </Flex>
     </Flex>
   );

@@ -100,7 +100,7 @@ export default function Status({ user }: Props) {
   }
   useEffect(() => {
     let isMount = { current: true };
-    getStatus(user._id, setStatus, isMount, setSavedStatus);
+    getStatus(user?._id, setStatus, isMount, setSavedStatus);
     return () => {
       isMount.current = false;
     };

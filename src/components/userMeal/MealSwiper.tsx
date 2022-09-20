@@ -113,7 +113,7 @@ export function MealSwiper({ link, label }: Props) {
     };
   }, []);
   return (
-    <Flex w='100%' flexDir='column' my='4' gap='2'>
+    <Flex w='100%' overflow={'hidden'} flexDir='column' my='4' gap='2'>
       <Text px='4' fontSize={{ base: 'md', md: 'xl' }} fontWeight='bold'>
         {label}
       </Text>

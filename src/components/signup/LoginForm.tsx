@@ -64,8 +64,7 @@ export default function LoginForm({
     }
     await fetcher({
       url: `/users/resetpassword/${email}`,
-      successToast: 'تم ارسال رابط لاعادة تعين كلمة السر',
-      errorToast: 'لا يوجد بريد الكتروني مسجل '
+      successToast: 'تم ارسال رابط لاعادة تعين كلمة السر'
     });
     onClose();
   }

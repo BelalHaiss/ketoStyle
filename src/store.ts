@@ -1,5 +1,5 @@
 import create, { StoreApi, Mutate, UseBoundStore } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import { USER, AppState, Price, Profile, Meal } from 'src/ts/store.types';
 import createContext from 'zustand/context';
 import { useLayoutEffect } from 'react';
@@ -20,16 +20,14 @@ const initalState = {
 };
 export const initializeStore = (preloadedState: AppState) =>
   create<AppState>()(
-    devtools(
-      persist((set) => ({
-        ...initalState,
-        ...preloadedState,
-        setUser: (user: USER | null) => set({ user }),
-        setProfile: (profile: Profile) => set({ profile }),
-        setPrices: (prices: Price[]) => set({ prices }),
-        setMealView: (meal: Meal | null) => set({ mealView: meal })
-      }))
-    )
+    persist((set) => ({
+      ...initalState,
+      ...preloadedState,
+      setUser: (user: USER | null) => set({ user }),
+      setProfile: (profile: Profile) => set({ profile }),
+      setPrices: (prices: Price[]) => set({ prices }),
+      setMealView: (meal: Meal | null) => set({ mealView: meal })
+    }))
   );
 
 export function useCreateStore(preloadedState: AppState) {

@@ -5,6 +5,7 @@ import Meta from 'src/utils/Meta';
 import '@fontsource/vazir';
 import Header from './Header';
 import { useStore } from 'src/store';
+
 import Fotter from './Footer';
 import { fetchUser as fetchUserData } from 'src/utils/fetchData';
 import { useState, useEffect } from 'react';
@@ -17,6 +18,7 @@ export function Layout({ children }: any) {
   const user = useStore((state) => state.user);
   const [isHydradated, setIsHydradated] = useState(false);
   const [fetchUser, setUserFetched] = useState(false);
+
   useEffect(() => {
     fetchPrices(setPrices);
     setIsHydradated(true);
@@ -33,6 +35,7 @@ export function Layout({ children }: any) {
   if (!isHydradated) {
     return null;
   }
+
   return (
     <ChakraProvider theme={theme}>
       <Flex flexDir={'column'} minH='100vh'>
