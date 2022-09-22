@@ -59,7 +59,7 @@ export default function Paypal({ plan, setCheckout }: Props) {
         options={{
           'client-id':
             'AYTCP0tc6Sc1UURcx0uQtvtuUOhQJIXBoTyuBxShH5IllqUuYKYvgz6mTc3qS543O-6MqVNSk-M40s-P',
-          // locale: 'ar_SA',
+          locale: 'ar_SA',
           intent: 'subscription',
           vault: true
         }}

@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
-import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
+import { Flex, Text, Heading, Icon, Image, Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 const checkedText = [
   'نظام دفع آمن',
   'قبول وسائل الدفع المختلفة',
-  'مرونه عالية في الإشتراك والإلغاء',
-  'إشتراك لمره واحدة ولايتجدد تلقائيًا'
+  'مرونه عالية في الإشتراك والإلغاء'
 ];
 export function Section8() {
   const [imgSrc, setImageSrc] = useState('/home/paypal.png');
+  const router = useRouter();
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/paypal.png')
@@ -86,6 +87,14 @@ export function Section8() {
             </Flex>
           ))}
         </Flex>
+        <Button
+          onClick={() => router.replace('/pricing')}
+          w='100%'
+          colorScheme={'orange'}
+        >
+          {' '}
+          اشترك الان{' '}
+        </Button>
       </Flex>
     </Flex>
   );
