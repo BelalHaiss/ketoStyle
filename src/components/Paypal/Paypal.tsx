@@ -51,9 +51,16 @@ export default function Paypal({ plan, setCheckout }: Props) {
           <TextBetween lBold lText={plan.usd} rText='دولار امريكي' />
         </Flex>
       )}
-      <Alert fontSize='lg' variant='solid' borderRadius={'xl'} status='warning'>
+      <Alert
+        fontSize='lg'
+        variant='solid'
+        borderRadius={'xl'}
+        status='error'
+        maxW='500px'
+      >
         <AlertIcon />
-        يجب ادخال البيانات بالغة الانجليزية{' '}
+        عند مواصلة الدفع يرجى تعبئة بقية البيانات باللغه الانجليزية مثل الاسم
+        والبيانات الاخرى{' '}
       </Alert>
       <PayPalScriptProvider
         options={{

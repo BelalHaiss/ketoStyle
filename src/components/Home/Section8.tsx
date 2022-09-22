@@ -3,8 +3,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image, Button } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-
+import { useStore } from 'src/store';
 const checkedText = [
   'نظام دفع آمن',
   'قبول وسائل الدفع المختلفة',
@@ -12,7 +11,7 @@ const checkedText = [
 ];
 export function Section8() {
   const [imgSrc, setImageSrc] = useState('/home/paypal.png');
-  const router = useRouter();
+  const user = useStore((state) => state.user);
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/paypal.png')
@@ -24,6 +23,10 @@ export function Section8() {
       window.removeEventListener('resize', handleResizeWindow);
     };
   }, []);
+  function clickRegisterButton() {
+    const btn = document.getElementById('register');
+    btn?.click();
+  }
   return (
     <Flex
       align='center'
@@ -87,14 +90,11 @@ export function Section8() {
             </Flex>
           ))}
         </Flex>
-        <Button
-          onClick={() => router.replace('/pricing')}
-          w='100%'
-          colorScheme={'orange'}
-        >
-          {' '}
-          اشترك الان{' '}
-        </Button>
+        {!user && (
+          <Button onClick={clickRegisterButton} w='100%' colorScheme={'orange'}>
+            اشترك الان
+          </Button>
+        )}
       </Flex>
     </Flex>
   );

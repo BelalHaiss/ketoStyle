@@ -96,6 +96,7 @@ export default function Header() {
               {' '}
               <Button
                 onClick={onOpen}
+                id='register'
                 borderRadius='2xl'
                 size={{ base: 'sm', md: 'md' }}
                 colorScheme='orange'
