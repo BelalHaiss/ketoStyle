@@ -18,6 +18,7 @@ type Props = {
   onChange: (name: string, value: any) => void;
   width?: string;
   options?: Value_Label[] | null;
+  readOnly?: boolean;
 };
 export function CustomFormControl({
   type,
@@ -26,7 +27,8 @@ export function CustomFormControl({
   label,
   onChange,
   width,
-  options
+  options,
+  readOnly = false
 }: Props) {
   return (
     <FormControl maxW={width ? width : '500px'}>
@@ -34,7 +36,7 @@ export function CustomFormControl({
       {(type === 'text' || type === 'number' || type === 'array') && (
         <Input
           color='orange.500'
-          readOnly={name === 'image'}
+          readOnly={name === 'image' || readOnly}
           id={name}
           focusBorderColor='orange.500'
           type={type}

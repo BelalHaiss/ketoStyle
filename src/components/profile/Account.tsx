@@ -3,6 +3,7 @@ import {
   Flex,
   Input,
   FormLabel,
+  Button,
   Select,
   InputGroup,
   InputLeftAddon,
@@ -18,6 +19,7 @@ import { USER } from 'src/ts/store.types';
 import ToastUtil from 'src/utils/Toast';
 import { fetcher } from 'src/utils/fetcher';
 import ChangePassword from './ChangePassword';
+import CustomDrawer from 'src/utils/CustomDrawer';
 const submitButtonIntial = {
   submitActive: true,
   submitLoading: false,
@@ -64,6 +66,9 @@ export function Account({ user, isAdminUpdate = false }: Props) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [showFormActions, setShowFormActions] = useState('none');
   const [submitButton, setSubmitButton] = useState(submitButtonIntial);
+  const [isOpen, setIsOpen] = useState(false); // Drawer for delete person for admin
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
   function handleError(name: string, error: '' | 'fine') {
     if (error === '') {
       setErrors({ ...errors, [name]: '' });
@@ -151,6 +156,16 @@ export function Account({ user, isAdminUpdate = false }: Props) {
     setErrors(user.profile);
   }, [user]);
 
+  // admin actions
+
+  async function handleRemovePerson() {
+    await fetcher({
+      url: `/admin/user/${user._id}`,
+      method: 'delete',
+      successToast: 'تم حذف الشخص'
+    });
+    onClose();
+  }
   return (
     <Flex
       sx={{
@@ -200,6 +215,23 @@ export function Account({ user, isAdminUpdate = false }: Props) {
         submitButton={submitButton}
       />
       <ChangePassword isAdminUpdate={isAdminUpdate} id={user._id} />
+
+      {isAdminUpdate && (
+        <Button onClick={onOpen} colorScheme='red'>
+          {' '}
+          حذف المستخدم
+        </Button>
+      )}
+
+      {isAdminUpdate && (
+        <CustomDrawer
+          onClose={onClose}
+          onSubmit={handleRemovePerson}
+          title={`حذف ${user.profile.name} نهائيا`}
+          isOpen={isOpen}
+          text='هل انت متاكد من حذف الشخص'
+        />
+      )}
     </Flex>
   );
 }

@@ -52,9 +52,10 @@ export default function Header() {
         justify='space-between'
         wrap={{ base: 'wrap', md: 'nowrap' }}
         sx={{
-          '@media (max-width:699px)': {
+          '@media (max-width:560px)': {
             'div:nth-of-type(2)': {
-              order: '3'
+              order: '3',
+              minWidth: !user ? 'auto' : '100%'
             },
             'div:nth-of-type(3)': {
               order: '2'
@@ -63,7 +64,7 @@ export default function Header() {
         }}
         p='0.4px 6px'
       >
-        <Flex align='center' mr={5}>
+        <Flex align='center'>
           <Image
             src='/logo.svg'
             w='90px'
@@ -80,19 +81,29 @@ export default function Header() {
           />
         )}
         {user && !user.role && !checkSubscription(user, 'meal') && (
-          <LinksButton justifyMd='center' links={links} scheme='gray' />
+          <LinksButton
+            justifyMd='center'
+            links={links.slice(1, 5)}
+            scheme='gray'
+          />
         )}
         {user?.role && (
           <LinksButton justifyMd='center' links={adminLinks} scheme='gray' />
         )}
-        <Flex wrap='wrap' px='3' align='center' gap='2'>
+        <Flex wrap='wrap' px='1' align='center' gap={{ base: '1', md: '2' }}>
           {!user ? (
             <>
               {' '}
-              <Button onClick={onOpen} borderRadius='2xl' colorScheme='orange'>
+              <Button
+                onClick={onOpen}
+                borderRadius='2xl'
+                size={{ base: 'sm', md: 'md' }}
+                colorScheme='orange'
+              >
                 انضم الينا
               </Button>
               <Button
+                size={{ base: 'sm', md: 'md' }}
                 borderRadius='2xl'
                 onClick={() => setIsLogin(true)}
                 colorScheme='orange'

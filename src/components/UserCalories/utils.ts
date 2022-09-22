@@ -1,11 +1,11 @@
 import { MealTimes } from 'src/ts/store.types';
 import { Measure, Physical, Willing } from 'src/ts/register.types';
-import { MealsData } from './TimesEnergy';
+import { MealsData, CustomMeal } from './TimesEnergy';
 import { Meal } from 'src/ts/store.types';
 
 export type Energy = 'carbs' | 'proteins' | 'fats' | 'calories';
 
-export function calculateActualEnergy(data: MealsData) {
+export function calculateActualEnergy(data: MealsData, custom: CustomMeal) {
   let carbs = 0,
     fats = 0,
     proteins = 0,
@@ -20,6 +20,10 @@ export function calculateActualEnergy(data: MealsData) {
       calories += meal.calories;
     });
   }
+  carbs += custom.carbs;
+  fats += custom.fats;
+  proteins += custom.proteins;
+  calories += custom.calories;
   return {
     carbs,
     fats,

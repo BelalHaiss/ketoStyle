@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
@@ -10,6 +10,18 @@ const checkedText = [
   'حساب احتياج الجسم وكتلة الجسم'
 ];
 export function Section6() {
+  const [imgSrc, setImageSrc] = useState('/home/sec6.png');
+  function handleResizeWindow() {
+    window.innerWidth >= 700
+      ? setImageSrc('/home/sec6.png')
+      : setImageSrc('/home/sec6-sm.png');
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
   return (
     <Flex
       align='center'
@@ -25,10 +37,11 @@ export function Section6() {
     >
       <Image
         mr='-25px'
-        width={{ base: '200px', md: '400px' }}
-        height={{ base: '200px', md: '400px' }}
+        width={{ base: '300px', md: '400px' }}
+        height={{ base: '300px', md: '400px' }}
         alt={'we support you'}
-        src='/home/sec6.png'
+        className='home-image'
+        src={imgSrc}
       />
       <Flex
         w={{ base: 'auto', md: '430px' }}

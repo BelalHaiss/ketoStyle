@@ -10,16 +10,19 @@ type Props = {
   links: Link[];
   justifyMd?: string;
   scheme?: string;
+  fullWidth?: boolean;
 };
 
 export default function LinksButton({
   links,
   scheme = 'orange',
-  justifyMd = 'flex-start'
+  justifyMd = 'flex-start',
+  fullWidth = false
 }: Props) {
   const router = useRouter();
   return (
     <Flex
+      w={fullWidth ? '100%' : 'auto'}
       flex='1' // flex='1'
       gap={{ base: '1', md: '2' }}
       flexDir={{ base: 'column', sm: 'row' }}
@@ -32,6 +35,7 @@ export default function LinksButton({
           key={i}
           size={{ base: 'xs', md: 'sm' }}
           colorScheme={scheme}
+          color='orange.900 '
           _hover={{ bg: 'white', color: 'orange.500' }}
           variant='ghost'
           onClick={() => router.replace(link.href)}

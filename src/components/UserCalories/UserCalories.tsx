@@ -4,7 +4,7 @@ import { CaloriesLoader } from './CaloriesLoader';
 import { useStore } from 'src/store';
 import { EnergyProgress } from './EnergyProgress';
 import { useAsync } from 'src/customHooks/useAsync';
-import { TimesEnergy, MealsData } from './TimesEnergy';
+import { TimesEnergy, MealsData, CustomMeal } from './TimesEnergy';
 import { MyMealsModal } from './MyMealsModal';
 import { calculateEnergy, calculateActualEnergy } from './utils';
 import { AiFillFire } from 'react-icons/ai';
@@ -19,8 +19,11 @@ function initialEnergy(): Energy {
     actual: 10
   };
 }
-
-export function UserCalories() {
+type Props = {
+  fetchCalories: boolean;
+  setFetchCalories: (bool: boolean) => void;
+};
+export function UserCalories({ fetchCalories, setFetchCalories }: Props) {
   const user = useStore((state) => state.user);
   const [loading, setLoader] = useState(true);
   const [calories, setCalories] = useState<Energy>(initialEnergy);
@@ -34,6 +37,12 @@ export function UserCalories() {
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
 
+  useEffect(() => {
+    // when usere add custom meal we fetch the data
+    if (fetchCalories) {
+      setShouldFetch(true);
+    }
+  }, [fetchCalories]);
   useAsync(
     !shouldFetch
       ? null
@@ -42,11 +51,15 @@ export function UserCalories() {
             user!._id
           }?date=${new Date().toLocaleDateString('en')}`
         },
-    setMealsData,
+    null,
     {
-      onRequest: () => setShouldFetch(false),
-      onSuccess: (data: MealsData) => {
-        const actuals = calculateActualEnergy(data);
+      onRequest: () => {
+        setFetchCalories(false);
+        setShouldFetch(false);
+      },
+      onSuccess: (data: { mealsData: MealsData; custom: CustomMeal }) => {
+        setMealsData(data.mealsData);
+        const actuals = calculateActualEnergy(data.mealsData, data.custom);
         setProteins((prev) => ({
           ...prev,
           actual: +actuals.proteins.toFixed(0)
@@ -129,12 +142,12 @@ export function UserCalories() {
             align='center'
           >
             <Icon w='8' h='8' mb='2' as={AiFillFire} />
-            <Text fontWeight={'bold'}> استهلكت {calories.actual} جم</Text>
+            <Text fontWeight={'bold'}> استهلكت {calories.actual} سعره</Text>
 
             <Text>
               {calories.total - calories.actual < 0
                 ? 'استهلكت اكثر من اللازم'
-                : ` متبقي لك ${calories.total - calories.actual} جم`}
+                : ` متبقي لك ${calories.total - calories.actual} سعره`}
             </Text>
           </Flex>
         </Flex>

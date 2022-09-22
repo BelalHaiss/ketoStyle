@@ -17,8 +17,8 @@ export function Section2() {
     >
       <Flex flex='1' justify={'center'} order={{ base: '1', md: '2' }}>
         <Image
-          width={{ base: '200px', md: '450px' }}
-          height={{ base: '200px', md: '450px' }}
+          width={{ base: '300px', md: '450px' }}
+          height={{ base: '300px', md: '450px' }}
           alt={'diet'}
           src={'/home/bodies.png'}
         />
@@ -34,6 +34,7 @@ export function Section2() {
         >
           <Heading
             as='h3'
+            fontWeight={'normal'}
             w={{ base: 'auto', md: '350px' }}
             color='orange.900'
             fontSize={{ base: 'xl', md: '50px' }}

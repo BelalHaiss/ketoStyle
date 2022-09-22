@@ -73,7 +73,8 @@ function Expectaion() {
               >
                 بدأت رحلتك يا {user?.profile?.name}
                 <Text display='inline-block' mr='1' color='orange.500'>
-                  وزنك المثالي هو {user?.measurements?.desiredWeight} كجم
+                  هدفك المثالي
+                  {user?.measurements?.desiredWeight} كجم
                 </Text>
               </Heading>
             </Flex>

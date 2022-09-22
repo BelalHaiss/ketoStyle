@@ -3,9 +3,10 @@ import ToastUtil from './Toast';
 import { MealInfo, Meal } from 'src/ts/store.types';
 
 const getDate = () => new Date().toLocaleDateString('en');
-export async function fetchPrices(setPrices: any) {
+export async function fetchPrices(setPrices: any, setLoading?: any) {
   const prices = await fetcher({ url: '/prices', noErrorToast: true });
   setPrices(prices);
+  setLoading && setLoading(false);
 }
 
 export async function fetchWorkouts(setWorkouts: any) {

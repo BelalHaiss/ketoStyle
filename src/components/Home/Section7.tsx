@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
 
 export function Section7() {
+  const [imgSrc, setImageSrc] = useState('/home/sec7.png');
+  function handleResizeWindow() {
+    window.innerWidth >= 700
+      ? setImageSrc('/home/sec7.png')
+      : setImageSrc('/home/sec7-sm.png');
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
   return (
     <Flex
       align='center'
@@ -17,10 +29,11 @@ export function Section7() {
     >
       <Image
         order={{ base: 1, md: '2' }}
-        width={{ base: '200px', md: '300px', lg: '400px' }}
-        height={{ base: '200px', md: '300px', lg: '400px' }}
+        width={{ base: '300px', md: '300px', lg: '400px' }}
+        className='home-image'
+        height={{ base: '300px', md: '300px', lg: '400px' }}
         alt={'dish'}
-        src='/home/sec7.png'
+        src={imgSrc}
       />
       <Flex
         w={{ base: 'auto', md: '550px' }}

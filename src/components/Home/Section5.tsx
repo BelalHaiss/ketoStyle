@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
@@ -10,6 +10,18 @@ const checkedText = [
   'توقعات لموعد وصولك للوزن المطلوب'
 ];
 export function Section5() {
+  const [imgSrc, setImageSrc] = useState('/home/sec5.png');
+  function handleResizeWindow() {
+    window.innerWidth >= 700
+      ? setImageSrc('/home/sec5.png')
+      : setImageSrc('/home/sec5-sm.png');
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
   return (
     <Flex
       align='center'
@@ -23,10 +35,11 @@ export function Section5() {
     >
       <Image
         order={{ base: 1, md: '2' }}
-        width={{ base: '200px', md: '300px', lg: '400px' }}
-        height={{ base: '200px', md: '300px', lg: '400px' }}
+        width={{ base: '300px', md: '300px', lg: '400px' }}
+        className='home-image'
+        height={{ base: '300px', md: '300px', lg: '400px' }}
         alt={'dish'}
-        src='/home/sec5.png'
+        src={imgSrc}
       />
       <Flex
         w={{ base: 'auto', md: '450px' }}

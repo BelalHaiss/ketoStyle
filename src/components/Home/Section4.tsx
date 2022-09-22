@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
@@ -10,6 +10,18 @@ const checkedText = [
   'أكثر من ١٥٠ وصفة كيتو'
 ];
 export function Section4() {
+  const [imgSrc, setImageSrc] = useState('/home/sec4.png');
+  function handleResizeWindow() {
+    window.innerWidth >= 700
+      ? setImageSrc('/home/sec4.png')
+      : setImageSrc('/home/sec4-sm.png');
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
   return (
     <Flex
       align='center'
@@ -25,10 +37,11 @@ export function Section4() {
     >
       <Image
         mr='-25px'
-        width={{ base: '200px', md: '400px' }}
-        height={{ base: '200px', md: '400px' }}
+        className='home-image'
+        width={{ base: '300px', md: '400px' }}
+        height={{ base: '300px', md: '400px' }}
         alt={'dish'}
-        src={'/home/sec4.png'}
+        src={imgSrc}
       />
       <Flex
         w={{ base: 'auto', md: '430px' }}

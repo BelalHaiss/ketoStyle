@@ -37,9 +37,11 @@ export type Plans = 'meal' | 'nutritionist' | 'workout';
 export type Price = {
   _id: string;
   category: Plans;
+  planId: string;
   label: string;
   price: number;
   usd: number;
+  discount: number;
   duration: number;
 };
 

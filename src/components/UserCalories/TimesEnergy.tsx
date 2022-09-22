@@ -4,6 +4,12 @@ import { MealTimes, Meal } from 'src/ts/store.types';
 import { getEnergyLabel, getTimeLabel } from './utils';
 
 export type MealsData = { [key in MealTimes]: Meal[] };
+export type CustomMeal = {
+  carbs: number;
+  proteins: number;
+  fats: number;
+  calories: number;
+};
 type Props = {
   data: MealsData;
 };

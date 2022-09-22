@@ -11,6 +11,7 @@ import { DataTable } from 'src/components/admin/utils/DataTable';
 import { countUsers, SearchUserByNameOrPhone } from 'src/utils/fetchData';
 import ToastUtil from 'src/utils/Toast';
 import EditUser from 'src/components/admin/EditUsers';
+import { fetcher } from 'src/utils/fetcher';
 function Users() {
   const [usersCount, setUserCount] = useState<StatType>({
     icon: FaUsers,
@@ -61,7 +62,6 @@ function Users() {
   }
   async function onSearch(value: string) {
     const res = await SearchUserByNameOrPhone(value);
-    console.log(res);
     if (res) {
       if (res.name === 'custom') {
         ToastUtil('لاتوجد نتائج', 'error');
@@ -75,6 +75,16 @@ function Users() {
         setUsersResult(res);
       }
     }
+  }
+  async function showAllUsers() {
+    const res = await fetcher({ url: '/admin/allusers' });
+    setShowTable(true);
+    setResultCount({
+      ...resultCount,
+      number: res.length
+    });
+
+    setUsersResult(res);
   }
   useEffect(() => {
     countUsers(setUserCount);
@@ -101,9 +111,11 @@ function Users() {
       >
         <StatBox {...usersCount} />
         <Search placeholder='ابحث برقم الهاتف او الايميل' onSearch={onSearch} />
+        <Button onClick={showAllUsers} colorScheme={'purple'}>
+          اظهار جميع العملاء
+        </Button>
         <StatBox {...resultCount} />
       </Flex>
-
       {/* user table */}
       {showTable && (
         <DataTable

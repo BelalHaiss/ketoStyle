@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
@@ -11,22 +11,35 @@ const checkedText = [
   'إشتراك لمره واحدة ولايتجدد تلقائيًا'
 ];
 export function Section8() {
+  const [imgSrc, setImageSrc] = useState('/home/paypal.png');
+  function handleResizeWindow() {
+    window.innerWidth >= 700
+      ? setImageSrc('/home/paypal.png')
+      : setImageSrc('/home/paypal-sm.png');
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeWindow);
+    return () => {
+      window.removeEventListener('resize', handleResizeWindow);
+    };
+  }, []);
   return (
     <Flex
       align='center'
       bg='orange.100'
       // gap={{ base: '4', md: '1' }}
       p='2'
-      gap={{ base: '15', md: '1' }}
+      gap={{ base: '15', md: '3' }}
       py='7'
       w='100%'
       flexDir={{ base: 'column', md: 'row' }}
     >
       <Image
-        // width={{ base: '200px', md: '400px' }}
-        height={{ base: '200px', md: '400px' }}
+        className='home-image'
+        width={{ base: '300px', md: 'auto' }}
+        height={{ base: '300px', md: '400px' }}
         alt={'paypal'}
-        src='/home/paypal.png'
+        src={imgSrc}
       />
       <Flex
         w={{ base: 'auto', md: '400px' }}

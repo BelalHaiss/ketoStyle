@@ -1,7 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Water from 'src/components/userMeal/Water';
 import Status from 'src/components/userMeal/Status';
+import AddCustomMeal from 'src/components/userMeal/AddCustomMeal';
 import { USER } from 'src/ts/store.types';
 import { UserMeal } from 'src/components/userMeal/Meal';
 import { UserCalories } from 'src/components/UserCalories/UserCalories';
@@ -12,10 +13,15 @@ type Props = {
 };
 function Meals({ user }: Props) {
   useEffect(() => {}, []);
+  const [fetchCalories, setFetchCalories] = useState(false);
   return (
     <Flex gap='5' flexDir='column'>
-      <UserCalories />
+      <UserCalories
+        setFetchCalories={setFetchCalories}
+        fetchCalories={fetchCalories}
+      />
       <UserMeal />
+      <AddCustomMeal setFetchCalories={setFetchCalories} />
       <Water user={user} />
       <Status user={user} />
     </Flex>

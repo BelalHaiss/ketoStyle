@@ -16,7 +16,7 @@ export default function MealSquare({ title, texts, isValues }: Props) {
       bg='orange.200'
       rounded={'xl'}
       w='250px'
-      h='350px'
+      minH='350px'
     >
       <Text fontSize='2xl' mt='2' mb='3' fontWeight={'bold'}>
         {title}

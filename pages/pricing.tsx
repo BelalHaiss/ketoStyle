@@ -84,9 +84,9 @@ function Pricing({ vistor }: Props) {
   const [checkout, setCheckout] = useState<Price | null>(null);
 
   const [cards, setCards] = useState(initCards);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchPrices(setPrices);
+    fetchPrices(setPrices, setLoading);
   }, []);
   useEffect(() => {
     if (prices?.length) {
@@ -179,15 +179,56 @@ function Pricing({ vistor }: Props) {
               >
                 <hr style={{ width: '100%', border: '2px dashed white' }} />
                 {/* price */}
-                <Flex align='center' gap='5'>
+                <Flex align='center' gap='3'>
                   <Flex align='center'>
                     <Text fontSize='2xl' ml='1' fontWeight='bold' as='sup'>
                       SAR
                     </Text>
                     <Text fontWeight='bold' fontSize='50px'>
-                      {card.plan?.price ?? '0'}
+                      {card.plan?.price}
                     </Text>
                   </Flex>
+                  {card.plan && card.plan?.discount > 0 && (
+                    <>
+                      <svg height='65' width='20'>
+                        <line
+                          x1='0'
+                          y1='55'
+                          x2='20'
+                          y2='0'
+                          // style={{':rgb(255,0,0);stroke-width:2'}}
+                          style={{
+                            stroke: '#4A5568',
+                            strokeWidth: '3px'
+                          }}
+                        />
+                      </svg>
+                      <Flex color='#4A5568' position='relative' align='center'>
+                        <svg
+                          height='60'
+                          style={{ position: 'absolute', width: '100%' }}
+                        >
+                          <line
+                            x1='0'
+                            y1='20'
+                            x2='100%'
+                            y2='20'
+                            // style={{':rgb(255,0,0);stroke-width:2'}}
+                            style={{
+                              stroke: '#4A5568',
+                              strokeWidth: '3px'
+                            }}
+                          />
+                        </svg>
+                        <Text fontSize='md' ml='1' as='sup'>
+                          SAR
+                        </Text>
+                        <Text fontSize='30px' mt='-2'>
+                          {card.plan?.price + card.plan?.discount}
+                        </Text>
+                      </Flex>
+                    </>
+                  )}
                 </Flex>
                 {/* subs */}
                 <Button

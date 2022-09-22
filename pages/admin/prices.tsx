@@ -20,7 +20,7 @@ function Prices() {
   const [priceState, setPrices] = useState<Price[]>(prices);
   const [displayFormAction, setDisplayFormAction] = useState('none');
   const [isUSD, setIsUSD] = useState('false');
-  const [usdValue, setUSDValue] = useState(3.76);
+  const [usdValue, setUSDValue] = useState(0.27);
   const [submitButton, setSubmitButton] = useState(initSubmitButton);
   function resetFormAction() {
     setDisplayFormAction('none');
@@ -71,7 +71,7 @@ function Prices() {
           return {
             ...price,
             price: +value,
-            usd: +(+value * usdValue).toFixed(0)
+            usd: +((+value - price.discount) * usdValue).toFixed(0)
           };
         }
         return price;
@@ -79,6 +79,21 @@ function Prices() {
     );
   }
 
+  function handleDiscount(name: string, value: string) {
+    newAction();
+    setPrices(
+      priceState.map((price) => {
+        if (price._id === name) {
+          return {
+            ...price,
+            discount: +value,
+            usd: +((price.price - +value) * usdValue).toFixed(0)
+          };
+        }
+        return price;
+      })
+    );
+  }
   if (!prices || !priceState.length) return <Loader />;
   return (
     <Flex flexDir={'column'} gap='3' layerStyle={'flexCenter'}>
@@ -104,7 +119,7 @@ function Prices() {
                 setPrices((old) =>
                   old.map((price) => ({
                     ...price,
-                    usd: +(price.price * +value).toFixed(0)
+                    usd: +((price.price - price.discount) * +value).toFixed(0)
                   }))
                 );
               }}
@@ -127,14 +142,37 @@ function Prices() {
             </Flex>
           </Flex>
           {priceState.map((plan, i) => (
-            <CustomFormControl
-              key={i}
-              value={isUSD === 'false' ? plan.price : plan.usd}
-              onChange={handleChange}
-              label={plan.label}
-              type='number'
-              name={plan._id}
-            />
+            <Flex gap='2' key={i} align='center'>
+              <CustomFormControl
+                value={isUSD === 'false' ? plan.price : plan.usd}
+                onChange={handleChange}
+                label={plan.label}
+                type='number'
+                name={plan._id}
+                readOnly={isUSD === 'true'}
+              />
+              {isUSD === 'false' && (
+                <>
+                  <CustomFormControl
+                    key={i + 'discount'}
+                    value={plan.discount}
+                    onChange={handleDiscount}
+                    label='الخصم'
+                    type='number'
+                    name={plan._id}
+                  />
+                  <CustomFormControl
+                    key={i + 'net'}
+                    value={plan.price - plan.discount}
+                    onChange={handleChange}
+                    label={'صافي السعر'}
+                    type='number'
+                    name={plan._id}
+                    readOnly
+                  />
+                </>
+              )}
+            </Flex>
           ))}
           <FormAction
             onReset={onReset}

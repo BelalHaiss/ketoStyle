@@ -14,7 +14,7 @@ const Meta = ({ title }: { title: string }) => {
       <meta property='og:title' content='كيتو ستايل' />
       <meta
         name='keywords'
-        content='تمارين رياضية - قياس كتلة - اخصائي اغذية- وجبات كيتة'
+        content='تمارين رياضية - قياس كتلة - اخصائي اغذية- وجبات كيتة - كيتو ستايل'
       />
 
       {/* <link rel='manifest' href='/manifest.json' /> */}

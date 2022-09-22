@@ -1,4 +1,4 @@
-import { Flex, Button, Text } from '@chakra-ui/react';
+import { Flex, AlertIcon, Alert, Text } from '@chakra-ui/react';
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -51,11 +51,17 @@ export default function Paypal({ plan, setCheckout }: Props) {
           <TextBetween lBold lText={plan.usd} rText='دولار امريكي' />
         </Flex>
       )}
-
+      <Alert fontSize='lg' variant='solid' borderRadius={'xl'} status='warning'>
+        <AlertIcon />
+        يجب ادخال البيانات بالغة الانجليزية{' '}
+      </Alert>
       <PayPalScriptProvider
         options={{
           'client-id':
-            'AYTCP0tc6Sc1UURcx0uQtvtuUOhQJIXBoTyuBxShH5IllqUuYKYvgz6mTc3qS543O-6MqVNSk-M40s-P'
+            'AYTCP0tc6Sc1UURcx0uQtvtuUOhQJIXBoTyuBxShH5IllqUuYKYvgz6mTc3qS543O-6MqVNSk-M40s-P',
+          // locale: 'ar_SA',
+          intent: 'subscription',
+          vault: true
         }}
       >
         {<PaypalButton plan={plan} setCheckout={setCheckout} />}
@@ -93,7 +99,9 @@ function PaypalButton({ setCheckout, plan }: Props) {
     });
     setLoading(false);
     await fetchUser(user!._id, setUser);
-    plan?.category === 'meal' ? router.replace('/meals') : cancelCheckout();
+    plan?.category === 'meal'
+      ? router.replace('/expectation')
+      : cancelCheckout();
   }
   async function handleError(e: any) {
     savePayment(true);
@@ -108,30 +116,27 @@ function PaypalButton({ setCheckout, plan }: Props) {
         style={{ layout: 'vertical', shape: 'pill' }}
         onCancel={cancelCheckout}
         onError={handleError}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: plan!.usd.toString()
-                }
-              }
-            ],
-            application_context: {
-              brand_name: 'KetoStyle'
-            }
+        createSubscription={function (data, actions) {
+          return actions.subscription.create({
+            plan_id: plan!.planId
+            // application_context: {
+            //   brand_name: 'KetoStyle'
+            // }
           });
         }}
-        onApprove={async (data, actions) => {
-          const paypalInfo = await actions.order!.capture();
+        onApprove={async function (data, actions) {
           const paypal = {
-            orderId: paypalInfo.id,
-            payer: paypalInfo.payer,
+            //   orderId: paypalInfo.id,
+            // payer: paypalInfo.payer,
             // @ts-ignore
             method: data.paymentSource,
-            status: paypalInfo.status
+            orderID: data.orderID,
+            payerID: data.payerID,
+            paymentID: data.paymentID,
+            subscriptionID: data.subscriptionID
+            //   status: paypalInfo.status
           };
-          savePayment(false, paypal, paypalInfo.purchase_units[0].amount.value);
+          savePayment(false, paypal);
         }}
       />
     </>

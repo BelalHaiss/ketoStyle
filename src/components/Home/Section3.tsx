@@ -17,8 +17,8 @@ export function Section3() {
     >
       <Flex flex='1' justify={'center'} order={{ base: '1', md: '2' }}>
         <Image
-          width={{ base: '200px', md: '250px' }}
-          height={{ base: '200px', md: '250px' }}
+          width={{ base: '250px', md: '250px' }}
+          height={{ base: '250px', md: '250px' }}
           alt={'dish'}
           src={'/home/dish.png'}
         />
@@ -33,10 +33,10 @@ export function Section3() {
           flexDir={'column'}
         >
           <Heading
+            fontWeight={'normal'}
             as='h3'
             w={{ base: 'auto', md: '430px' }}
             color='orange.900'
-            fontWeight={'normal'}
             fontSize={{ base: '2xl', md: '47.8px' }}
           >
             إبدأ الكيتو بطريقة{' '}

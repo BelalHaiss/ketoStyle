@@ -4,18 +4,18 @@ import LinksButton from 'src/components/layout/LinksButton';
 import { RiCustomerService2Fill } from 'react-icons/ri';
 import { useStore } from 'src/store';
 const links = [
-  {
-    label: 'من نحن',
-    href: '/about'
-  },
+  // {
+  //   label: 'من نحن',
+  //   href: '/about'
+  // },
   {
     label: 'سياسة الخصوصية',
     href: '/privacy'
   },
-  {
-    label: 'تواصل معنا',
-    href: '/contact'
-  },
+  // {
+  //   label: 'تواصل معنا',
+  //   href: '/contact'
+  // },
   {
     label: 'الشروط والاحكام',
     href: '/terms'
