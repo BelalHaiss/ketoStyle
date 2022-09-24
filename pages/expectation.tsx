@@ -33,7 +33,6 @@ function getDesiredWeightDate(measurements: Measure, willing: Willing) {
 }
 function Expectaion() {
   const user = useStore((state) => state.user);
-  console.log(user, 'user');
   return (
     <>
       <Meta title='التوقعات' />

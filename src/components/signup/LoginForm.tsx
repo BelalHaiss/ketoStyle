@@ -28,11 +28,13 @@ export default function LoginForm({
   const setUser = useStore((state) => state.setUser);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const [loadingText, setLoadingText] = useState('جاري تسجيل الدخول');
   const [forgetPassword, setForgetPassword] = useState(false);
   const handleSubmit = async () => {
     if (!userState.emailOrNumber || !userState.password)
       return Toast('برجاء ادخال جميع البيانات');
     setLoading(true);
+    setLoadingText('جاري تسجيل الدخول');
     const user = await fetcher({
       url: '/users/login',
       method: 'post',
@@ -59,6 +61,9 @@ export default function LoginForm({
   };
 
   async function sendResetPassword() {
+    setLoading(true);
+    setLoadingText('جاري التحقق');
+
     if (!emailRegex.test(email)) {
       return ToastUtil('البريد الاكتروني غير صحيح');
     }
@@ -150,7 +155,7 @@ export default function LoginForm({
 
       <Button
         isLoading={loading}
-        loadingText='جاري تسجيل الدخول'
+        loadingText={loadingText}
         colorScheme='orange'
         w='100%'
         onClick={forgetPassword ? sendResetPassword : handleSubmit}

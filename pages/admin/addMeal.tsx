@@ -182,7 +182,6 @@ function AddMeal() {
   function editedData() {
     return formData.map((item: MealInfo) => {
       if (item.name === 'category' || item.name === 'time') {
-        console.log(mealView, 'mealView');
         // @ts-ignore
         item.value = mealView![item.name].value;
       } else if (item.name === 'image') {

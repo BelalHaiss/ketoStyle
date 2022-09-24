@@ -31,7 +31,6 @@ export default function AllPayment() {
       onRequest: () => setIsFetched(true),
       onSuccess: (data) => {
         setLoading(false);
-        console.log(data);
       }
     }
   );

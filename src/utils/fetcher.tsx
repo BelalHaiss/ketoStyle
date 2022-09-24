@@ -55,7 +55,6 @@ export const fetcher = async ({
     }
     if (noErrorToast) return null;
     if (e.message === 'canceled') return null;
-    console.log(e, 'fetcher error');
     if (e.response?.data?.name === 'custom') {
       Toast(e.response.data.message, 'error');
     } else {

@@ -25,7 +25,6 @@ export function RegisterModal({
 }: Props) {
   const [header, setHeader] = useState('مرحبًا بك في عائلتنا');
   const [registerDetails, setRegisterDetails] = useState({});
-  console.log(registerDetails);
   const [page, setPage] = useState(1);
   const [isPrevDisabled, setIsPrevDisabled] = useState(true);
   const [isNextDisabled, setIsNextDisabled] = useState(false);

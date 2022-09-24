@@ -117,7 +117,6 @@ function netCalories(
   willing: Willing
 ) {
   let net = calories;
-  console.log(net, 'inside net');
   if (sex === 'male') {
     net -= willing === 'max' ? 500 : 250;
     return net;
