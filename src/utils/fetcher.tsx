@@ -39,7 +39,6 @@ export const fetcher = async ({
     const res = await axios({
       url: url,
       method,
-
       data,
       signal: controller.signal,
       withCredentials: true

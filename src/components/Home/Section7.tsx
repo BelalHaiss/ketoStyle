@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
-
+function initState() {
+  return window.innerWidth >= 700 ? '/home/sec7.png' : '/home/sec7-sm.png';
+}
 export function Section7() {
-  const [imgSrc, setImageSrc] = useState('/home/sec7.png');
+  const [imgSrc, setImageSrc] = useState(initState);
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/sec7.png')

@@ -9,8 +9,11 @@ const checkedText = [
   'إعداد خطة غذائية مخصصة لك',
   'توقعات لموعد وصولك للوزن المطلوب'
 ];
+function initState() {
+  return window.innerWidth >= 700 ? '/home/sec5.png' : '/home/sec5-sm.png';
+}
 export function Section5() {
-  const [imgSrc, setImageSrc] = useState('/home/sec5.png');
+  const [imgSrc, setImageSrc] = useState(initState);
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/sec5.png')

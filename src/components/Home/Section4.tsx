@@ -9,8 +9,11 @@ const checkedText = [
   'يمكنك تغييرها في أي وقت',
   'أكثر من ١٥٠ وصفة كيتو'
 ];
+function initState() {
+  return window.innerWidth >= 700 ? '/home/sec4.png' : '/home/sec4-sm.png';
+}
 export function Section4() {
-  const [imgSrc, setImageSrc] = useState('/home/sec4.png');
+  const [imgSrc, setImageSrc] = useState<string>(initState);
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/sec4.png')

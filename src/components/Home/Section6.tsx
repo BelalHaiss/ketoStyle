@@ -9,8 +9,11 @@ const checkedText = [
   'توقعات تقريبية لموعد وصولك للوزن المطلوب',
   'حساب احتياج الجسم وكتلة الجسم'
 ];
+function initState() {
+  return window.innerWidth >= 700 ? '/home/sec6.png' : '/home/sec6-sm.png';
+}
 export function Section6() {
-  const [imgSrc, setImageSrc] = useState('/home/sec6.png');
+  const [imgSrc, setImageSrc] = useState(initState);
   function handleResizeWindow() {
     window.innerWidth >= 700
       ? setImageSrc('/home/sec6.png')

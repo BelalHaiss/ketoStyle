@@ -9,8 +9,12 @@ const checkedText = [
   'قبول وسائل الدفع المختلفة',
   'مرونه عالية في الإشتراك والإلغاء'
 ];
+
+function initState() {
+  return window.innerWidth >= 700 ? '/home/paypal.png' : '/home/paypal-sm.png';
+}
 export function Section8() {
-  const [imgSrc, setImageSrc] = useState('/home/paypal.png');
+  const [imgSrc, setImageSrc] = useState(initState);
   const user = useStore((state) => state.user);
   function handleResizeWindow() {
     window.innerWidth >= 700
