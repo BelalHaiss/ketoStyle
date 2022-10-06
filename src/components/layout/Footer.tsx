@@ -60,8 +60,9 @@ export default function Footer() {
         </Button>
 
         <Image
-          src='/home/paymentmethod.svg'
+          src='/home/payment.svg'
           alt='payment'
+          borderRadius={'xl'}
           // width={{ base: 150, md: '300px' }}
           // height={'95px'}
         />

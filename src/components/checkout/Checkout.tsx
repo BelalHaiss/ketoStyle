@@ -4,33 +4,27 @@ import { useStore } from 'src/store';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Price } from 'src/ts/store.types';
-import { useRouter } from 'next/router';
 import TextBetween from 'src/utils/TextBetween';
-import Loader from 'src/utils/Loader';
-import { fetcher } from 'src/utils/fetcher';
-import { fetchUser } from 'src/utils/fetchData';
+import { FaApplePay } from 'react-icons/fa';
 import { MdOutlinePayment } from 'react-icons/md';
 type Props = {
   plan: Price | null;
   setCheckout: (param: Price | null) => void;
 };
-const clientURL = 'https://www.ketonestyle.com';
+const clientURL = 'https://www.ketonestyle.com/redirect/?re=';
 function handleRedirect(plan: Price['category']) {
   switch (plan) {
     case 'meal':
       // return `/expectation`;
-      return `${clientURL}/expectation`;
+      return `${clientURL}expectation`;
     case 'workout':
-      return `${clientURL}/workout`;
+      return `${clientURL}workout`;
     case 'nutritionist':
-      return `${clientURL}/nutritionist`;
+      return `${clientURL}nutritionist`;
   }
 }
 export default function Checkout({ plan, setCheckout }: Props) {
-  const router = useRouter();
-
   const user = useStore((state) => state.user);
-  const setUser = useStore((state) => state.setUser);
   const cancelCheckout = () => setCheckout(null);
   // @ts-ignore
   const [loading, setLoading] = useState(window.goSell ? false : true);
@@ -120,19 +114,35 @@ export default function Checkout({ plan, setCheckout }: Props) {
       )}
       <Alert fontSize='lg' variant='solid' borderRadius={'xl'} status='error'>
         <AlertIcon />
-        عند مواصلة الدفع يرجى تعبئة بقية البيانات باللغه الانجليزية مثل الاسم
-        والبيانات الاخرى{' '}
+        اذا اردت الدفع بواسطة Apple pay يرجي الدخول من متصفح safari{' '}
       </Alert>
 
       <Button
         leftIcon={<MdOutlinePayment />}
         fontSize='xl'
         isLoading={loading || !GoSell}
-        onClick={() => GoSell.openLightBox()}
+        onClick={() => GoSell.openPaymentPage()}
         colorScheme={'green'}
       >
         {' '}
         ادفع الان{' '}
+      </Button>
+      <Button
+        leftIcon={<FaApplePay fontSize='50px' />}
+        // fontSize='xl'
+        isLoading={loading || !GoSell}
+        onClick={() => GoSell.openPaymentPage()}
+        bg='black'
+        color='white'
+        dir='ltr'
+        _hover={{
+          bg: 'black'
+        }}
+        _active={{
+          bg: 'black'
+        }}
+      >
+        ادفع بواسطة
       </Button>
     </Flex>
   );

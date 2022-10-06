@@ -35,7 +35,6 @@ export function Layout({ children }: any) {
   if (!isHydradated) {
     return null;
   }
-  console.log(user, 'userState');
 
   return (
     <ChakraProvider theme={theme}>
