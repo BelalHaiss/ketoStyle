@@ -12,8 +12,12 @@ const tableHeaders = [
     label: 'الاسم',
     name: 'name',
     parentField: 'profile',
-    custom: (item: any) =>
-      `${item.userId.profile.name} ${item.userId.profile.lastName}`,
+    custom: (item: any) => {
+      if (!item.userId) {
+        return 'تم حذف الحساب';
+      }
+      return `${item.userId?.profile?.name} ${item.userId?.profile?.lastName}`;
+    },
     type: 'string'
   },
   {
