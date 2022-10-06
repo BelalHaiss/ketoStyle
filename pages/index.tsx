@@ -6,7 +6,6 @@ import { Section4 } from 'src/components/Home/Section4';
 import { Section5 } from 'src/components/Home/Section5';
 import { Section6 } from 'src/components/Home/Section6';
 import { Section7 } from 'src/components/Home/Section7';
-import { Section8 } from 'src/components/Home/Section8';
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +17,6 @@ const Home: NextPage = () => {
       <Section5 />
       <Section6 />
       <Section7 />
-      <Section8 />
     </>
   );
 };
