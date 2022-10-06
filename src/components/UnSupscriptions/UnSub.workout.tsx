@@ -6,7 +6,7 @@ import { MdOutlineFitnessCenter } from 'react-icons/md';
 import { AiFillFire, AiFillSafetyCertificate } from 'react-icons/ai';
 import { FaWeight, FaRegFlushed } from 'react-icons/fa';
 import { GiMuscleUp } from 'react-icons/gi';
-import Paypal from '../Paypal/Paypal';
+import Paypal from '../checkout/Checkout';
 import { Price } from 'src/ts/store.types';
 
 import { useEffect, useState } from 'react';

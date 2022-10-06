@@ -9,7 +9,7 @@ import { FaWeight, FaRegFlushed } from 'react-icons/fa';
 import { GiMuscleUp } from 'react-icons/gi';
 import { VscChecklist } from 'react-icons/vsc';
 import { useEffect, useState } from 'react';
-import Paypal from '../Paypal/Paypal';
+import Paypal from '../checkout/Checkout';
 import { Price } from 'src/ts/store.types';
 export default function UnSubNutritionist() {
   const prices = useStore((state) => state.prices);

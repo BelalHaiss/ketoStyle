@@ -60,10 +60,12 @@ type Props = {
 };
 export function Account({ user, isAdminUpdate = false }: Props) {
   const setUser = useStore((state) => state.setUser);
+  const prices = useStore((state) => state.prices);
   const currentUser = useStore((state) => state.user);
   const [accountInfo, setAccountInfo] = useState<Profile | any>(user.profile);
   const [errors, setErrors] = useState<Profile | any>(user.profile);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isFreeSubscription, setIsFreeSubscription] = useState('');
   const [showFormActions, setShowFormActions] = useState('none');
   const [submitButton, setSubmitButton] = useState(submitButtonIntial);
   const [isOpen, setIsOpen] = useState(false); // Drawer for delete person for admin
@@ -88,6 +90,22 @@ export function Account({ user, isAdminUpdate = false }: Props) {
     setIsUpdate(false);
     setSubmitButton(submitButtonIntial);
   }
+
+  async function addFreeSubscripion() {
+    const thePrice = prices.find((price) => price._id === isFreeSubscription);
+    const payload = {
+      userId: user._id,
+      priceId: thePrice?._id,
+      category: thePrice?.category
+    };
+    fetcher({
+      url: '/subscriptions/free',
+      data: payload,
+      method: 'post',
+      successToast: 'تم الاضافه بنجاح'
+    });
+    return resetSubmitButton();
+  }
   async function onSubmit() {
     setSubmitButton((old) => ({ ...old, submitLoading: true }));
     accountInfo.password && delete accountInfo.password;
@@ -100,7 +118,7 @@ export function Account({ user, isAdminUpdate = false }: Props) {
     };
     if (isAdminUpdate) {
       fetcher({
-        url: 'admin/account/' + user._id + '?path=admin',
+        url: '/admin/account/' + user._id + '?path=admin',
         ...payload
       });
       return resetSubmitButton();
@@ -217,20 +235,37 @@ export function Account({ user, isAdminUpdate = false }: Props) {
       <ChangePassword isAdminUpdate={isAdminUpdate} id={user._id} />
 
       {isAdminUpdate && (
-        <Button onClick={onOpen} colorScheme='red'>
-          {' '}
-          حذف المستخدم
-        </Button>
-      )}
+        <>
+          <Button onClick={onOpen} colorScheme='red'>
+            {' '}
+            حذف المستخدم
+          </Button>
 
-      {isAdminUpdate && (
-        <CustomDrawer
-          onClose={onClose}
-          onSubmit={handleRemovePerson}
-          title={`حذف ${user.profile.name} نهائيا`}
-          isOpen={isOpen}
-          text='هل انت متاكد من حذف الشخص'
-        />
+          <Select
+            variant='filled'
+            onChange={(e) => setIsFreeSubscription(e.target.value)}
+            placeholder='اضف اشتراك مجاني'
+          >
+            {prices.map((plan) => (
+              <option key={plan._id} value={plan._id}>
+                {plan.label}
+              </option>
+            ))}
+          </Select>
+          {isFreeSubscription && (
+            <Button colorScheme='green' onClick={addFreeSubscripion}>
+              {' '}
+              اضف الاشتراك{' '}
+            </Button>
+          )}
+          <CustomDrawer
+            onClose={onClose}
+            onSubmit={handleRemovePerson}
+            title={`حذف ${user.profile.name} نهائيا`}
+            isOpen={isOpen}
+            text='هل انت متاكد من حذف الشخص'
+          />
+        </>
       )}
     </Flex>
   );

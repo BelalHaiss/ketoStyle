@@ -16,17 +16,20 @@ export default function SubscripedHOC(
     const [loading, setLoading] = useState(true);
     const [isSubscriped, setIsSubscriped] = useState(false);
     const [vistor, setVistor] = useState(false);
+    const [endSubscriptionDate, setEndSubscriptionDate] = useState('');
     const user = useStore((state) => state.user);
     const prices = useStore((state) => state.prices);
     useEffect(() => {
       if (user && prices?.length) {
         // if pricing page
         if (plan === 'pricing') {
-          checkSubscription(user, 'meal')
+          checkSubscription(user, 'meal').status
             ? router.replace('/')
             : setLoading(false);
         } else if (plan === 'meal') {
-          if (checkSubscription(user, 'meal')) {
+          if (checkSubscription(user, 'meal').status) {
+            setIsSubscriped(true);
+            setEndSubscriptionDate(checkSubscription(user, 'meal').end);
             setLoading(false);
           } else {
             router.replace('/pricing');
@@ -34,9 +37,13 @@ export default function SubscripedHOC(
             return;
           }
         } else {
-          checkSubscription(user, plan)
-            ? setIsSubscriped(true)
-            : setIsSubscriped(false);
+          if (checkSubscription(user, plan).status) {
+            setIsSubscriped(true);
+            setEndSubscriptionDate(checkSubscription(user, plan).end);
+          } else {
+            setIsSubscriped(false);
+          }
+
           setLoading(false);
         }
       }
@@ -53,7 +60,12 @@ export default function SubscripedHOC(
     }, [user, prices]);
 
     return !loading ? (
-      <Component user={user} isSubscriped={isSubscriped} vistor={vistor} />
+      <Component
+        user={user}
+        endDate={endSubscriptionDate}
+        isSubscriped={isSubscriped}
+        vistor={vistor}
+      />
     ) : (
       <Loader />
     ); // Render whatever you want while the authentication occurs

@@ -13,7 +13,7 @@ import { fetchPrices } from 'src/utils/fetchData';
 import Loader from 'src/utils/Loader';
 import { Price } from 'src/ts/store.types';
 
-import Paypal from 'src/components/Paypal/Paypal';
+import Paypal from 'src/components/checkout/Checkout';
 import ToastUtil from 'src/utils/Toast';
 const textIconsArr = [
   {
@@ -188,7 +188,7 @@ function Pricing({ vistor }: Props) {
                       {card.plan?.price}
                     </Text>
                   </Flex>
-                  {card.plan && card.plan?.discount > 0 && (
+                  {card.plan && card.plan?.before > 0 && (
                     <>
                       <svg height='65' width='20'>
                         <line
@@ -224,7 +224,7 @@ function Pricing({ vistor }: Props) {
                           SAR
                         </Text>
                         <Text fontSize='30px' mt='-2'>
-                          {card.plan?.price + card.plan?.discount}
+                          {card.plan?.before}
                         </Text>
                       </Flex>
                     </>

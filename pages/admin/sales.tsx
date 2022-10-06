@@ -43,6 +43,11 @@ const tableHeaders = [
     type: 'string'
   },
   {
+    label: 'hash',
+    name: 'hash',
+    type: 'string'
+  },
+  {
     label: 'fraud',
     name: 'fraud',
     type: 'string'

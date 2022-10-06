@@ -43,13 +43,13 @@ function EditUser({ user, isAdmin = true }: Props) {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <Account isAdminUpdate={true} user={user} />
+          <Account isAdminUpdate={isAdmin} user={user} />
         </TabPanel>
         {
           <TabPanel>
             <Measurements
-              shouldRender={true}
-              isAdminUpdate={true}
+              shouldRender={isAdmin}
+              isAdminUpdate={isAdmin}
               user={user}
             />
           </TabPanel>

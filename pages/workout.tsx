@@ -4,13 +4,24 @@ import { FcSportsMode } from 'react-icons/fc';
 import SubscripedHOC from 'src/components/SubscriptionHOC';
 import WorkoutVideos from 'src/components/workout/WorkoutVideos';
 import UnSupWorkout from 'src/components/UnSupscriptions/UnSub.workout';
-function Workout({ isSubscriped }: { isSubscriped: boolean }) {
+function Workout({
+  isSubscriped,
+  endDate
+}: {
+  isSubscriped: boolean;
+  endDate: string;
+}) {
   const user = useStore((state) => state.user);
   return (
     <Flex px='3' direction='column' mt='5' align='center' justify='center'>
       {!isSubscriped && <UnSupWorkout />}
       {isSubscriped && (
         <>
+          {endDate && (
+            <Text textAlign='center' fontSize='xs'>
+              تاريخ انتهاء الاشتراك : {endDate}
+            </Text>
+          )}
           <Heading as='h3' size={{ base: 'lg', md: 'xl' }} color='orange.800'>
             {`مرحبا, ${user?.profile.name} هذه التمارين المخصصة لك لهذا اليوم`}
           </Heading>

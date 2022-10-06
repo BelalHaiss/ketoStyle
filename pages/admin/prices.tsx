@@ -19,8 +19,7 @@ function Prices() {
   const [loading, setLoading] = useState(false);
   const [priceState, setPrices] = useState<Price[]>(prices);
   const [displayFormAction, setDisplayFormAction] = useState('none');
-  const [isUSD, setIsUSD] = useState('false');
-  const [usdValue, setUSDValue] = useState(0.27);
+
   const [submitButton, setSubmitButton] = useState(initSubmitButton);
   function resetFormAction() {
     setDisplayFormAction('none');
@@ -58,20 +57,13 @@ function Prices() {
     });
   }
   function handleChange(name: string, value: string) {
-    if (isUSD === 'true') {
-      return ToastUtil(
-        'لا يمكن التعديل من هنا عدل سعر الدولار وسيتم التحديث تلقائيا',
-        'error'
-      );
-    }
     newAction();
     setPrices(
       priceState.map((price) => {
         if (price._id === name) {
           return {
             ...price,
-            price: +value,
-            usd: +((+value - price.discount) * usdValue).toFixed(0)
+            price: +value
           };
         }
         return price;
@@ -79,15 +71,14 @@ function Prices() {
     );
   }
 
-  function handleDiscount(name: string, value: string) {
+  function handleBefore(name: string, value: string) {
     newAction();
     setPrices(
       priceState.map((price) => {
         if (price._id === name) {
           return {
             ...price,
-            discount: +value,
-            usd: +((price.price - +value) * usdValue).toFixed(0)
+            before: +value
           };
         }
         return price;
@@ -100,78 +91,24 @@ function Prices() {
       {loading && <Loader />}
       {!loading && (
         <>
-          <Flex
-            align='center'
-            bg='gray.600'
-            w='90%'
-            justify='space-around'
-            mx='auto'
-            color='white'
-            p='3'
-            borderRadius='xl'
-            boxShadow='xl'
-          >
-            <CustomFormControl
-              value={usdValue}
-              onChange={(_, value) => {
-                setUSDValue(+value);
-                newAction();
-                setPrices((old) =>
-                  old.map((price) => ({
-                    ...price,
-                    usd: +((price.price - price.discount) * +value).toFixed(0)
-                  }))
-                );
-              }}
-              width='250px'
-              label='سعر الدولار '
-              type='number'
-              name='dollar'
-            />
-            <Flex align='center' gap='3' flexDir='column'>
-              <Text fontSize='lg'>عرض السعر </Text>
-              <RadioGroup
-                display='flex'
-                gap='4'
-                onChange={setIsUSD}
-                value={isUSD}
-              >
-                <Radio value='false'>ريال سعودي</Radio>
-                <Radio value='true'>دولار</Radio>
-              </RadioGroup>
-            </Flex>
-          </Flex>
           {priceState.map((plan, i) => (
             <Flex gap='2' key={i} align='center'>
               <CustomFormControl
-                value={isUSD === 'false' ? plan.price : plan.usd}
+                value={plan.price}
                 onChange={handleChange}
                 label={plan.label}
                 type='number'
                 name={plan._id}
-                readOnly={isUSD === 'true'}
               />
-              {isUSD === 'false' && (
-                <>
-                  <CustomFormControl
-                    key={i + 'discount'}
-                    value={plan.discount}
-                    onChange={handleDiscount}
-                    label='الخصم'
-                    type='number'
-                    name={plan._id}
-                  />
-                  <CustomFormControl
-                    key={i + 'net'}
-                    value={plan.price - plan.discount}
-                    onChange={handleChange}
-                    label={'صافي السعر'}
-                    type='number'
-                    name={plan._id}
-                    readOnly
-                  />
-                </>
-              )}
+
+              <CustomFormControl
+                key={i + 'before'}
+                value={plan.before}
+                onChange={handleBefore}
+                label='قبل'
+                type='number'
+                name={plan._id}
+              />
             </Flex>
           ))}
           <FormAction

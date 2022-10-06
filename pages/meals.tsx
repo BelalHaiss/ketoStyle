@@ -10,21 +10,30 @@ import SubscripedHOC from 'src/components/SubscriptionHOC';
 
 type Props = {
   user: USER;
+  endDate: string;
+  isSubscriped: any;
 };
-function Meals({ user }: Props) {
+function Meals({ user, endDate, isSubscriped }: Props) {
   useEffect(() => {}, []);
   const [fetchCalories, setFetchCalories] = useState(false);
   return (
-    <Flex gap='5' flexDir='column'>
-      <UserCalories
-        setFetchCalories={setFetchCalories}
-        fetchCalories={fetchCalories}
-      />
-      <UserMeal />
-      <AddCustomMeal setFetchCalories={setFetchCalories} />
-      <Water user={user} />
-      <Status user={user} />
-    </Flex>
+    <>
+      {endDate && (
+        <Text textAlign='center' fontSize='xs'>
+          تاريخ انتهاء الاشتراك : {endDate}
+        </Text>
+      )}
+      <Flex gap='5' flexDir='column'>
+        <UserCalories
+          setFetchCalories={setFetchCalories}
+          fetchCalories={fetchCalories}
+        />
+        <UserMeal />
+        <AddCustomMeal setFetchCalories={setFetchCalories} />
+        <Water user={user} />
+        <Status user={user} />
+      </Flex>
+    </>
   );
 }
 

@@ -6,11 +6,22 @@ import { useStore } from 'src/store';
 import { GiMeal } from 'react-icons/gi';
 import { BsWhatsapp } from 'react-icons/bs';
 import UnSubNutritionist from 'src/components/UnSupscriptions/UnSub.nutritionist';
-function Nutrition({ isSubscriped }: { isSubscriped: boolean }) {
+function Nutrition({
+  isSubscriped,
+  endDate
+}: {
+  isSubscriped: boolean;
+  endDate: string;
+}) {
   const user = useStore((state) => state.user);
   return (
     <>
       <Meta title='اخصائي التغذية' />
+      {endDate && (
+        <Text textAlign='center' fontSize='xs'>
+          تاريخ انتهاء الاشتراك : {endDate}
+        </Text>
+      )}
       <Flex gap='10' my='3' align='center' flexDir='column'>
         {!isSubscriped && <UnSubNutritionist />}
 
