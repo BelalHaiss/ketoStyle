@@ -61,4 +61,4 @@ function Workout({
   );
 }
 
-export default SubscripedHOC(Workout, 'workout');
+export default SubscripedHOC(Workout, 'meal');

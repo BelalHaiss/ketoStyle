@@ -50,7 +50,8 @@ export default function Footer() {
         <Button
           colorScheme={'orange'}
           onClick={() => {
-            const link = 'https://wa.me/+13126101416';
+            const link = 'https://wa.me/+966577157351';
+
             window.open(link, '_blank');
           }}
           size={{ base: 'sm', md: 'md' }}

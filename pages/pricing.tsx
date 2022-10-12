@@ -17,15 +17,23 @@ import Paypal from 'src/components/checkout/Checkout';
 import ToastUtil from 'src/utils/Toast';
 const textIconsArr = [
   {
-    text: 'وجبات متنوعة',
+    text: 'مستشار تغذيه خاص',
+    image: '/home/nutritionist.png'
+  },
+  {
+    text: 'جدول تمارين كامل',
+    icon: MdOutlineFitnessCenter
+  },
+  {
+    text: 'وجبات كيتو متنوعة',
     icon: GiMeal
   },
   {
-    text: 'قياس الكتلة ',
+    text: 'قياس كتله الجسم ',
     icon: BiBody
   },
   {
-    text: 'حساب السعرات',
+    text: 'حساب معدل الحرق',
     icon: AiFillFire
   },
   {
@@ -35,14 +43,6 @@ const textIconsArr = [
   {
     text: 'وسائل دفع امنه',
     icon: AiFillSafetyCertificate
-  },
-  {
-    text: 'شهر مجاني لخدمة التمرين',
-    icon: MdOutlineFitnessCenter
-  },
-  {
-    text: 'اسبوع مجانا لخدمة اخصائي الاغذية',
-    image: '/home/nutritionist.png'
   }
 ];
 
@@ -256,8 +256,8 @@ function TEXT_WITH_ICONS(num: 1 | 2 | 3) {
   return (
     <Flex flexDir={'column'} gap='2' align='center'>
       {textIconsArr.map((item, i) => {
-        if (num === 1 && i > 4) return;
-        if (num === 2 && i > 5) return;
+        // if (num === 1 && i > 4) return;
+        // if (num === 2 && i > 5) return;
         return (
           <Flex w='200px' align='center' gap='2' key={i}>
             {item.icon ? (

@@ -47,7 +47,7 @@ function Nutrition({
               size='lg'
               w='250px'
               onClick={() => {
-                const link = 'https://wa.me/+18722824005';
+                const link = 'https://wa.me/+966577151863';
                 window.open(link, '_blank');
               }}
             >
@@ -87,4 +87,4 @@ function Nutrition({
   );
 }
 
-export default SubscripedHOC(Nutrition, 'nutritionist');
+export default SubscripedHOC(Nutrition, 'meal');
