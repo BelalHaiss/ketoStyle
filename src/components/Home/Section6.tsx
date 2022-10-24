@@ -4,11 +4,6 @@ import { BsCheck2Circle } from 'react-icons/bs';
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
 
-const checkedText = [
-  'خدمات التغذية والتدريب المضافة',
-  'توقعات تقريبية لموعد وصولك للوزن المطلوب',
-  'حساب احتياج الجسم وكتلة الجسم'
-];
 function initState() {
   return window.innerWidth >= 700 ? '/home/sec6.png' : '/home/sec6-sm.png';
 }
@@ -40,6 +35,7 @@ export function Section6() {
     >
       <Image
         mr='-25px'
+        loading='lazy'
         width={{ base: '300px', md: '400px' }}
         height={{ base: '300px', md: '400px' }}
         alt={'we support you'}
@@ -63,9 +59,9 @@ export function Section6() {
           fontWeight={'normal'}
           fontSize={{ base: '2xl', md: '40.8px' }}
         >
-          نحن هنا{' '}
-          <Text color='orange.500' px='1' display='inline-block'>
-            لدعمك
+          احنا موجودين
+          <Text color='orange.500' px='3' display='inline-block'>
+            عشانك
           </Text>
         </Heading>
         <Text
@@ -73,30 +69,21 @@ export function Section6() {
           fontSize={{ base: '15px', md: '19.5px' }}
           color='orange.900'
         >
-          بالطبع منذ لحظة دخولك لعالم الكيتو مع كيتو سايكل، فأنت لست لوحدك مع
-          فريقنا المُحب، سيكون هناك فريقنا معك وسيهتم بأدق التفاصيل، مع خدمات
-          التغذية وخدمات التدريب المضافة.
+          من بداية دخولك ببرنامج كيتوستايل للكيتو، هدفك لوصولك للوزن المطلوب هو
+          هدفنا أيضًا، كل فريق كيتوستايل راح يكون متواجد عشانك، واخصائي التغذية
+          اللي راح يكون متواجد معاك من اليوم الأول لدعمك، وراح نكون عائلتك
+          الثانية ومراح نرتاح لين ماتوصل لهدفك وتكون راضي عن النتيجة بشكل تام،
+          يعني من اليوم الأول ونزولك مضمون معانا.
         </Text>
         <Text
+          mt='auto'
           className='section4-text'
           fontSize={{ base: '15px', md: '19.5px' }}
           color='orange.900'
         >
-          نحن نسعى لتوفير وخلق بيئة مساعدة لك لتتمكن من الإستمرار وتحقيق الهدف
-          اللذي تريده، بطريقة علمية مدروسة{' '}
+          فرصة تغيير حياتك جتلك لين عندك، ابدأ من هذي اللحظة وتذكر إن مشوار
+          الألف ميل يبدأ بخطوة واحده منك.
         </Text>
-        {checkedText.map((text, i) => (
-          <Flex w='100%' gap='1' key={i}>
-            <Icon as={BsCheck2Circle} w='5' h='5' color='green.400' />
-            <Text
-              className='section4-text'
-              color='orange.900'
-              fontWeight={'bold'}
-            >
-              {text}
-            </Text>
-          </Flex>
-        ))}
       </Flex>
     </Flex>
   );

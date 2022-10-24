@@ -30,7 +30,7 @@ export function Section4() {
       align='center'
       my='5'
       className='section4'
-      bg='orange.100'
+      // bg='orange.100'
       // gap={{ base: '4', md: '1' }}
       p='2'
       py='7'
@@ -41,6 +41,7 @@ export function Section4() {
       <Image
         mr='-25px'
         className='home-image'
+        loading='lazy'
         width={{ base: '300px', md: '400px' }}
         height={{ base: '300px', md: '400px' }}
         alt={'dish'}

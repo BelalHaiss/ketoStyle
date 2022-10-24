@@ -3,6 +3,7 @@ import Section1 from 'src/components/Home/Section1';
 import { Section2 } from 'src/components/Home/Section2';
 import { Section3 } from 'src/components/Home/Section3';
 import { Section4 } from 'src/components/Home/Section4';
+import { Section5 as Section2_5 } from 'src/components/Home/Section22';
 import { Section5 } from 'src/components/Home/Section5';
 import { Section6 } from 'src/components/Home/Section6';
 import { Section7 } from 'src/components/Home/Section7';
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
     <>
       <Section1 />
       <Section2 />
+      <Section2_5 />
       <Section3 />
       <Section4 />
       <Section5 />

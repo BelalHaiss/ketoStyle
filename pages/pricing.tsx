@@ -15,6 +15,7 @@ import { Price } from 'src/ts/store.types';
 
 import Paypal from 'src/components/checkout/Checkout';
 import ToastUtil from 'src/utils/Toast';
+import { FeedBack } from 'src/components/FeedBack';
 const textIconsArr = [
   {
     text: 'مستشار تغذيه خاص',
@@ -248,6 +249,7 @@ function Pricing({ vistor }: Props) {
           ))}
         {checkout && <Paypal setCheckout={setCheckout} plan={checkout} />}
       </Flex>
+      <FeedBack />
     </Flex>
   );
 }

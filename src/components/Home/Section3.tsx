@@ -8,7 +8,7 @@ export function Section3() {
     <Flex
       align='center'
       my='5'
-      //   bg='orange.100'
+      bg='orange.100'
       gap={{ base: '4', md: '1' }}
       p='2'
       w='100%'
@@ -17,6 +17,7 @@ export function Section3() {
     >
       <Flex flex='1' justify={'center'} order={{ base: '1', md: '2' }}>
         <Image
+          loading='lazy'
           width={{ base: '250px', md: '250px' }}
           height={{ base: '250px', md: '250px' }}
           alt={'dish'}
@@ -44,7 +45,7 @@ export function Section3() {
               ذكية
             </Text>
           </Heading>
-          <Text fontSize={{ base: '15px', md: '19.5px' }} color='orange.900'>
+          <Text fontSize={{ base: '15px', md: '22px' }} color='orange.900'>
             من الصعب جدًا عليك البدء بنظام الكيتو لوحدك كونه يتطلب الكثير من
             الأدوات اللتي نوفرها في كيتو ستايل، اترك العلم والتخطيط لنا بينما
             تركز على ما هو أكثر أهمية وهو تغيير حياتك للأجمل{' '}

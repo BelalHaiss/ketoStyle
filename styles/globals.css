@@ -74,7 +74,8 @@
   }
 }
 @media screen and (max-width: 763px) and (min-width: 700px) {
-  .section4 img {
+  .section4 img,
+  .vegtable-img {
     width: 340px;
     height: 340px;
   }
@@ -134,5 +135,20 @@
 @media screen and (max-width: 700px) {
   .home-image {
     border-radius: 15px;
+  }
+}
+
+.before-after {
+  animation-duration: 0.8s;
+  /* animation-delay: 1s; */
+  /* animation-timing-function: ease-in-out; */
+  animation-name: before-after;
+}
+@keyframes before-after {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
