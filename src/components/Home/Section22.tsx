@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BsCheck2Circle } from 'react-icons/bs';
 
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
@@ -39,14 +38,14 @@ export function Section5() {
           <Heading fontWeight={'normal'} fontSize='1em'>
             ليش أشترك{' '}
           </Heading>
-          <Heading fontWeight={'normal'} fontSize='1em' color='red.500'>
+          <Heading fontWeight={'bold'} fontSize='1em' color='red.500'>
             بكيتو
           </Heading>
-          <Heading fontWeight={'normal'} fontSize='1em' color='orange.300'>
+          <Heading fontWeight={'bold'} fontSize='1em' color='orange.300'>
             ستايل
           </Heading>
         </Flex>
-        <Text fontSize='22px'>
+        <Text fontSize={{ base: '15px', md: '22px' }}>
           بكيتوستايل جلسنا مدة طويلة ندرس هالنظام بشكل صحيح وبطريقة ماتحسسك
           بالجوع او التعب او الإرهاق، لأن تطبيقك للكيتو بطريقة خاطئة مراح يعطيك
           النتيجة المطلوبة وراح يخليك بحالة تعب مستمره وراح يضيع وقتك وانت تحسب

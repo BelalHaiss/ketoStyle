@@ -25,7 +25,7 @@ export function Section6() {
       align='center'
       my='5'
       className='section4'
-      bg='orange.100'
+      // bg='orange.100'
       // gap={{ base: '4', md: '1' }}
       p='2'
       gap={{ base: '15', md: '1' }}

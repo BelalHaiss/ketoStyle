@@ -10,7 +10,7 @@ export function Section7() {
     <Flex>
       {!user && (
         <Button
-          w='60%'
+          w={{ base: '90%', md: '60%' }}
           size='lg'
           mx='auto'
           fontSize='2xl'

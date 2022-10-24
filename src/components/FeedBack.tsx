@@ -39,7 +39,7 @@ export function FeedBack() {
       align='center'
       mt='5'
       gap='2'
-      w='75%'
+      w={{ base: '90%' }}
       mx='auto'
     >
       <Flex w='100%' fontSize={'40px'} gap='2' align='center' justify='center'>
@@ -71,7 +71,7 @@ export function FeedBack() {
         w='100%'
         position={'relative'}
         bg='orange.100'
-        h='140px'
+        h={{ base: '280px', md: '150px' }}
         align='center'
         borderRadius={'xl'}
         p='5'
@@ -96,7 +96,9 @@ export function FeedBack() {
               ? 'prevAnimation'
               : ''
           }
+          align='center'
           w='100%'
+          h={{ base: '280px', md: '150px' }}
         >
           <Text w='90%' mx='auto' fontWeight={'bold'} fontSize='20px'>
             {feedbacks[feedbackIndex].text}

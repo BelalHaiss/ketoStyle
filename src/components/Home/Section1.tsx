@@ -17,7 +17,7 @@ export default function Section1() {
             fontWeight={'bold'}
             fontSize='1em'
             className='ketoHeading'
-            letterSpacing={'5px'}
+            // letterSpacing={{base:}}
           >
             {' '}
             بكيتو
@@ -46,7 +46,6 @@ export default function Section1() {
             }}
             color='orange.900'
             fontWeight={'bold'}
-            letterSpacing='2px'
             fontSize='0.7em'
             className='ketoHeading'
           >
