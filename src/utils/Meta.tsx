@@ -10,6 +10,9 @@ const Meta = ({ title }: { title: string }) => {
         name='description'
         content='كيتو ستايل اول موقع عربي مختص بمجال الكيتو واخصائي الاغذية والكثير لصحة افضل'
       />
+      <meta property='og:image' content='/logo.svg' />
+      <meta property='og:url' content='https://www.ketonestyle.com/' />
+
       <meta property='og:locale' content='ar_AR' />
       <meta property='og:title' content='كيتو ستايل' />
       <meta

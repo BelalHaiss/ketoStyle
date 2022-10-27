@@ -27,7 +27,7 @@ export function Section5() {
         <Flex gap='2' fontSize={{ base: '2xl', md: '37px' }}>
           <Heading fontWeight={'normal'} fontSize='1em'>
             {' '}
-            كثير من ناس غيروا{' '}
+            كثير من الناس غيروا{' '}
           </Heading>
           <Heading fontWeight={'normal'} fontSize='1em' color='orange.500'>
             {' '}

@@ -9,7 +9,7 @@ import { FaApplePay } from 'react-icons/fa';
 import { MdOutlinePayment } from 'react-icons/md';
 type Props = {
   plan: Price | null;
-  setCheckout: (param: Price | null) => void;
+  // setCheckout?: (param: Price | null) => void;
 };
 const clientURL = 'https://www.ketonestyle.com/redirect/?re=';
 function handleRedirect(plan: Price['category']) {
@@ -23,9 +23,16 @@ function handleRedirect(plan: Price['category']) {
       return `${clientURL}nutritionist`;
   }
 }
-export default function Checkout({ plan, setCheckout }: Props) {
+export default function Checkout({ plan }: Props) {
   const user = useStore((state) => state.user);
-  const cancelCheckout = () => setCheckout(null);
+  function handlePay() {
+    if (!user) {
+      document.getElementById('register')?.click();
+      return;
+    }
+    GoSell.openPaymentPage();
+  }
+  // const cancelCheckout = () => setCheckout(null);
   // @ts-ignore
   const [loading, setLoading] = useState(window.goSell ? false : true);
   const [GoSell, setGoSell] = useState<any>(null);
@@ -45,7 +52,7 @@ export default function Checkout({ plan, setCheckout }: Props) {
         gateway: {
           publicKey: 'pk_live_st7fiZQDAjdbRoyC583c6M4a',
           contactInfo: 'https://www.ketonestyle.com/',
-          onClose: cancelCheckout,
+          // onClose: cancelCheckout,
           language: 'ar'
         },
         customer: {
@@ -64,8 +71,9 @@ export default function Checkout({ plan, setCheckout }: Props) {
           mode: 'charge',
           charge: {
             threeDSecure: true,
+
             metadata: {
-              userId: user!._id,
+              userId: user?._id,
               priceId: plan?._id,
               category: plan?.category
             },
@@ -75,63 +83,43 @@ export default function Checkout({ plan, setCheckout }: Props) {
         }
       });
     }
-  }, [GoSell]);
+  }, [GoSell, user]);
   return (
-    <Flex w='50%' mx='auto' flexDir='column' gap='4'>
-      <BackButton client onClick={cancelCheckout} />
+    <Flex
+      p='2'
+      bg='gray.50'
+      boxShadow={'5xl'}
+      borderRadius={'lg'}
+      w='100%'
+      align='center'
+      flexDir='column'
+      gap='4'
+    >
       <Script
         src='https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js'
         onLoad={() => setLoading(false)}
       />
-      {plan && (
-        <Flex
-          flexDir='column'
-          py='2'
-          px={{ base: '2', md: '6' }}
-          bg='green.100'
-          boxShadow='md'
-          borderRadius='lg'
-          gap='2'
-          color='green.900'
-          fontSize={{ base: 'lg', md: 'xl' }}
-        >
-          <Text
-            fontWeight='bold'
-            fontSize={{ base: 'xl', md: '2xl' }}
-            textAlign={'center'}
-          >
-            {plan?.label}
-          </Text>
-
-          <TextBetween
-            lBold
-            rBold
-            lText={plan.price + ' ' + 'ريال'}
-            rText='سعر الباقه'
-          />
-          <hr style={{ border: '1px solid white' }} />
-        </Flex>
-      )}
-      <Alert fontSize='lg' variant='solid' borderRadius={'xl'} status='error'>
-        <AlertIcon />
-        اذا اردت الدفع بواسطة Apple pay يرجي الدخول من متصفح safari{' '}
-      </Alert>
-
+      <Text fontSize='xl' color='red.500'>
+        المجموع الكلي للإشتراك {plan?.price}
+      </Text>
       <Button
         leftIcon={<MdOutlinePayment />}
         fontSize='xl'
+        w='80%'
+        mx='auto'
         isLoading={loading || !GoSell}
-        onClick={() => GoSell.openPaymentPage()}
+        onClick={handlePay}
         colorScheme={'green'}
       >
-        {' '}
-        ادفع الان{' '}
+        الدفع الان
       </Button>
       <Button
+        w='80%'
+        mx='auto'
         leftIcon={<FaApplePay fontSize='50px' />}
         // fontSize='xl'
         isLoading={loading || !GoSell}
-        onClick={() => GoSell.openPaymentPage()}
+        onClick={handlePay}
         bg='black'
         color='white'
         dir='ltr'
@@ -141,9 +129,79 @@ export default function Checkout({ plan, setCheckout }: Props) {
         _active={{
           bg: 'black'
         }}
-      >
-        ادفع بواسطة
-      </Button>
+      ></Button>
     </Flex>
   );
 }
+
+// old;
+// return (
+//   <Flex w='50%' mx='auto' flexDir='column' gap='4'>
+//     <BackButton client onClick={cancelCheckout} />
+//     <Script
+//       src='https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js'
+//       onLoad={() => setLoading(false)}
+//     />
+//     {plan && (
+//       <Flex
+//         flexDir='column'
+//         py='2'
+//         px={{ base: '2', md: '6' }}
+//         bg='green.100'
+//         boxShadow='md'
+//         borderRadius='lg'
+//         gap='2'
+//         color='green.900'
+//         fontSize={{ base: 'lg', md: 'xl' }}
+//       >
+//         <Text
+//           fontWeight='bold'
+//           fontSize={{ base: 'xl', md: '2xl' }}
+//           textAlign={'center'}
+//         >
+//           {plan?.label}
+//         </Text>
+
+//         <TextBetween
+//           lBold
+//           rBold
+//           lText={plan.price + ' ' + 'ريال'}
+//           rText='سعر الباقه'
+//         />
+//         <hr style={{ border: '1px solid white' }} />
+//       </Flex>
+//     )}
+//     <Alert fontSize='lg' variant='solid' borderRadius={'xl'} status='error'>
+//       <AlertIcon />
+//       اذا اردت الدفع بواسطة Apple pay يرجي الدخول من متصفح safari{' '}
+//     </Alert>
+
+//     <Button
+//       leftIcon={<MdOutlinePayment />}
+//       fontSize='xl'
+//       isLoading={loading || !GoSell}
+//       onClick={() => GoSell.openPaymentPage()}
+//       colorScheme={'green'}
+//     >
+//       {' '}
+//       ادفع الان{' '}
+//     </Button>
+//     <Button
+//       leftIcon={<FaApplePay fontSize='50px' />}
+//       // fontSize='xl'
+//       isLoading={loading || !GoSell}
+//       onClick={() => GoSell.openPaymentPage()}
+//       bg='black'
+//       color='white'
+//       dir='ltr'
+//       _hover={{
+//         bg: 'black'
+//       }}
+//       _active={{
+//         bg: 'black'
+//       }}
+//     >
+//       ادفع بواسطة
+//     </Button>
+//   </Flex>
+// );

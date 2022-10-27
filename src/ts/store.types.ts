@@ -33,13 +33,17 @@ export type Answer = {
 };
 
 export type Plans = 'meal' | 'nutritionist' | 'workout';
-
+type Plan = {
+  category: Plans;
+  duration: number;
+};
 export type Price = {
   _id: string;
   category: Plans;
   label: string;
   price: number;
   before: number;
+  plans: Plan[];
 };
 
 export type Profile = 'measurements' | 'payments' | 'account' | 'meal';

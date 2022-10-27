@@ -72,7 +72,7 @@ function Payment({ payment }: { payment: PaymentType }) {
         <Flex gap='2' align='center'>
           <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight='bold'>
             {' '}
-            {payment.paid} دولار
+            {payment.paid} ريال
           </Text>
           <Badge
             p={{ base: '1', md: '2' }}
