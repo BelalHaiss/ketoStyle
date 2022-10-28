@@ -26,7 +26,7 @@ export function PriceBox({ title, plan }: Props) {
   }
   return (
     <Flex
-      w={{ base: '370px', md: '600px' }}
+      w={{ base: '350px', md: '600px' }}
       borderRadius={'xl'}
       flexDir='column'
       p='1'
@@ -55,7 +55,7 @@ export function PriceBox({ title, plan }: Props) {
             borderRadius: '50%',
             background: '#F6AD55',
             position: 'absolute',
-            right: ['11px', '11px', '12px'],
+            right: ['10px', '10px', '12px'],
             top: ['31px', '31px', '16px'],
             opacity: `${checked ? '1' : '0'}`
           }}
@@ -70,7 +70,7 @@ export function PriceBox({ title, plan }: Props) {
           <Text fontWeight={'bold'} fontSize={{ base: 'md', md: '2xl' }}>
             {title}
           </Text>
-          <Text>الإشتراك يدفع لمره واحده واليتجدد تلقائًيا</Text>
+          <Text>الإشتراك يدفع لمره واحده ولا يتجدد تلقائًيا</Text>
         </Flex>
 
         <Divider orientation='vertical' />
