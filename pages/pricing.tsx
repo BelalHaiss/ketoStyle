@@ -15,7 +15,7 @@ import Loader from 'src/utils/Loader';
 import { Price } from 'src/ts/store.types';
 
 import ToastUtil from 'src/utils/Toast';
-import { FeedBack } from 'src/components/FeedBack';
+import { FeedBack } from 'src/components/pricing/FeedBack';
 import { YalaSubscripe } from 'src/components/pricing/YalaSubscripe';
 import { PriceBox } from 'src/components/pricing/PriceBox';
 const textIconsArr = [
@@ -131,8 +131,11 @@ function Pricing({ vistor }: Props) {
             gap='3'
           >
             <Text fontSize={{ base: 'md', md: 'lg' }}>
-              يعتبر نظام كيتوستايل المدروس من قبل المختصين، هو النظام الأفضل
-              والأسرع والأضمن في النتائج بدون منازع عن بقية الأنظمة.
+              نظامنا بالكيتو، من اكثر الانظمة اللي الناس خسروا فيها وزن بعد
+              ماطبقوها بالشكل الصحيح، بدون مايحسون بالجوع أو ان طعم الأكل مب
+              لذيذ، لأن كلشي بالكيتو لذيذ حتى الشاورما بتقدر تاكلها للشبع وبتخسر
+              وزن كبير، تدري أنه فيه ناس معانا خسروا اكثر من ٣٥ كيلو لحد الأن
+              ومواصلين{' '}
             </Text>
             {cards.map((card: Card) => (
               <PriceBox title={card.title} plan={card.plan!} key={card._id} />

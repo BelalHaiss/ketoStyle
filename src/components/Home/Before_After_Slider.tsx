@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-const maxImage = 4;
+const maxImage = 2;
 export function BeforeAfterSlider() {
   const [img, setImg] = useState(1);
 

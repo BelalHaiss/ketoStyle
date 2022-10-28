@@ -87,7 +87,7 @@ export default function Checkout({ plan }: Props) {
   return (
     <Flex
       p='2'
-      bg='gray.50'
+      bg='orange.50'
       boxShadow={'5xl'}
       borderRadius={'lg'}
       w='100%'
@@ -109,7 +109,7 @@ export default function Checkout({ plan }: Props) {
         mx='auto'
         isLoading={loading || !GoSell}
         onClick={handlePay}
-        colorScheme={'green'}
+        colorScheme={'orange'}
       >
         الدفع الان
       </Button>
@@ -130,6 +130,9 @@ export default function Checkout({ plan }: Props) {
           bg: 'black'
         }}
       ></Button>
+      <Text color='gray.600' fontSize='sm'>
+        عند النقر سيتم تحويلك لصفحة الدفع لاكمال العملية
+      </Text>
     </Flex>
   );
 }
