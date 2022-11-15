@@ -10,7 +10,7 @@ import { MdOutlineFitnessCenter } from 'react-icons/md';
 // import { BsFillPatchCheckFill } from 'react-icons/bs';
 import { GiMeal } from 'react-icons/gi';
 import { useStore } from 'src/store';
-import { fetchPrices } from 'src/utils/fetchData';
+import { fetchPrices, getPaylinkToken } from 'src/utils/fetchData';
 import Loader from 'src/utils/Loader';
 import { Price } from 'src/ts/store.types';
 
@@ -91,7 +91,9 @@ function Pricing({ vistor }: Props) {
 
   const [cards, setCards] = useState(initCards);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState('');
   useEffect(() => {
+    getPaylinkToken(setToken);
     fetchPrices(setPrices, setLoading);
   }, []);
   useEffect(() => {
@@ -135,7 +137,12 @@ function Pricing({ vistor }: Props) {
               والأسرع والأضمن في النتائج بدون منازع عن بقية الأنظمة
             </Text>
             {cards.map((card: Card) => (
-              <PriceBox title={card.title} plan={card.plan!} key={card._id} />
+              <PriceBox
+                title={card.title}
+                plan={card.plan!}
+                token={token}
+                key={card._id}
+              />
             ))}
           </Flex>
         )}

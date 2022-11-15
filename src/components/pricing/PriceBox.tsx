@@ -4,11 +4,13 @@ import { Flex, Text, Divider } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Price } from 'src/ts/store.types';
 import { TEXT_WITH_ICONS } from 'pages/pricing';
-import Payment from 'src/components/checkout/Checkout';
+import Payment from 'src/components/checkout/Checkout'; // this is tap payment
+import Paylink from '../checkout/PaylinkCheckout';
 
 type Props = {
   title: string;
   plan: Price;
+  token: string;
 };
 
 function PricePerMonth(plan: Price) {
@@ -19,7 +21,7 @@ function PricePerMonth(plan: Price) {
   const perMonth = Number(+plan.price / +monthNumber).toFixed(0);
   return `${perMonth}ريال/ للشهر`;
 }
-export function PriceBox({ title, plan }: Props) {
+export function PriceBox({ title, plan, token }: Props) {
   const [checked, setChecked] = useState(false);
   function handleChecked() {
     setChecked(!checked);
@@ -116,9 +118,18 @@ export function PriceBox({ title, plan }: Props) {
         <Flex gap='3' w='100%' flexDir={'column'}>
           <hr style={{ border: '1px solid white', width: '100%' }} />
           <TEXT_WITH_ICONS />
-          <Payment plan={plan} />
+          <Paylink token={token} plan={plan} />
         </Flex>
       )}
+
+      {/* tap payment  */}
+      {/* {checked && (
+        <Flex gap='3' w='100%' flexDir={'column'}>
+          <hr style={{ border: '1px solid white', width: '100%' }} />
+          <TEXT_WITH_ICONS />
+          <Payment plan={plan} />
+        </Flex>
+      )} */}
     </Flex>
   );
 }

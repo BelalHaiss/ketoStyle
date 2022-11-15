@@ -9,6 +9,7 @@ import { FaApplePay } from 'react-icons/fa';
 import { MdOutlinePayment } from 'react-icons/md';
 type Props = {
   plan: Price | null;
+  token: string;
   // setCheckout?: (param: Price | null) => void;
 };
 const clientURL = 'https://www.ketonestyle.com/redirect/?re=';
@@ -23,67 +24,49 @@ function handleRedirect(plan: Price['category']) {
       return `${clientURL}nutritionist`;
   }
 }
-export default function Checkout({ plan }: Props) {
+export default function Paylink({ plan, token }: Props) {
   const user = useStore((state) => state.user);
-  function handlePay() {
+  // const cancelCheckout = () => setCheckout(null);
+  // @ts-ignore
+  const [loading, setLoading] = useState(window.PaylinkPayments ? false : true);
+
+  function handlePay(isApplePay: boolean) {
     if (!user) {
       document.getElementById('register')?.click();
       return;
     }
-    GoSell.openPaymentPage();
-  }
-  // const cancelCheckout = () => setCheckout(null);
-  // @ts-ignore
-  const [loading, setLoading] = useState(window.goSell ? false : true);
-  const [GoSell, setGoSell] = useState<any>(null);
 
-  useEffect(() => {
     // @ts-ignore
-    if (window.goSell && !GoSell) {
+    if (plan && window.Order) {
       // @ts-ignore
-      setGoSell(window.goSell);
-      setLoading(false);
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    if (GoSell) {
-      GoSell.config({
-        gateway: {
-          publicKey: 'pk_live_st7fiZQDAjdbRoyC583c6M4a',
-          contactInfo: 'https://www.ketonestyle.com/',
-          // onClose: cancelCheckout,
-          language: 'ar'
-        },
-        customer: {
-          phone: {
-            country_code: 965,
-            number: user?.profile.phone
-          },
-          first_name: user?.profile.name,
-          email: user?.profile.email
-        },
-        order: {
-          amount: plan?.price,
-          currency: 'SAR'
-        },
-        transaction: {
-          mode: 'charge',
-          charge: {
-            threeDSecure: true,
-
-            metadata: {
-              userId: user?._id,
-              priceId: plan?._id,
-              category: plan?.category
-            },
-            redirect: handleRedirect(plan!.category!),
-            post: 'https://www.ketonestyle.com/api/payments/tap'
-          }
-        }
+      const order = new window.Order({
+        callBackUrl: handleRedirect('meal'), // callback page URL (for example http://localhost:6655 processPayment.php) in your site to be called after payment is processed. (mandatory)
+        clientName: user?.profile.name, // the name of the buyer. (mandatory)
+        clientMobile: user?.profile.phone, // the mobile of the buyer. (mandatory)
+        amount: plan.price, // the total amount of the order (including VAT or discount). (mandatory). NOTE: This amount is used regardless of total amount of products listed below.
+        orderNumber: Date.now(), // the order number in your system. (mandatory)
+        clientEmail: user?.profile.email // the email of the buyer (optional)
       });
+      const paylinkPayments =
+        // @ts-ignore
+        new window.PaylinkPayments({
+          mode: 'production',
+          defaultLang: 'en',
+          backgroundColor: '#EEE'
+        });
+
+      if (isApplePay) {
+        paylinkPayments.openApplePay(token, order, () => {
+          console.log('haiss pay');
+        });
+      } else {
+        paylinkPayments.openPayment(token, order, () => {
+          console.log('haiss normalpay');
+        });
+      }
     }
-  }, [GoSell, user]);
+  }
+
   return (
     <Flex
       p='2'
@@ -95,10 +78,12 @@ export default function Checkout({ plan }: Props) {
       flexDir='column'
       gap='4'
     >
-      <Script
-        src='https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js'
-        onLoad={() => setLoading(false)}
-      />
+      {loading && (
+        <Script
+          src='https://pilot.paylink.sa/assets/js/paylink.js'
+          onLoad={() => setLoading(false)}
+        />
+      )}
       <Text fontSize='xl' color='red.500'>
         المجموع الكلي للإشتراك {plan?.price}
       </Text>
@@ -107,8 +92,9 @@ export default function Checkout({ plan }: Props) {
         fontSize='xl'
         w='80%'
         mx='auto'
-        isLoading={loading || !GoSell}
-        onClick={handlePay}
+        // @ts-ignore
+        isLoading={loading || !window?.Order}
+        onClick={() => handlePay(false)}
         colorScheme={'orange'}
       >
         الدفع الان
@@ -118,8 +104,9 @@ export default function Checkout({ plan }: Props) {
         mx='auto'
         leftIcon={<FaApplePay fontSize='50px' />}
         // fontSize='xl'
-        isLoading={loading || !GoSell}
-        onClick={handlePay}
+        // @ts-ignore
+        isLoading={loading || !window?.Order}
+        onClick={() => handlePay(true)}
         bg='black'
         color='white'
         dir='ltr'

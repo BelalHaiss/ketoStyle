@@ -247,3 +247,14 @@ export async function getStatus(
     setSavedStatus(res);
   }
 }
+
+export async function getPaylinkToken(setToken: any) {
+  const res = await fetcher({
+    url: `/payments/token`,
+    method: 'get'
+  });
+
+  if (res) {
+    setToken(res);
+  }
+}
