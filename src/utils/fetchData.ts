@@ -1,6 +1,7 @@
 import { fetcher } from './fetcher';
 import ToastUtil from './Toast';
 import { MealInfo, Meal } from 'src/ts/store.types';
+import axios from 'axios';
 
 const getDate = () => new Date().toLocaleDateString('en');
 export async function fetchPrices(setPrices: any, setLoading?: any) {
@@ -248,13 +249,12 @@ export async function getStatus(
   }
 }
 
-export async function getPaylinkToken(setToken: any) {
-  const res = await fetcher({
-    url: `/payments/token`,
-    method: 'get'
+export async function getPayLink(data: any) {
+  const res = await axios({
+    url: `/payments/payLink`,
+    method: 'post',
+    data
   });
 
-  if (res) {
-    setToken(res);
-  }
+  return res.data;
 }

@@ -10,7 +10,7 @@ import { MdOutlineFitnessCenter } from 'react-icons/md';
 // import { BsFillPatchCheckFill } from 'react-icons/bs';
 import { GiMeal } from 'react-icons/gi';
 import { useStore } from 'src/store';
-import { fetchPrices, getPaylinkToken } from 'src/utils/fetchData';
+import { fetchPrices, getPayLink } from 'src/utils/fetchData';
 import Loader from 'src/utils/Loader';
 import { Price } from 'src/ts/store.types';
 
@@ -91,11 +91,13 @@ function Pricing({ vistor }: Props) {
 
   const [cards, setCards] = useState(initCards);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState('');
+  const [payUrl, setPayUrl] = useState('');
+
   useEffect(() => {
-    getPaylinkToken(setToken);
+    // getPayLink(setPayUrl);
     fetchPrices(setPrices, setLoading);
   }, []);
+
   useEffect(() => {
     if (prices?.length) {
       setCards(
@@ -107,6 +109,7 @@ function Pricing({ vistor }: Props) {
       setLoading(false);
     }
   }, [prices]);
+
   return (
     <Flex
       color='orange.800'
@@ -140,7 +143,7 @@ function Pricing({ vistor }: Props) {
               <PriceBox
                 title={card.title}
                 plan={card.plan!}
-                token={token}
+                token={payUrl}
                 key={card._id}
               />
             ))}
