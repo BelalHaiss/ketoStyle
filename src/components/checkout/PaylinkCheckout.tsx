@@ -35,7 +35,8 @@ export default function Paylink({ plan, token }: Props) {
   // @ts-ignore
   const [loading, setLoading] = useState(false);
 
-  async function handlePay() {
+  async function handlePay(e: MouseEvent) {
+    e.stopPropagation();
     setLoading(true);
     if (!user) {
       document.getElementById('register')?.click();
