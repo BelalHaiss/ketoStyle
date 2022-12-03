@@ -1,10 +1,11 @@
-import { Flex, Text, Button, Icon, Heading, Image } from '@chakra-ui/react';
+import { Flex, Text, Button, Icon, Heading, Image } from "@chakra-ui/react";
 // import Image from 'next/image';
-import Meta from 'src/utils/Meta';
-import { useStore } from 'src/store';
-import { Measure, Willing } from 'src/ts/register.types';
-import { calculateEnergy } from 'src/components/UserCalories/utils';
-import SubscripedHOC from 'src/components/SubscriptionHOC';
+import Meta from "src/utils/Meta";
+import { useStore } from "src/store";
+import { Measure, Willing } from "src/ts/register.types";
+import { calculateEnergy } from "src/components/UserCalories/utils";
+import SubscripedHOC from "src/components/SubscriptionHOC";
+import { useEffect } from "react";
 
 function getBMI(measurements: Measure) {
   // weight / height * height
@@ -15,63 +16,67 @@ function getBMI(measurements: Measure) {
 function getDesiredWeightDate(measurements: Measure, willing: Willing) {
   let theExpectedDate = 0,
     weekAverage = 0;
-  weekAverage = willing === 'min' ? 0.5 : 0.7;
+  weekAverage = willing === "min" ? 0.5 : 0.7;
   const weightDifference = measurements.weight - measurements.desiredWeight;
   const daysToDesiredWeight = ((weightDifference / weekAverage) * 7).toFixed(0);
   const expectedDate = new Date(
     new Date(measurements.weightUpdateDate).setDate(
       new Date(measurements.weightUpdateDate).getDate() + +daysToDesiredWeight
     )
-  ).toLocaleDateString('ar', {
-    dateStyle: 'full'
+  ).toLocaleDateString("ar", {
+    dateStyle: "full",
   });
 
   return {
     expectedDate,
-    weekAverage
+    weekAverage,
   };
 }
 function Expectaion() {
   const user = useStore((state) => state.user);
+  useEffect(() => {
+    // track Page View for snapchat
+    window.handleSnap("PAGE_VIEW");
+  }, []);
   return (
     <>
-      <Meta title='التوقعات' />
+      <Meta title="التوقعات" />
       {user && (
         <>
-          <Flex gap='10' my='3' align='center' flexDir='column'>
+          <Flex gap="10" my="3" align="center" flexDir="column">
             {/* section one  */}
 
             <Flex
-              align='center'
-              py='4'
-              w='100%'
-              my='1'
-              px='2'
-              gap='2'
-              flexDir={{ base: 'column', md: 'row' }}
-              justify='space-around'
+              align="center"
+              py="4"
+              w="100%"
+              my="1"
+              px="2"
+              gap="2"
+              flexDir={{ base: "column", md: "row" }}
+              justify="space-around"
             >
-              <Flex order={{ base: '1', md: '2' }}>
+              <Flex order={{ base: "1", md: "2" }}>
                 <Image
                   // width={300}
                   // height={300}
                   // priority
-                  w={{ base: '200px', md: '300px' }}
-                  h={{ base: '200px', md: '300px' }}
-                  className='section-image'
-                  alt='Keto weight'
-                  src='/home/expectation/weight.png'
+                  w={{ base: "200px", md: "300px" }}
+                  h={{ base: "200px", md: "300px" }}
+                  className="section-image"
+                  alt="Keto weight"
+                  src="/home/expectation/weight.png"
                 />
               </Flex>
               <Heading
-                order={{ base: '2', md: '1' }}
-                w={{ base: 'auto', md: '400px' }}
-                as='h3'
-                color='orange.900'
-                fontSize={{ base: 'xl', md: '5xl' }}
+                order={{ base: "2", md: "1" }}
+                w={{ base: "auto", md: "400px" }}
+                as="h3"
+                color="orange.900"
+                fontSize={{ base: "xl", md: "5xl" }}
               >
                 بدأت رحلتك يا {user?.profile?.name}
-                <Text display='inline-block' mr='1' color='orange.500'>
+                <Text display="inline-block" mr="1" color="orange.500">
                   هدفك المثالي
                   {user?.measurements?.desiredWeight} كجم
                 </Text>
@@ -80,43 +85,43 @@ function Expectaion() {
 
             {/* section 2 */}
             <Flex
-              align='center'
-              py='4'
-              w='100%'
-              my='1'
-              px='2'
-              bg='orange.100'
-              gap='2'
-              flexDir={{ base: 'column', md: 'row' }}
-              justify='space-around'
+              align="center"
+              py="4"
+              w="100%"
+              my="1"
+              px="2"
+              bg="orange.100"
+              gap="2"
+              flexDir={{ base: "column", md: "row" }}
+              justify="space-around"
             >
-              <Flex order={{ base: '1', md: '2' }}>
+              <Flex order={{ base: "1", md: "2" }}>
                 <Image
                   // width={300}
                   // height={300}
                   // priority
-                  w={{ base: '200px', md: '300px' }}
-                  h={{ base: '200px', md: '300px' }}
-                  className='section-image'
-                  alt='Keto weight'
-                  src='/home/expectation/bmi.png'
+                  w={{ base: "200px", md: "300px" }}
+                  h={{ base: "200px", md: "300px" }}
+                  className="section-image"
+                  alt="Keto weight"
+                  src="/home/expectation/bmi.png"
                 />
               </Flex>
               <Flex
-                w={{ base: 'auto', md: '400px' }}
-                flexDir='column'
-                align='center'
-                gap='3'
-                order={{ base: '2', md: '1' }}
+                w={{ base: "auto", md: "400px" }}
+                flexDir="column"
+                align="center"
+                gap="3"
+                order={{ base: "2", md: "1" }}
               >
                 <Heading
-                  as='h3'
-                  mb='3'
-                  color='orange.900'
-                  fontSize={{ base: 'xl', md: '5xl' }}
+                  as="h3"
+                  mb="3"
+                  color="orange.900"
+                  fontSize={{ base: "xl", md: "5xl" }}
                 >
                   مؤشر كتلة جسمك هو
-                  <Text display='inline-block' mr='1' color='orange.500'>
+                  <Text display="inline-block" mr="1" color="orange.500">
                     {getBMI(user?.measurements)}
                   </Text>
                 </Heading>
@@ -132,42 +137,42 @@ function Expectaion() {
             {user?.measurements &&
               user?.measurements.desiredWeight < user?.measurements.weight && (
                 <Flex
-                  align='center'
-                  py='4'
-                  w='100%'
-                  my='1'
-                  px='2'
-                  gap='2'
-                  flexDir={{ base: 'column', md: 'row' }}
-                  justify='space-around'
+                  align="center"
+                  py="4"
+                  w="100%"
+                  my="1"
+                  px="2"
+                  gap="2"
+                  flexDir={{ base: "column", md: "row" }}
+                  justify="space-around"
                 >
-                  <Flex order={{ base: '1', md: '2' }}>
+                  <Flex order={{ base: "1", md: "2" }}>
                     <Image
                       // width={300}
                       // height={300}
                       // priority
-                      w={{ base: '200px', md: '300px' }}
-                      h={{ base: '200px', md: '300px' }}
-                      className='section-image'
-                      alt='Keto weight'
-                      src='/home/expectation/goal.png'
+                      w={{ base: "200px", md: "300px" }}
+                      h={{ base: "200px", md: "300px" }}
+                      className="section-image"
+                      alt="Keto weight"
+                      src="/home/expectation/goal.png"
                     />
                   </Flex>
                   <Flex
-                    w={{ base: 'auto', md: '400px' }}
-                    flexDir='column'
-                    align='center'
-                    gap='3'
-                    order={{ base: '2', md: '1' }}
+                    w={{ base: "auto", md: "400px" }}
+                    flexDir="column"
+                    align="center"
+                    gap="3"
+                    order={{ base: "2", md: "1" }}
                   >
                     <Heading
-                      as='h3'
-                      mb='3'
-                      color='orange.900'
-                      fontSize={{ base: 'xl', md: '5xl' }}
+                      as="h3"
+                      mb="3"
+                      color="orange.900"
+                      fontSize={{ base: "xl", md: "5xl" }}
                     >
                       {user.profile.name}، ستصل لهدفك في تاريخ
-                      <Text display='inline-block' mr='1' color='orange.500'>
+                      <Text display="inline-block" mr="1" color="orange.500">
                         {
                           getDesiredWeightDate(user.measurements, user.willing)
                             .expectedDate
@@ -175,13 +180,13 @@ function Expectaion() {
                         ,
                       </Text>
                       <Text
-                        display='inline-block'
+                        display="inline-block"
                         // mr='1'
-                        fontSize={{ base: 'lg', md: 'xl' }}
-                        color='orange.500'
+                        fontSize={{ base: "lg", md: "xl" }}
+                        color="orange.500"
                       >
                         ( معدل
-                        {' ' +
+                        {" " +
                           getDesiredWeightDate(user.measurements, user.willing)
                             .weekAverage}
                         كجم اسبوعيا )
@@ -196,43 +201,43 @@ function Expectaion() {
               )}
             {/* section 4  */}
             <Flex
-              align='center'
-              py='4'
-              w='100%'
-              my='1'
-              px='2'
-              bg='orange.100'
-              gap='2'
-              flexDir={{ base: 'column', md: 'row' }}
-              justify='space-around'
+              align="center"
+              py="4"
+              w="100%"
+              my="1"
+              px="2"
+              bg="orange.100"
+              gap="2"
+              flexDir={{ base: "column", md: "row" }}
+              justify="space-around"
             >
-              <Flex order={{ base: '1', md: '2' }}>
+              <Flex order={{ base: "1", md: "2" }}>
                 <Image
                   // width={300}
                   // height={300}
                   // priority
-                  w={{ base: '200px', md: '300px' }}
-                  h={{ base: '200px', md: '300px' }}
-                  className='section-image'
-                  alt='Keto weight'
-                  src='/home/expectation/kcai.png'
+                  w={{ base: "200px", md: "300px" }}
+                  h={{ base: "200px", md: "300px" }}
+                  className="section-image"
+                  alt="Keto weight"
+                  src="/home/expectation/kcai.png"
                 />
               </Flex>
               <Flex
-                w={{ base: 'auto', md: '400px' }}
-                flexDir='column'
-                align='center'
-                gap='3'
-                order={{ base: '2', md: '1' }}
+                w={{ base: "auto", md: "400px" }}
+                flexDir="column"
+                align="center"
+                gap="3"
+                order={{ base: "2", md: "1" }}
               >
                 <Heading
-                  as='h3'
-                  mb='3'
-                  color='orange.900'
-                  fontSize={{ base: 'xl', md: '5xl' }}
+                  as="h3"
+                  mb="3"
+                  color="orange.900"
+                  fontSize={{ base: "xl", md: "5xl" }}
                 >
                   سعراتك اليومية لإنزال الوزن هي
-                  <Text display='inline-block' mr='1' color='orange.500'>
+                  <Text display="inline-block" mr="1" color="orange.500">
                     {calculateEnergy(
                       user?.willing,
                       user?.physicalActivity,
@@ -248,39 +253,39 @@ function Expectaion() {
             </Flex>
             {/* section 5 */}
             <Flex
-              align='center'
-              py='4'
-              w='100%'
-              my='1'
-              px='2'
-              gap='2'
-              flexDir={{ base: 'column', md: 'row' }}
-              justify='space-around'
+              align="center"
+              py="4"
+              w="100%"
+              my="1"
+              px="2"
+              gap="2"
+              flexDir={{ base: "column", md: "row" }}
+              justify="space-around"
             >
-              <Flex order={{ base: '1', md: '1' }}>
+              <Flex order={{ base: "1", md: "1" }}>
                 <Image
                   // width={220}
                   // height={400}
                   // priority
-                  w={{ base: '110px', md: '220px' }}
-                  h={{ base: '200px', md: '400px' }}
-                  className='section-image'
-                  alt='Keto weight'
-                  src='/home/expectation/meal.png'
+                  w={{ base: "110px", md: "220px" }}
+                  h={{ base: "200px", md: "400px" }}
+                  className="section-image"
+                  alt="Keto weight"
+                  src="/home/expectation/meal.png"
                 />
               </Flex>
               <Flex
-                w={{ base: 'auto', md: '400px' }}
-                flexDir='column'
-                align='center'
-                gap='3'
-                order={{ base: '2', md: '2' }}
+                w={{ base: "auto", md: "400px" }}
+                flexDir="column"
+                align="center"
+                gap="3"
+                order={{ base: "2", md: "2" }}
               >
                 <Heading
-                  as='h3'
-                  mb='3'
-                  color='orange.900'
-                  fontSize={{ base: 'xl', md: '5xl' }}
+                  as="h3"
+                  mb="3"
+                  color="orange.900"
+                  fontSize={{ base: "xl", md: "5xl" }}
                 >
                   العديد من الوصفات
                 </Heading>
@@ -298,4 +303,4 @@ function Expectaion() {
   );
 }
 
-export default SubscripedHOC(Expectaion, 'meal');
+export default SubscripedHOC(Expectaion, "meal");

@@ -4,17 +4,17 @@ import {
   Tab,
   TabPanels,
   TabList,
-  TabPanel
-} from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import AuthHOC from 'src/components/UserHOC';
-import { useStore } from 'src/store';
-import { USER, Profile as ProfilesType } from 'src/ts/store.types';
-import Account from 'src/components/profile/Account';
-import AllPayment from 'src/components/profile/Payments';
-import EditMeal from 'src/components/profile/EditMeals';
+  TabPanel,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import AuthHOC from "src/components/UserHOC";
+import { useStore } from "src/store";
+import { USER, Profile as ProfilesType } from "src/ts/store.types";
+import Account from "src/components/profile/Account";
+import AllPayment from "src/components/profile/Payments";
+import EditMeal from "src/components/profile/EditMeals";
 
-import Measurements from 'src/components/profile/Measurements';
+import Measurements from "src/components/profile/Measurements";
 type Props = {
   user: USER;
 };
@@ -25,16 +25,16 @@ function Profile({ user }: Props) {
   function getIndex(profile: ProfilesType) {
     let index = 0;
     switch (profile) {
-      case 'account':
+      case "account":
         index = 0;
         break;
-      case 'measurements':
+      case "measurements":
         index = 1;
         break;
-      case 'meal':
+      case "meal":
         index = 2;
         break;
-      case 'payments':
+      case "payments":
         index = 3;
         break;
       default:
@@ -56,15 +56,19 @@ function Profile({ user }: Props) {
       setIsIdmin(false);
     }
   }, [loginedUser]);
+  useEffect(() => {
+    // track Page View for snapchat
+    window.handleSnap("PAGE_VIEW");
+  }, []);
   return (
     <Tabs
       onChange={(index) => setTabIndex(index)}
       index={tabIndex}
       isFitted
-      variant='soft-rounded'
-      colorScheme='orange'
+      variant="soft-rounded"
+      colorScheme="orange"
     >
-      <TabList mb='1em'>
+      <TabList mb="1em">
         <Tab>حسابي </Tab>
         {!isAdmin && <Tab>قياساتي</Tab>}
         {!isAdmin && <Tab> وجباتي</Tab>}

@@ -1,15 +1,15 @@
-import { ChakraProvider, Flex } from '@chakra-ui/react';
-import { createStandaloneToast } from '@chakra-ui/toast';
-import theme from 'src/utils/theme';
-import Meta from 'src/utils/Meta';
-import '@fontsource/vazir';
-import Header from './Header';
-import { useStore } from 'src/store';
+import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { createStandaloneToast } from "@chakra-ui/toast";
+import theme from "src/utils/theme";
+import Meta from "src/utils/Meta";
+import "@fontsource/vazir";
+import Header from "./Header";
+import { useStore } from "src/store";
 
-import Fotter from './Footer';
-import { fetchUser as fetchUserData } from 'src/utils/fetchData';
-import { useState, useEffect } from 'react';
-import { fetchPrices } from 'src/utils/fetchData';
+import Fotter from "./Footer";
+import { fetchUser as fetchUserData } from "src/utils/fetchData";
+import { useState, useEffect } from "react";
+import { fetchPrices } from "src/utils/fetchData";
 const { ToastContainer, toast } = createStandaloneToast(theme);
 export const Toast = toast;
 export function Layout({ children }: any) {
@@ -38,11 +38,11 @@ export function Layout({ children }: any) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Flex flexDir={'column'} minH='100vh'>
+      <Flex flexDir={"column"} minH="100vh">
         <Meta />
         <Header />
 
-        <main style={{ marginTop: '5px' }}>{children}</main>
+        <main style={{ marginTop: "5px" }}>{children}</main>
         <ToastContainer />
         <Fotter />
       </Flex>

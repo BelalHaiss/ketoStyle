@@ -4,13 +4,13 @@ import {
   FormLabel,
   FormControl,
   Input,
-  FormErrorMessage
-} from '@chakra-ui/react';
-import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { fetcher } from 'src/utils/fetcher';
-import FormAction from 'src/utils/FormActions';
-import ToastUtil from 'src/utils/Toast';
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
+import { fetcher } from "src/utils/fetcher";
+import FormAction from "src/utils/FormActions";
+import ToastUtil from "src/utils/Toast";
 
 const passwordRegex = /(?=^\S*$)(?=.{8,})/;
 
@@ -18,47 +18,51 @@ export default function PasswordReset() {
   const router = useRouter();
 
   // init is mills
-  const { id, token, init = '1' } = router.query;
+  const { id, token, init = "1" } = router.query;
   const elapsedMins = Math.floor((Date.now() - +init) / 1000 / 60);
   //
   useEffect(() => {
-    let toast = '';
+    let toast = "";
     if (Object.keys(router.query).length) {
       if (!id || !token) {
-        router.replace('/');
-        toast = 'true';
+        router.replace("/");
+        toast = "true";
       }
       if (elapsedMins > 59) {
-        router.replace('/');
-        toast = 'true';
+        router.replace("/");
+        toast = "true";
       }
-      toast === 'true' && ToastUtil('هذا الرابط غير صالح للاستخدام');
+      toast === "true" && ToastUtil("هذا الرابط غير صالح للاستخدام");
     }
   }, [router]);
-  const [actionDisplay, setActionDisplay] = useState('none');
+  const [actionDisplay, setActionDisplay] = useState("none");
   const submitButtonInit = {
     submitActive: true,
     submitLoading: false,
-    loadingText: 'جاري تحديث البيانات'
+    loadingText: "جاري تحديث البيانات",
   };
   const [submitButton, setSubmitButton] = useState(submitButtonInit);
   const [password, setPassword] = useState({
-    password: '',
-    confirmPassword: ''
+    password: "",
+    confirmPassword: "",
   });
   useEffect(() => {
     if (validatePassword()) {
-      setActionDisplay('flex');
+      setActionDisplay("flex");
       setSubmitButton(submitButtonInit);
     } else {
-      setActionDisplay('flex');
+      setActionDisplay("flex");
       setSubmitButton({ ...submitButtonInit, submitActive: false });
     }
   }, [password]);
+  useEffect(() => {
+    // track Page View for snapchat
+    window.handleSnap("PAGE_VIEW");
+  }, []);
   function validatePassword() {
     if (
-      password['password'] !== password['confirmPassword'] ||
-      !passwordRegex.test(password['confirmPassword'])
+      password["password"] !== password["confirmPassword"] ||
+      !passwordRegex.test(password["confirmPassword"])
     )
       return false;
     return true;
@@ -70,65 +74,65 @@ export default function PasswordReset() {
 
   async function handleSubmit() {
     if (!validatePassword()) {
-      return ToastUtil('تاكد من صحة كلمة المرور');
+      return ToastUtil("تاكد من صحة كلمة المرور");
     }
     await fetcher({
-      url: '/users/updatepassword',
-      method: 'patch',
+      url: "/users/updatepassword",
+      method: "patch",
       data: {
         userId: id,
         token,
-        password: password.password
+        password: password.password,
       },
-      successToast: 'تم تغير كلمة السر بنجاح'
+      successToast: "تم تغير كلمة السر بنجاح",
     });
-    router.replace('/');
+    router.replace("/");
   }
 
   function reset() {
-    setActionDisplay('none');
+    setActionDisplay("none");
     setSubmitButton(submitButtonInit);
     setPassword({
-      password: '',
-      confirmPassword: ''
+      password: "",
+      confirmPassword: "",
     });
   }
   return (
-    <Flex p='5' align='center' gap='5' maxW='600px' mx='auto' flexDir='column'>
-      <Text my='5' fontWeight={'bold'} fontSize='xl'>
+    <Flex p="5" align="center" gap="5" maxW="600px" mx="auto" flexDir="column">
+      <Text my="5" fontWeight={"bold"} fontSize="xl">
         ادخل كلمة السر الجديدة
       </Text>
       <FormControl
-        isInvalid={!passwordRegex.test(password['password'])}
-        color='orange.900'
+        isInvalid={!passwordRegex.test(password["password"])}
+        color="orange.900"
       >
-        <FormLabel fontSize='lg' htmlFor='password'>
+        <FormLabel fontSize="lg" htmlFor="password">
           كلمة السر
         </FormLabel>
         <Input
-          id='password'
-          type='password'
-          value={password['password']}
-          name='password'
+          id="password"
+          type="password"
+          value={password["password"]}
+          name="password"
           onChange={handleChange}
-          bg='white'
+          bg="white"
         />
         <FormErrorMessage> كلمة السر لا تقل عن 8 حروف</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={!validatePassword()} color='orange.900'>
-        <FormLabel fontSize='lg' htmlFor='confirm'>
-          تاكيد كلمة السر{' '}
+      <FormControl isInvalid={!validatePassword()} color="orange.900">
+        <FormLabel fontSize="lg" htmlFor="confirm">
+          تاكيد كلمة السر{" "}
         </FormLabel>
         <Input
-          id='confirm'
-          type='password'
-          value={password['confirmPassword']}
-          name='confirmPassword'
+          id="confirm"
+          type="password"
+          value={password["confirmPassword"]}
+          name="confirmPassword"
           onChange={handleChange}
-          bg='white'
+          bg="white"
         />
         <FormErrorMessage>
-          {' '}
+          {" "}
           تاكد من ان كلمة السر متماثلة ولاتقل عن 8 حروف
         </FormErrorMessage>
       </FormControl>

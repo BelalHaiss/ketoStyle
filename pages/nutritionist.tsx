@@ -1,37 +1,42 @@
-import { Flex, Text, Button, Icon, Heading } from '@chakra-ui/react';
+import { Flex, Text, Button, Icon, Heading } from "@chakra-ui/react";
 
-import SubscripedHOC from 'src/components/SubscriptionHOC';
-import Meta from 'src/utils/Meta';
-import { useStore } from 'src/store';
-import { GiMeal } from 'react-icons/gi';
-import { BsWhatsapp } from 'react-icons/bs';
-import UnSubNutritionist from 'src/components/UnSupscriptions/UnSub.nutritionist';
+import SubscripedHOC from "src/components/SubscriptionHOC";
+import Meta from "src/utils/Meta";
+import { useStore } from "src/store";
+import { GiMeal } from "react-icons/gi";
+import { BsWhatsapp } from "react-icons/bs";
+import UnSubNutritionist from "src/components/UnSupscriptions/UnSub.nutritionist";
+import { useEffect } from "react";
 function Nutrition({
   isSubscriped,
-  endDate
+  endDate,
 }: {
   isSubscriped: boolean;
   endDate: string;
 }) {
   const user = useStore((state) => state.user);
+  useEffect(() => {
+    // track Page View for snapchat
+    window.handleSnap("PAGE_VIEW");
+  }, []);
   return (
     <>
-      <Meta title='اخصائي التغذية' />
+      <Meta title="اخصائي التغذية" />
       {endDate && (
-        <Text textAlign='center' fontSize='xs'>
+        <Text textAlign="center" fontSize="xs">
           تاريخ انتهاء الاشتراك : {endDate}
         </Text>
       )}
-      <Flex gap='10' my='3' align='center' flexDir='column'>
+      <Flex gap="10" my="3" align="center" flexDir="column">
         {!isSubscriped && <UnSubNutritionist />}
 
         {isSubscriped && (
           <>
-            <Flex gap='2' w='100%' align='center' flexDir={'column'}>
+            <Flex gap="2" w="100%" align="center" flexDir={"column"}>
               <Heading
-                as='h3'
-                size={{ base: 'lg', md: 'xl' }}
-                color='orange.800'
+                as="h3"
+                size={{ base: "lg", md: "xl" }}
+                color="orange.800"
               >
                 {`مرحبا, ${user?.profile.name} في قسم اخصائي الاغذية`}
               </Heading>
@@ -42,25 +47,25 @@ function Nutrition({
             </Flex>
 
             <Button
-              leftIcon={<BsWhatsapp fontSize='25px' />}
-              colorScheme={'whatsapp'}
-              size='lg'
-              w='250px'
+              leftIcon={<BsWhatsapp fontSize="25px" />}
+              colorScheme={"whatsapp"}
+              size="lg"
+              w="250px"
               onClick={() => {
-                const link = 'https://wa.me/+966577151863';
-                window.open(link, '_blank');
+                const link = "https://wa.me/+966577151863";
+                window.open(link, "_blank");
               }}
             >
               تواصل مع اخصائي
             </Button>
             <Flex
-              justify={{ base: 'center', md: 'space-between' }}
-              w='100%'
-              px='10'
-              align='center'
+              justify={{ base: "center", md: "space-between" }}
+              w="100%"
+              px="10"
+              align="center"
             >
-              <Flex gap='5' flexDir={'column'}>
-                <Heading as='h5' size='lg'>
+              <Flex gap="5" flexDir={"column"}>
+                <Heading as="h5" size="lg">
                   فريق التغذية
                 </Heading>
                 <Text>
@@ -72,12 +77,12 @@ function Nutrition({
               </Flex>
 
               <Icon
-                display={{ base: 'none', md: 'inline-block' }}
+                display={{ base: "none", md: "inline-block" }}
                 as={GiMeal}
-                color='orange.200'
-                w='60'
-                mr='10'
-                h='40'
+                color="orange.200"
+                w="60"
+                mr="10"
+                h="40"
               />
             </Flex>
           </>
@@ -87,4 +92,4 @@ function Nutrition({
   );
 }
 
-export default SubscripedHOC(Nutrition, 'meal');
+export default SubscripedHOC(Nutrition, "meal");
