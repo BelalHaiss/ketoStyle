@@ -27,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         window.user = user;
         window.snaptr("init", "92c88017-7992-43fe-82a9-e4719af8f5ad", {
           user_email: window.user.profile.email,
-          user_phone_number: window.user.profile.phone,
         });
       }
       if (event && window.user) {
