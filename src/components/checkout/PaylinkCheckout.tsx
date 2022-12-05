@@ -57,7 +57,7 @@ export default function Paylink({ plan, token }: Props) {
       // track start checkout for snap chat
       window.handleSnap("START_CHECKOUT", user, {
         price: plan.price,
-        currency: "SR",
+        currency: "SAR",
         item_category: "plans",
         item_ids: plan.plans,
       });
