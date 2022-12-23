@@ -1,10 +1,10 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
 
-import { useCreateStore, Provider } from "src/store";
-import { Layout } from "src/components/layout/Layout";
-import { User } from "src/ts/register.types";
-import { useEffect } from "react";
+import { useCreateStore, Provider } from 'src/store';
+import { Layout } from 'src/components/layout/Layout';
+import { User } from 'src/ts/register.types';
+import { useEffect } from 'react';
 declare global {
   interface Window {
     snaptr: any;
@@ -25,16 +25,17 @@ function MyApp({ Component, pageProps }: AppProps) {
         (!window.user || window.user.profile.email !== user.profile.email)
       ) {
         window.user = user;
-        window.snaptr("init", "92c88017-7992-43fe-82a9-e4719af8f5ad", {
-          user_email: window.user.profile.email,
+        window.snaptr('init', '92c88017-7992-43fe-82a9-e4719af8f5ad', {
+          user_email: window.user.profile.email
         });
       }
       if (event && window.user) {
         if (eventPara) {
-          window.snaptr("track", event, eventPara);
-        } else window.snaptr("track", event);
+          window.snaptr('track', event, eventPara);
+        } else window.snaptr('track', event);
       }
     };
+    const agent = navigator.userAgent.toLowerCase();
   }, []);
   return (
     <Provider createStore={store}>

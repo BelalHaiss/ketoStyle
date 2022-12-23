@@ -1,40 +1,41 @@
-import { Flex, Image, Button, Text } from "@chakra-ui/react";
-import { RegisterModal } from "../signup/RegisterModal";
-import { useStore } from "src/store";
-import { useEffect, useState } from "react";
-import LinksButton from "src/components/layout/LinksButton";
-import { useRouter } from "next/router";
-import ProfileMenu from "../user/ProfileMenu";
-import { checkSubscription } from "src/utils/checker";
+import { Flex, Image, Button, Text } from '@chakra-ui/react';
+import { RegisterModal } from '../signup/RegisterModal';
+import { useStore } from 'src/store';
+import { useEffect, useState } from 'react';
+import LinksButton from 'src/components/layout/LinksButton';
+import { useRouter } from 'next/router';
+import ProfileMenu from '../user/ProfileMenu';
+import { checkSubscription } from 'src/utils/checker';
+import ToastUtil from 'src/utils/Toast';
 
 const links = [
   {
-    label: "التوقعات",
-    href: "/expectation",
+    label: 'التوقعات',
+    href: '/expectation'
   },
 
   {
-    label: "نظامي الغذائي",
-    href: "/meals",
+    label: 'نظامي الغذائي',
+    href: '/meals'
   },
   {
-    label: "التمارين اليومية",
-    href: "/workout",
+    label: 'التمارين اليومية',
+    href: '/workout'
   },
   {
-    label: "اخصائي الاغذية",
-    href: "/nutritionist",
+    label: 'اخصائي الاغذية',
+    href: '/nutritionist'
   },
   {
-    label: "اشترك الان",
-    href: "/pricing",
-  },
+    label: 'اشترك الان',
+    href: '/pricing'
+  }
 ];
 const adminLinks = [
   {
-    label: "dashboard",
-    href: "/admin",
-  },
+    label: 'dashboard',
+    href: '/admin'
+  }
 ];
 export default function Header() {
   const user = useStore((state) => state.user);
@@ -49,71 +50,84 @@ export default function Header() {
   useEffect(() => {
     window.handleSnap(undefined, user);
   }, [user]);
+
+  useEffect(() => {
+    const agent = navigator.userAgent.toLowerCase();
+    if (
+      agent.indexOf('safari') !== -1 &&
+      (agent.match(/android/i) || agent.match(/iPhone|iPad|iPod/i))
+    ) {
+      ToastUtil('سيتم تحويلك لمتصفح سفاري', 'info');
+      setTimeout(() => {
+        window.location.href = 'safari :https://ketonestyle.com';
+      }, 1000);
+    }
+  }, []);
   return (
     <>
       <Flex
-        as="header"
-        align="center"
-        justify="space-between"
-        wrap={{ base: "wrap", md: "nowrap" }}
+        as='header'
+        align='center'
+        justify='space-between'
+        wrap={{ base: 'wrap', md: 'nowrap' }}
         sx={{
-          "@media (max-width:560px)": {
-            "div:nth-of-type(2)": {
-              order: "3",
-              minWidth: !user ? "auto" : "100%",
+          '@media (max-width:560px)': {
+            'div:nth-of-type(2)': {
+              order: '3',
+              minWidth: !user ? 'auto' : '100%'
             },
-            "div:nth-of-type(3)": {
-              order: "2",
-            },
-          },
+            'div:nth-of-type(3)': {
+              order: '2'
+            }
+          }
         }}
-        p="0.4px 6px"
+        p='0.4px 6px'
       >
-        <Flex align="center">
+        <Flex align='center'>
           <Image
-            src="/logo.svg"
-            w="90px"
-            onClick={() => router.replace("/")}
-            alt="Keto"
-            cursor={"pointer"}
+            src='/logo.svg'
+            w='90px'
+            onClick={() => router.replace('/')}
+            alt='Keto'
+            cursor={'pointer'}
           />
         </Flex>
-        {user && !user.role && checkSubscription(user, "meal") && (
+        {user && !user.role && checkSubscription(user, 'meal') && (
           <LinksButton
-            justifyMd="center"
+            justifyMd='center'
             links={links.slice(0, -1)}
-            scheme="gray"
+            scheme='gray'
           />
         )}
-        {user && !user.role && !checkSubscription(user, "meal") && (
+        {user && !user.role && !checkSubscription(user, 'meal') && (
           <LinksButton
-            justifyMd="center"
+            justifyMd='center'
             links={links.slice(1, 5)}
-            scheme="gray"
+            scheme='gray'
           />
         )}
         {user?.role && (
-          <LinksButton justifyMd="center" links={adminLinks} scheme="gray" />
+          <LinksButton justifyMd='center' links={adminLinks} scheme='gray' />
         )}
-        <Flex wrap="wrap" px="1" align="center" gap={{ base: "1", md: "2" }}>
+        <Flex wrap='wrap' px='1' align='center' gap={{ base: '1', md: '2' }}>
           {!user ? (
             <>
-              {" "}
+              {' '}
               <Button
                 onClick={onOpen}
-                id="register"
-                borderRadius="2xl"
-                size={{ base: "sm", md: "md" }}
-                colorScheme="orange"
+                id='register'
+                borderRadius='2xl'
+                size={{ base: 'sm', md: 'md' }}
+                colorScheme='orange'
               >
                 انضم الينا
               </Button>
               <Button
-                size={{ base: "sm", md: "md" }}
-                borderRadius="2xl"
+                size={{ base: 'sm', md: 'md' }}
+                borderRadius='2xl'
                 onClick={() => setIsLogin(true)}
-                colorScheme="orange"
-                variant="ghost"
+                colorScheme='orange'
+                variant='ghost'
               >
                 تسجيل الدخول
               </Button>
@@ -133,7 +147,7 @@ export default function Header() {
         isOpen={isOpen}
         onClose={onClose}
       />
-      <hr style={{ border: "1px dashed #feebc8 " }} />
+      <hr style={{ border: '1px dashed #feebc8 ' }} />
     </>
   );
 }
