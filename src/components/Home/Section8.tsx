@@ -86,7 +86,7 @@ export function Section8() {
         width={{ base: '300px', md: '400px' }}
         height={{ base: '300px', md: '400px' }}
         alt={'dish'}
-        src={'/home/Section8.png'}
+        src={'/home/section8.png'}
       />
     </Flex>
   );
