@@ -250,11 +250,14 @@ export async function getStatus(
 }
 
 export async function getPayLink(data: any) {
-  const res = await axios({
-    url: `/payments/payLink`,
-    method: 'post',
-    data
-  });
-
-  return res.data;
+  try {
+    const res = await axios({
+      url: `/payments/payLink`,
+      method: 'post',
+      data
+    });
+    return res.data;
+  } catch (error) {
+    ToastUtil('برجاء المحاوله لاحقا');
+  }
 }

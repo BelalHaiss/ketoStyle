@@ -1,56 +1,57 @@
-import { Flex, Text, Button, Icon, Image as IMAGE } from "@chakra-ui/react";
+import { Flex, Text, Button, Icon, Image as IMAGE } from '@chakra-ui/react';
 // import Image from 'next/image';
-import SubscripedHOC from "src/components/SubscriptionHOC";
+import SubscripedHOC from 'src/components/SubscriptionHOC';
 
-import { useState, useEffect } from "react";
-import { BiBody, BiHealth } from "react-icons/bi";
-import { AiFillFire, AiFillSafetyCertificate } from "react-icons/ai";
-import { FaWeight, FaClipboardCheck } from "react-icons/fa";
-import { MdOutlineFitnessCenter } from "react-icons/md";
+import { useState, useEffect } from 'react';
+import { BiBody, BiHealth } from 'react-icons/bi';
+import { AiFillFire, AiFillSafetyCertificate } from 'react-icons/ai';
+import { FaWeight, FaClipboardCheck } from 'react-icons/fa';
+import { MdOutlineFitnessCenter } from 'react-icons/md';
 // import { BsFillPatchCheckFill } from 'react-icons/bs';
-import { GiMeal } from "react-icons/gi";
-import { useStore } from "src/store";
-import { fetchPrices, getPayLink } from "src/utils/fetchData";
-import Loader from "src/utils/Loader";
-import { Price } from "src/ts/store.types";
+import { GiMeal } from 'react-icons/gi';
+import { useStore } from 'src/store';
+import { fetchPrices, getPayLink } from 'src/utils/fetchData';
+import Loader from 'src/utils/Loader';
+import { Price } from 'src/ts/store.types';
 
-import ToastUtil from "src/utils/Toast";
-import { FeedBack } from "src/components/pricing/FeedBack";
-import { YalaSubscripe } from "src/components/pricing/YalaSubscripe";
-import { PriceBox } from "src/components/pricing/PriceBox";
+import ToastUtil from 'src/utils/Toast';
+import { FeedBack } from 'src/components/pricing/FeedBack';
+import { YalaSubscripe } from 'src/components/pricing/YalaSubscripe';
+import { PriceBox } from 'src/components/pricing/PriceBox';
+import { OfferTImer } from 'src/utils/Timer';
 const textIconsArr = [
   {
-    text: "ستحصل على مستشار التغذية الخاص فيك",
-    image: "/home/nutritionist.png",
+    text: 'ستحصل على مستشار التغذية الخاص فيك',
+    image: '/home/nutritionist.png'
   },
   {
-    text: "جدول تمارين متكامل حسب احتياجك",
-    icon: MdOutlineFitnessCenter,
+    text: 'جدول تمارين متكامل حسب احتياجك',
+    icon: MdOutlineFitnessCenter
   },
   {
-    text: "العديد من وصفات الكيتو الجاهزة",
-    icon: GiMeal,
+    text: 'العديد من وصفات الكيتو الجاهزة',
+    icon: GiMeal
   },
   {
-    text: "قياس كامل لكتلة جسمك",
-    icon: BiBody,
+    text: 'قياس كامل لكتلة جسمك',
+    icon: BiBody
   },
   {
-    text: "حساب معدل حرق الدهون لجسمك",
-    icon: AiFillFire,
+    text: 'حساب معدل حرق الدهون لجسمك',
+    icon: AiFillFire
   },
   {
-    text: "توقعات لتواريخ نزول وزنك",
-    icon: FaWeight,
+    text: 'توقعات لتواريخ نزول وزنك',
+    icon: FaWeight
   },
   {
-    text: "وسائل دفع آمنة و الدفع لمرة واحده فقط",
-    icon: AiFillSafetyCertificate,
+    text: 'وسائل دفع آمنة و الدفع لمرة واحده فقط',
+    icon: AiFillSafetyCertificate
   },
   {
-    text: "ضمان نزول الوزن المطلوب",
-    icon: FaClipboardCheck,
-  },
+    text: 'ضمان نزول الوزن المطلوب',
+    icon: FaClipboardCheck
+  }
 ];
 
 type Card = {
@@ -61,23 +62,23 @@ type Card = {
 };
 const initCards: Card[] = [
   {
-    _id: "mealOne",
-    title: "اشتراك شهر واحد",
+    _id: 'mealOne',
+    title: 'اشتراك شهر واحد',
     feature: TEXT_WITH_ICONS(),
-    plan: null,
+    plan: null
   },
   {
-    _id: "mealThree",
-    title: "اشتراك 3 شهور",
+    _id: 'mealThree',
+    title: 'اشتراك 3 شهور',
     feature: TEXT_WITH_ICONS(),
-    plan: null,
+    plan: null
   },
   {
-    _id: "mealSix",
-    title: "اشتراك 6 اشهر",
+    _id: 'mealSix',
+    title: 'اشتراك 6 اشهر',
     feature: TEXT_WITH_ICONS(),
-    plan: null,
-  },
+    plan: null
+  }
 ];
 
 type Props = {
@@ -91,7 +92,7 @@ function Pricing({ vistor }: Props) {
 
   const [cards, setCards] = useState(initCards);
   const [loading, setLoading] = useState(true);
-  const [payUrl, setPayUrl] = useState("");
+  const [payUrl, setPayUrl] = useState('');
 
   useEffect(() => {
     // getPayLink(setPayUrl);
@@ -112,38 +113,39 @@ function Pricing({ vistor }: Props) {
 
   useEffect(() => {
     // track Page View for snapchat
-    window.handleSnap("PAGE_VIEW");
+    window.handleSnap('PAGE_VIEW');
   }, []);
 
   return (
     <Flex
-      color="orange.800"
-      w="100%"
-      pt="3"
-      pb="10"
-      flexDir="column"
-      align="center"
+      color='orange.800'
+      w='100%'
+      pt='3'
+      pb='10'
+      flexDir='column'
+      align='center'
     >
       {!checkout && user && <YalaSubscripe />}
       <Flex
-        flexDir={{ base: "column", md: "row" }}
-        align="center"
-        justify="space-around"
-        w="100%"
+        flexDir={{ base: 'column', md: 'row' }}
+        align='center'
+        justify='space-around'
+        w='100%'
       >
         {loading && <Loader />}
         {!checkout && !loading && (
           <Flex
-            mt="3"
-            w={{ base: "370px", md: "600px" }}
-            flexDir="column"
-            align="center"
-            gap="3"
+            mt='3'
+            w={{ base: '370px', md: '600px' }}
+            flexDir='column'
+            align='center'
+            gap='3'
           >
-            <Text fontSize={{ base: "md", md: "lg" }}>
+            <Text fontSize={{ base: 'md', md: 'lg' }}>
               يعتبر نظام كيتوستايل المدروس من قبل المختصين، هو النظام الأفضل
               والأسرع والأضمن في النتائج بدون منازع عن بقية الأنظمة
             </Text>
+            <OfferTImer />
             {cards.map((card: Card) => (
               <PriceBox
                 title={card.title}
@@ -162,16 +164,16 @@ function Pricing({ vistor }: Props) {
 
 export function TEXT_WITH_ICONS() {
   return (
-    <Flex px="3" flexDir={"column"} gap="2" align="center">
+    <Flex px='3' flexDir={'column'} gap='2' align='center'>
       {textIconsArr.map((item, i) => {
         return (
-          <Flex w="100%" align="center" gap="2" key={i}>
+          <Flex w='100%' align='center' gap='2' key={i}>
             {item.icon ? (
-              <Icon w="8" h="8" as={item.icon} />
+              <Icon w='8' h='8' as={item.icon} />
             ) : (
-              <IMAGE src={item.image} w="8" h="8" alt="nutritionist" />
+              <IMAGE src={item.image} w='8' h='8' alt='nutritionist' />
             )}
-            <Text fontWeight="medium" fontSize="lg">
+            <Text fontWeight='medium' fontSize='lg'>
               {item.text}
             </Text>
           </Flex>
@@ -181,7 +183,7 @@ export function TEXT_WITH_ICONS() {
   );
 }
 
-export default SubscripedHOC(Pricing, "pricing");
+export default SubscripedHOC(Pricing, 'pricing');
 
 // the old plan style
 

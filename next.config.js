@@ -16,7 +16,10 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true
   },
-  trailingSlash: true
+  trailingSlash: true,
+  compiler: {
+    styledComponents: true
+  }
 };
 
 module.exports = nextConfig;

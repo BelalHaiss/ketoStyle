@@ -19,6 +19,7 @@ export default function SubscripedHOC(
     const [endSubscriptionDate, setEndSubscriptionDate] = useState('');
     const user = useStore((state) => state.user);
     const prices = useStore((state) => state.prices);
+
     useEffect(() => {
       if (user && prices?.length) {
         // if pricing page

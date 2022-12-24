@@ -35,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         } else window.snaptr('track', event);
       }
     };
-    const agent = navigator.userAgent.toLowerCase();
+    if (!window.localStorage.getItem('offer')) {
+      window.localStorage.setItem('offer', Date.now().toString());
+    }
   }, []);
   return (
     <Provider createStore={store}>

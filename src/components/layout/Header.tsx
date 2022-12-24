@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import ProfileMenu from '../user/ProfileMenu';
 import { checkSubscription } from 'src/utils/checker';
 import ToastUtil from 'src/utils/Toast';
+import { isSafari } from '../UserCalories/utils';
 
 const links = [
   {
@@ -51,18 +52,6 @@ export default function Header() {
     window.handleSnap(undefined, user);
   }, [user]);
 
-  useEffect(() => {
-    const agent = navigator.userAgent.toLowerCase();
-    if (
-      agent.indexOf('safari') !== -1 &&
-      (agent.match(/android/i) || agent.match(/iPhone|iPad|iPod/i))
-    ) {
-      ToastUtil('سيتم تحويلك لمتصفح سفاري', 'info');
-      setTimeout(() => {
-        window.location.href = 'safari :https://ketonestyle.com';
-      }, 1000);
-    }
-  }, []);
   return (
     <>
       <Flex
