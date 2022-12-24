@@ -78,7 +78,7 @@ export function ApplePayBtn({ loading, handlePay }: Props) {
                 align='center'
               >
                 الرجاء التاكد من تواجدك في متصفح سفاري لإكمال الدفع عبر أبل بي،
-                وفي حال عدم انتقالك انقر على االيقونة{' '}
+                وفي حال عدم انتقالك انقر على الايقونه{' '}
               </Text>
               <Flex
                 bg='gray.200'

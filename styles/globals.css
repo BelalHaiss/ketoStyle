@@ -132,6 +132,23 @@
     background-position: 10000% 0;
   }
 }
+@media screen and (min-width: 750px) and (max-width: 900px) {
+  .sec8-image {
+    width: 250px !important;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 750px) {
+  .sec8-image {
+    width: 200px !important;
+  }
+}
+@media screen and (max-width: 504px) {
+  .more-people-icon {
+    font-size: 3em !important;
+  }
+}
+
 @media screen and (max-width: 700px) {
   .home-image {
     border-radius: 15px;

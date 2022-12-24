@@ -4,11 +4,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 // import Image from 'next/image';
 import { Flex, Text, Heading, Icon, Image } from '@chakra-ui/react';
 
-const checkedText = [
-  'تمارين مقاومة',
-  'تمارين كمال الأجسام',
-  'تمارين الكارديو'
-];
+const checkedText = ['تمارين مقاومة', 'تمارين كمال الأجسام', 'تمارين الكارديو'];
 function initState() {
   return window.innerWidth >= 700 ? '/home/sec4.png' : '/home/sec4-sm.png';
 }
@@ -35,9 +31,8 @@ export function Section8() {
       w='100%'
       gap={{ base: '15', md: '1' }}
       flexDir={{ base: 'column', md: 'row' }}
-      justifyContent="space-between"
+      justifyContent='space-between'
     >
-      
       <Flex
         w={{ base: 'auto', md: '430px' }}
         gap='2'
@@ -45,9 +40,9 @@ export function Section8() {
         mr={{ base: '0', md: '50px' }}
         wrap='wrap'
         fontSize={{ base: 'sm', md: 'md' }}
-      
         alignItems='center'
         flexDir={'column'}
+        order={{ base: '2', md: '1' }}
       >
         <Heading
           as='h3'
@@ -66,11 +61,9 @@ export function Section8() {
           fontSize={{ base: '15px', md: '19.5px' }}
           color='orange.900'
         >
-        عندنا بتاخذ نظام رياضي متكامل من اليوم الأول يناسب
-احتياجك وبخيارات متنوعه، وحتى لو ماكنت مسجل
-بنادي عندنا جدول منزلي متكامل مدروس من قبل
-مدربينا في كيتو ستايل وجدول للحديد وللتضخيم وجدول
-للكارديو
+          عندنا بتاخذ نظام رياضي متكامل من اليوم الأول يناسب احتياجك وبخيارات
+          متنوعه، وحتى لو ماكنت مسجل بنادي عندنا جدول منزلي متكامل مدروس من قبل
+          مدربينا في كيتو ستايل وجدول للحديد وللتضخيم وجدول للكارديو
         </Text>
         {checkedText.map((text, i) => (
           <Flex w='100%' gap='1' key={i}>
@@ -86,13 +79,14 @@ export function Section8() {
         ))}
       </Flex>
       <Image
-        mr='25px'
+        order={{ base: '1', md: '2' }}
+        borderRadius='xl'
         className='sec8-image'
         loading='lazy'
         width={{ base: '300px', md: '400px' }}
         height={{ base: '300px', md: '400px' }}
         alt={'dish'}
-        src={"/home/Section8.png"}
+        src={'/home/Section8.png'}
       />
     </Flex>
   );

@@ -30,9 +30,10 @@ export default function Footer() {
   return (
     <Flex
       as='footer'
-      justify='space-between'
       // bg='orange.100'
       align='center'
+      justify='space-between'
+      w='100%'
       mt='auto'
       gap='1'
       px={{ base: '1', md: '3' }}
@@ -40,34 +41,28 @@ export default function Footer() {
       flexDir={{ base: 'column', lg: 'row' }}
     >
       <LinksButton links={links} />
-      <Flex
-        align='center'
-        wrap='wrap'
-        justify={{ base: 'center', md: 'space-between' }}
-        w='100%'
-        flex='1'
+
+      <Button
+        colorScheme={'orange'}
+        onClick={() => {
+          const link = 'https://wa.me/+966577157351';
+
+          window.open(link, '_blank');
+        }}
+        size={{ base: 'sm', md: 'md' }}
+        leftIcon={<RiCustomerService2Fill fontSize='25px' />}
       >
-        <Button
-          colorScheme={'orange'}
-          onClick={() => {
-            const link = 'https://wa.me/+966577157351';
+        تواصل فورا مع خدمة العملاء
+      </Button>
 
-            window.open(link, '_blank');
-          }}
-          size={{ base: 'sm', md: 'md' }}
-          leftIcon={<RiCustomerService2Fill fontSize='25px' />}
-        >
-          تواصل فورًا مع خدمة العملاء{' '}
-        </Button>
-
-        <Image
-          src='/home/payment.svg'
-          alt='payment'
-          borderRadius={'xl'}
-          // width={{ base: 150, md: '300px' }}
-          // height={'95px'}
-        />
-      </Flex>
+      <Image
+        src='/home/payment.png'
+        alt='payment'
+        borderRadius={'xl'}
+        w='400px'
+        // width={{ base: 150, md: '300px' }}
+        // height={'95px'}
+      />
     </Flex>
   );
 }

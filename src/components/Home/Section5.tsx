@@ -10,7 +10,7 @@ import { BeforeAfterSlider } from './Before_After_Slider';
 export function Section5() {
   return (
     <Flex
-      p='4'
+      p={{ base: '2', md: '4' }}
       align='center'
       justify='center'
       gap='3'

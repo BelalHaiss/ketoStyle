@@ -22,8 +22,6 @@ export default function LinksButton({
   const router = useRouter();
   return (
     <Flex
-      w={fullWidth ? '100%' : 'auto'}
-      flex='1' // flex='1'
       gap={{ base: '1', md: '2' }}
       flexDir={{ base: 'column', sm: 'row' }}
       justify={{ base: 'center', md: justifyMd }}

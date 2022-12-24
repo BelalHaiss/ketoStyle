@@ -43,7 +43,7 @@ export function Section6() {
         src={imgSrc}
       />
       <Flex
-        w={{ base: 'auto', md: '430px' }}
+        w={{ base: 'auto', md: '400px' }}
         gap='2'
         height={{ base: 'auto', md: '366px' }}
         mr={{ base: '0', md: '-50px' }}
@@ -54,7 +54,7 @@ export function Section6() {
       >
         <Heading
           as='h3'
-          w={{ base: 'auto', md: '430px' }}
+          w={{ base: 'auto', md: '400px' }}
           color='orange.900'
           fontWeight={'normal'}
           fontSize={{ base: '2xl', md: '40.8px' }}
