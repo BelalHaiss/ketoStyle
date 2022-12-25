@@ -68,7 +68,7 @@ export function ApplePayBtn({ loading, handlePay }: Props) {
           <ModalHeader textAlign='center' color='white' fontSize='3xl'>
             لاكمال العمليه
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton right='2' left='0' />
           <ModalBody color='white' p='1'>
             <Flex gap='3' flexDir='column' align='center' p='7'>
               <Text
@@ -77,8 +77,9 @@ export function ApplePayBtn({ loading, handlePay }: Props) {
                 fontSize={{ base: '15px', md: '22px' }}
                 align='center'
               >
-                الرجاء التاكد من تواجدك في متصفح سفاري لإكمال الدفع عبر أبل بي،
-                وفي حال عدم انتقالك انقر على الايقونه{' '}
+                الرجاء التأكد من تواجدك في متصفح سفاري لإكمال الدفع عبر أبل باي
+                وفي حال لم تكن في متصفح سفاري الرجاء النقر على ايقونة سفاري في
+                اسفل متصفح سناب شات، لتتمكن من اكمال العمليه.
               </Text>
               <Flex
                 bg='gray.200'

@@ -100,7 +100,7 @@ export default function Paylink({ plan, token }: Props) {
         onClick={handlePay}
         colorScheme={'orange'}
       >
-        الدفع الان
+        الدفع عبر البطاقة
       </Button>
       <ApplePayBtn loading={loading} handlePay={handlePay} />
 
