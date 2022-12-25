@@ -59,24 +59,6 @@ export default function Popup() {
             >
               اهلا بك نرجو منك تسجيل الدخول لاكمال عملية الدفع
             </Text>
-
-            <Button
-              onClick={() => {
-                onClose();
-                document.getElementById('register')?.click();
-              }}
-              borderRadius='2xl'
-              size={{ base: 'sm', md: 'md' }}
-              w='200px'
-              bg='orange.800'
-              colorScheme='orange'
-              _hover={{
-                bg: 'white',
-                color: 'orange.800'
-              }}
-            >
-              تسجيل حساب جديد{' '}
-            </Button>
             <Button
               size={{ base: 'sm', md: 'md' }}
               borderRadius='2xl'
@@ -95,6 +77,24 @@ export default function Popup() {
             >
               تسجيل الدخول
             </Button>
+            <Button
+              onClick={() => {
+                onClose();
+                document.getElementById('register')?.click();
+              }}
+              borderRadius='2xl'
+              size={{ base: 'sm', md: 'md' }}
+              w='200px'
+              bg='orange.800'
+              colorScheme='orange'
+              _hover={{
+                bg: 'white',
+                color: 'orange.800'
+              }}
+            >
+              تسجيل حساب جديد{' '}
+            </Button>
+        
           </Flex>
         </ModalBody>
       </ModalContent>
