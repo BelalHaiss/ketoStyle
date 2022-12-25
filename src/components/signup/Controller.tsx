@@ -389,7 +389,7 @@ function Page4({
         wrap='wrap'
         flexDir={{ base: 'column', sm: 'row' }}
         align='center'
-        justify='space-between'
+        justify={{ base: 'center', md: 'space-between' }}
       >
         {physicalActivities.map((activity) => (
           <Button

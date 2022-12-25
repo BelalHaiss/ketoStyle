@@ -19,6 +19,7 @@ import { FeedBack } from 'src/components/pricing/FeedBack';
 import { YalaSubscripe } from 'src/components/pricing/YalaSubscripe';
 import { PriceBox } from 'src/components/pricing/PriceBox';
 import { OfferTImer } from 'src/utils/Timer';
+import Popup from 'src/components/Home/PopUp';
 const textIconsArr = [
   {
     text: 'ستحصل على مستشار التغذية الخاص فيك',
@@ -125,6 +126,8 @@ function Pricing({ vistor }: Props) {
       flexDir='column'
       align='center'
     >
+      <Popup />
+
       {!checkout && user && <YalaSubscripe />}
       <Flex
         flexDir={{ base: 'column', md: 'row' }}

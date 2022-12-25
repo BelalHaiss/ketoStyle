@@ -117,6 +117,7 @@ export default function Header() {
                 onClick={() => setIsLogin(true)}
                 colorScheme='orange'
                 variant='ghost'
+                id='login'
               >
                 تسجيل الدخول
               </Button>

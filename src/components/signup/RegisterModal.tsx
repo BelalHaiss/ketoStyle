@@ -88,7 +88,7 @@ export function RegisterModal({
           <ModalHeader fontSize='2xl' textAlign={'center'}>
             {header}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton left='0' right='2' />
           <ModalBody>
             {isLogin && (
               <LoginForm setHeader={setHeader} onClose={closeModal} />

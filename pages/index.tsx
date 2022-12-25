@@ -9,7 +9,6 @@ import { Section6 } from 'src/components/Home/Section6';
 import { Section7 } from 'src/components/Home/Section7';
 import { Section8 } from 'src/components/Home/Section8';
 import { Section9 } from 'src/components/Home/Section9';
-import Popup from 'src/components/Home/PopUp';
 import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
@@ -21,7 +20,6 @@ const Home: NextPage = () => {
   });
   return (
     <>
-      <Popup />
       <Section1 />
       <Section2 />
       <Section2_5 />

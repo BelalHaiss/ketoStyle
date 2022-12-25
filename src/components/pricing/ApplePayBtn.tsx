@@ -91,7 +91,6 @@ export function ApplePayBtn({ loading, handlePay }: Props) {
                 <Image
                   mr='25px'
                   className='Pop-image'
-                  loading='lazy'
                   width={{ base: '300px', md: '1500px' }}
                   alt={'homePop'}
                   src={'/home/HomePopup.png'}
